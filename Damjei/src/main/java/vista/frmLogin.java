@@ -15,6 +15,7 @@ public class frmLogin extends javax.swing.JFrame {
      */
     public frmLogin() {
         initComponents();
+    
     }
 
     /**
@@ -52,9 +53,11 @@ public class frmLogin extends javax.swing.JFrame {
                     .addComponent(lblUsuari))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLogin)
                     .addComponent(txtUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(btnLogin)))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

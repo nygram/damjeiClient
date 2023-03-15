@@ -15,6 +15,8 @@ public class Empleats {
     String cognoms;
     String dni;
     String categoria;
+    String contrasenya;
+    Boolean administrador;
 
     public Empleats() {
     }
@@ -67,6 +69,14 @@ public class Empleats {
         this.categoria = categoria;
     }
     
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
+
     
     
 }
