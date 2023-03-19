@@ -10,19 +10,20 @@ package model;
  */
 public class Empleats {
     
-    int id_empresa;
+    
     String nom;
     String cognoms;
     String dni;
     String categoria;
     String contrasenya;
+    int id_empresa;
     Boolean administrador;
 
     public Empleats() {
     }
 
-    public Empleats(int id_empresa, String nom, String cognoms, String dni, String categoria) {
-        this.id_empresa = id_empresa;
+    public Empleats(String nom, String cognoms, String dni, String categoria) {
+        //this.id_empresa = id_empresa;
         this.nom = nom;
         this.cognoms = cognoms;
         this.dni = dni;
