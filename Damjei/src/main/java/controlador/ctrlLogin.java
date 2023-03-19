@@ -30,15 +30,17 @@ public class ctrlLogin implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == vista.btnLogin){
         usuari.setNom(vista.txtUsuari.getText());
-        usuari.setContrasenya(vista.txtUsuari.getText());
+        usuari.setContrasenya(vista.txtPasswd.getText());
+            System.out.println("hola");
         
         try {
             empleats.enviaLogin(usuari);
         } catch (IOException ex) {
             Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        }    
         
         
     }

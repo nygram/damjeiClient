@@ -28,6 +28,12 @@ public class Empleats {
         this.dni = dni;
         this.categoria = categoria;
     }
+    
+    public Empleats(String nom, String contrasenya){
+        this.nom = nom;
+        this.contrasenya = contrasenya;
+        
+    }
 
     public int getId_empresa() {
         return id_empresa;
