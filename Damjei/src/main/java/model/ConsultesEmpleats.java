@@ -41,6 +41,9 @@ public class ConsultesEmpleats {
 
         OutputStream sortida = socket.getOutputStream();
         sortida.write(json.getBytes());
+        
+        
+        
 
     }
 

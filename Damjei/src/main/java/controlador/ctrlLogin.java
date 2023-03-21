@@ -1,5 +1,6 @@
 package controlador;
 
+import com.Comunica;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,7 +20,7 @@ public class ctrlLogin implements ActionListener{
     
     private frmLogin vista;
     private Empleats usuari;
-    private ConsultesEmpleats empleats = new ConsultesEmpleats();
+    private Comunica empleats = new Comunica();
     
    public ctrlLogin (frmLogin vista, Empleats usuari){
        this.vista = vista;
