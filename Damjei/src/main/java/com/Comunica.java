@@ -5,6 +5,7 @@
 package com;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,6 +33,7 @@ public class Comunica {
 
     public void enviaLogin(Empleats empleat) throws IOException {
 
+       
         Socket socket = new Socket(ip, port);
 
         Gson gson = new Gson();
@@ -40,6 +42,9 @@ public class Comunica {
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));
         obtEmpleat.addProperty("accio", ELIMINAR);
+        obtEmpleat.addProperty("clase", "Empleats.class");
+        
+        
 
         String json = gson.toJson(obtEmpleat);
         System.out.println(json);
@@ -52,8 +57,6 @@ public class Comunica {
         byte[] buffer = new byte[1024];
         int bytesRead = entrada.read(buffer);
         String resposta = new String(buffer, 0, bytesRead);
-        
-        
         
 
     }
