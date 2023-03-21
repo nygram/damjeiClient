@@ -52,8 +52,6 @@ public class Comunica {
         byte[] buffer = new byte[1024];
         int bytesRead = entrada.read(buffer);
         String resposta = new String(buffer, 0, bytesRead);
-        String resposta2 = gson.fromJson(resposta, String.class);
-        System.out.println("Desde client " +resposta2);
         
         
         

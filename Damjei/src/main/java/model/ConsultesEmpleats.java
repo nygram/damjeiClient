@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
 import com.google.gson.Gson;
@@ -37,7 +33,7 @@ public class ConsultesEmpleats {
         obtEmpleat.addProperty("accio", ELIMINAR);
 
         String json = gson.toJson(obtEmpleat);
-        System.out.println(json);
+        System.out.println(json+" hora");
 
         OutputStream sortida = socket.getOutputStream();
         sortida.write(json.getBytes());

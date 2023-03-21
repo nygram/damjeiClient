@@ -34,7 +34,7 @@ public class ctrlLogin implements ActionListener{
         if (e.getSource() == vista.btnLogin){
         usuari.setNom(vista.txtUsuari.getText());
         usuari.setContrasenya(vista.txtPasswd.getText());
-            System.out.println("hola");
+           
         
         try {
             empleats.enviaLogin(usuari);
