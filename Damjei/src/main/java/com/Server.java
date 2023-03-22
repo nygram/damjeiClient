@@ -45,9 +45,15 @@ public class Server {
             Gson gson = new Gson();
             String json = new String(buffer, 0, count);
             JsonObject objecte = gson.fromJson(json, JsonObject.class);
+            
+            //int accio = objecte.get("accio").getAsInt();
+            //System.out.println("valor accio nova "+accio);
+            
+           
             Empleats empleat = gson.fromJson(objecte.get("empleat"), Empleats.class);
             int accio = objecte.get("accio").getAsInt();
             String nom = empleat.getNom();
+
 
             if (nom.equals("2")) {
                 JsonObject obtResposta = new JsonObject();

@@ -28,6 +28,7 @@ public class Comunica {
     public static final int ACTUALITZAR = 2;
     public static final int ELIMINAR = 3;
     public static final int LLISTAR = 4;
+    public static final int LOGOUT = 5;
 
     int token = 0;
     int port = 10000;
@@ -49,6 +50,8 @@ public class Comunica {
         
         com.enviaDades(obtEmpleat, socket);
         JsonObject objecte = com.repDades(socket);
+        
+        socket.close();
        
         boolean correcte = objecte.get("correcte").getAsBoolean();
         boolean administrador = objecte.get("administrador").getAsBoolean();
@@ -57,9 +60,27 @@ public class Comunica {
         List.add(correcte);
         List.add(administrador);
         List.add(token);
-
+        
         return List;
 
+    }
+    public boolean enviaLogout(int token) throws IOException{
+        
+        Socket socket = new Socket(ip, port);
+        comDades com = new comDades();
+        Gson gson = new Gson();
+        
+        JsonObject obtLogout = new JsonObject();
+        obtLogout.addProperty("accio", LOGOUT);
+        obtLogout.addProperty("token", token);
+        
+        com.enviaDades(obtLogout, socket);
+        JsonObject objecte = com.repDades(socket);
+        
+        socket.close();
+        
+        boolean correcte = objecte.get("correcte").getAsBoolean();
+        return correcte;
     }
 
     

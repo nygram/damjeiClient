@@ -34,10 +34,11 @@ public class ctrlLogin implements ActionListener {
     public ctrlLogin(frmLogin vista, Empleats usuari) {
         this.vistaLogin = vista;
         this.usuari = usuari;
-        vista.btnLogin.addActionListener(this);
+        vistaLogin.btnLogin.addActionListener(this);
         vistaOpcions = new frmOpcions();
         vistaOpcions.setVisible(false);
         vistaOpcions.setLocationRelativeTo(null);
+        vistaOpcions.btnLogout.addActionListener(this);
 
     }
 
@@ -53,6 +54,7 @@ public class ctrlLogin implements ActionListener {
                     correcte = (boolean) List.get(0);
                     administrador = (boolean) List.get(1);
                     token = (int) List.get(2);
+                    
 
                 }
                 if (correcte) {
@@ -60,10 +62,12 @@ public class ctrlLogin implements ActionListener {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
                         vistaOpcions.btnAdministracio.setVisible(true);
+                        vistaOpcions.txtToken.setText(Integer.toString(token));
                     } else {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
                         vistaOpcions.btnAdministracio.setVisible(false);
+                        vistaOpcions.txtToken.setText(Integer.toString(token));
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al validar l'usuari");
@@ -73,6 +77,20 @@ public class ctrlLogin implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if (e.getSource() == vistaOpcions.btnLogout){
+            vistaLogin.setVisible(true);
+            vistaOpcions.setVisible(true);
+            vistaOpcions.dispose();
+            try {
+                empleats.enviaLogout(Integer.parseInt((vistaOpcions.txtToken.getText())));
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            System.out.println("Logout");
+            
+            
         }
 
     }
