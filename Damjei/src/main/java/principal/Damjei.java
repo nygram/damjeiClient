@@ -17,12 +17,12 @@ import vista.frmLogin;
 public class Damjei {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello World!");
         Server server = new Server();
         frmLogin vista = new frmLogin();
         Empleats empleat = new Empleats();
         ctrlLogin ctrl = new ctrlLogin(vista, empleat);
         vista.setVisible(true);
-         server.iniciar();
+        vista.setLocationRelativeTo(null);
+        server.iniciar();
     }
 }

@@ -2,12 +2,15 @@ package com;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 import model.Empleats;
 
@@ -18,6 +21,9 @@ import model.Empleats;
 public class Server {
 
     int puerto = 10000;
+    boolean correcte = true;
+    boolean administrador = false;
+    int token = 234;
 
     public Server() {
 
@@ -38,19 +44,20 @@ public class Server {
             int count = inputStream.read(buffer);
             Gson gson = new Gson();
             String json = new String(buffer, 0, count);
-            System.out.println(json);
             JsonObject objecte = gson.fromJson(json, JsonObject.class);
             Empleats empleat = gson.fromJson(objecte.get("empleat"), Empleats.class);
             int accio = objecte.get("accio").getAsInt();
             String nom = empleat.getNom();
 
-            System.out.println(json.getClass());
-
             if (nom.equals("2")) {
-                String resposta = "Usuari correcte";
-                System.out.println("Usuari Correcte");
+                JsonObject obtResposta = new JsonObject();
+                obtResposta.addProperty("correcte", correcte);
+                obtResposta.addProperty("administrador", administrador);
+                obtResposta.addProperty("token", token);
+                
+                String res = gson.toJson(obtResposta);
                 OutputStream sortida = socket.getOutputStream();
-                sortida.write(resposta.getBytes());
+                sortida.write(res.getBytes());
                 sortida.flush();
             } else {
                 System.out.println("no se cumple");

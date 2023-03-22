@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import com.comDades;
 import model.Empleats;
 
 /**
@@ -31,13 +33,13 @@ public class Comunica {
     int port = 10000;
     String ip = "127.0.0.1";
 
-    public void enviaLogin(Empleats empleat) throws IOException {
+    public ArrayList enviaLogin(Empleats empleat) throws IOException {
 
-       
+        ArrayList<Object> List = new ArrayList<Object>();
         Socket socket = new Socket(ip, port);
+        comDades com = new comDades();
 
         Gson gson = new Gson();
-        
 
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));
@@ -45,20 +47,21 @@ public class Comunica {
         obtEmpleat.addProperty("clase", "Empleats.class");
         
         
-
-        String json = gson.toJson(obtEmpleat);
-        System.out.println(json);
-
-        OutputStream sortida = socket.getOutputStream();
-        sortida.write(json.getBytes());
+        com.enviaDades(obtEmpleat, socket);
+        JsonObject objecte = com.repDades(socket);
        
+        boolean correcte = objecte.get("correcte").getAsBoolean();
+        boolean administrador = objecte.get("administrador").getAsBoolean();
+        int token = objecte.get("token").getAsInt();
         
-        InputStream entrada = socket.getInputStream();
-        byte[] buffer = new byte[1024];
-        int bytesRead = entrada.read(buffer);
-        String resposta = new String(buffer, 0, bytesRead);
-        
+        List.add(correcte);
+        List.add(administrador);
+        List.add(token);
+
+        return List;
 
     }
+
+    
 
 }
