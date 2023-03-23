@@ -18,17 +18,38 @@ import com.comDades;
 import model.Empleats;
 
 /**
- * @author JavierFernándezDíaz
  * Classe que s'encarrea de les comunicacions. Disposa de constants 
  * per seleccionar la acció que es vol relitzar. 
+ * @author JavierFernándezDíaz
+ * 
  */
 public class Comunica {
 
     public static final int LOGIN = 0;
+
+    /**
+     *
+     */
     public static final int LOGOUT = 1;
+
+    /**
+     *
+     */
     public static final int INSERTAR = 2;
+
+    /**
+     *
+     */
     public static final int ACTUALITZAR = 3;
+
+    /**
+     *
+     */
     public static final int ELIMINAR = 4;
+
+    /**
+     *
+     */
     public static final int LLISTAR = 5;
     
 
@@ -92,7 +113,7 @@ public class Comunica {
      * Mètode per fer Logout al servidor. Rep un int que es el token de la sessió i l'envia al servidor per
      * comunicar que s'ha fet el Logout. Torna un booleà que ens confirma si s'ha fet el Logout correctement
      * @param token identifica la sessió oberta amb el servidor
-     * @return boolean en confirma si el Logout s'ha fet correctement
+     * @return boolean ens confirma si el Logout s'ha fet correctement
      * @throws IOException 
      */
      

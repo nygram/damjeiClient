@@ -30,10 +30,16 @@ public class Server {
     HashMap<Integer, Integer> hash = new HashMap<>();
     ServerLogin login = new ServerLogin();
 
+    /**
+     * Constructor buit
+     */
     public Server() {
 
     }
-
+    /**
+     * Constructor que rep com a paràmetre el port de conexió
+     * @param puerto port de connexió
+     */
     public Server(int puerto) {
         this.puerto = puerto;
     }

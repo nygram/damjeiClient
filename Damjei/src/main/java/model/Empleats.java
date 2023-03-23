@@ -5,10 +5,10 @@
 package model;
 
 /**
- *
- * @author JavierFernándezDíaz Empleats representa els empleats (administradors
+ * Empleats representa els empleats (administradors
  * o no) que accedeixen a l'aplicació i que poden ser assignats a un vehicle.
  * Aquests empleats registraran els manteniments i els repostatges.
+ * @author JavierFernándezDíaz 
  */
 public class Empleats {
 
@@ -20,6 +20,7 @@ public class Empleats {
     int id_empresa;
     Boolean administrador;
 
+    
     public Empleats() {
     }
 

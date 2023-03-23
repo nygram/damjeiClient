@@ -20,6 +20,12 @@ import vista.frmLogin;
  */
 public class Damjei {
 
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void main(String[] args) throws IOException, SQLException {
         Server server = new Server();
         frmLogin vista = new frmLogin();

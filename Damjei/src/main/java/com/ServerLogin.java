@@ -12,14 +12,29 @@ import java.sql.SQLException;
 import model.Empleats;
 import model.conexion;
 
+/**
+ *
+ * @author Javi
+ */
 public class ServerLogin extends conexion {
 
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    /**
+     *
+     */
     public ServerLogin() {
     }
 
+    /**
+     *
+     * @param object
+     * @param socket
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
     public boolean Login(JsonObject object, Socket socket) throws IOException, SQLException {
 
         Gson gson = new Gson();
@@ -48,6 +63,14 @@ public class ServerLogin extends conexion {
 
     }
 
+    /**
+     *
+     * @param object
+     * @param socket
+     * @return
+     * @throws IOException
+     * @throws SQLException
+     */
     public boolean Admin(JsonObject object, Socket socket) throws IOException, SQLException {
 
         boolean admin = false;

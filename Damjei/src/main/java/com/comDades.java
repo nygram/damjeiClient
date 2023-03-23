@@ -12,12 +12,16 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * @author Javi
  * Classe que gestiona enviar i rebre dades del servidor
+ * @author Javi
+ * 
  */
 
 public class comDades{
 
+    /**
+     *
+     */
     public comDades(){
         
     }
