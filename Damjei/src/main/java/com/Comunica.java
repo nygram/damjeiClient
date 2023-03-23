@@ -24,17 +24,28 @@ import model.Empleats;
 public class Comunica {
 
     public static final int LOGIN = 0;
-    public static final int INSERTAR = 1;
-    public static final int ACTUALITZAR = 2;
-    public static final int ELIMINAR = 3;
-    public static final int LLISTAR = 4;
-    public static final int LOGOUT = 5;
+    public static final int LOGOUT = 1;
+    public static final int INSERTAR = 2;
+    public static final int ACTUALITZAR = 3;
+    public static final int ELIMINAR = 4;
+    public static final int LLISTAR = 5;
+    
 
     int token = 0;
     int port = 10000;
     String ip = "127.0.0.1";
 
-    public ArrayList enviaLogin(Empleats empleat) throws IOException {
+    public int getToken() {
+        return token;
+    }
+
+    public void setToken(int token) {
+        this.token = token;
+    }
+    
+    
+
+    public JsonObject enviaLogin(Empleats empleat) throws IOException {
 
         ArrayList<Object> List = new ArrayList<Object>();
         Socket socket = new Socket(ip, port);
@@ -44,7 +55,7 @@ public class Comunica {
 
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));
-        obtEmpleat.addProperty("accio", ELIMINAR);
+        obtEmpleat.addProperty("accio", LOGIN);
         obtEmpleat.addProperty("clase", "Empleats.class");
         
         
@@ -52,7 +63,7 @@ public class Comunica {
         JsonObject objecte = com.repDades(socket);
         
         socket.close();
-       
+       /*
         boolean correcte = objecte.get("correcte").getAsBoolean();
         boolean administrador = objecte.get("administrador").getAsBoolean();
         int token = objecte.get("token").getAsInt();
@@ -60,8 +71,8 @@ public class Comunica {
         List.add(correcte);
         List.add(administrador);
         List.add(token);
-        
-        return List;
+        */
+        return objecte;
 
     }
     public boolean enviaLogout(int token) throws IOException{
@@ -75,11 +86,12 @@ public class Comunica {
         obtLogout.addProperty("token", token);
         
         com.enviaDades(obtLogout, socket);
-        JsonObject objecte = com.repDades(socket);
+        //JsonObject objecte = com.repDades(socket);
         
         socket.close();
         
-        boolean correcte = objecte.get("correcte").getAsBoolean();
+        boolean correcte = true;
+                //"objecte.get("correcte").getAsBoolean();"
         return correcte;
     }
 

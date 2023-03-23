@@ -1,16 +1,13 @@
 package controlador;
 
 import com.Comunica;
+import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.ConsultesEmpleats;
 import model.Empleats;
 import vista.frmLogin;
 import vista.frmOpcions;
@@ -24,8 +21,8 @@ public class ctrlLogin implements ActionListener {
     private frmLogin vistaLogin;
     private frmOpcions vistaOpcions;
     private Empleats usuari;
-    private Comunica empleats = new Comunica();
-    private ArrayList<Object> List = new ArrayList<Object>();
+    private Comunica comunica = new Comunica();
+    private JsonObject object;
     private boolean correcte = false;
     private boolean administrador = false;
     private int token;
@@ -49,14 +46,11 @@ public class ctrlLogin implements ActionListener {
             usuari.setContrasenya(vistaLogin.txtPasswd.getText());
 
             try {
-                List = empleats.enviaLogin(usuari);
-                for (int i = 0; i < List.size(); i++) {
-                    correcte = (boolean) List.get(0);
-                    administrador = (boolean) List.get(1);
-                    token = (int) List.get(2);
-                    
-
-                }
+                object = comunica.enviaLogin(usuari);
+                    correcte = object.get("correcte").getAsBoolean();
+                    administrador = object.get("administrador").getAsBoolean();
+                    token = object.get("token").getAsInt();
+                
                 if (correcte) {
                     if (administrador) {
                         vistaLogin.setVisible(false);
@@ -78,18 +72,20 @@ public class ctrlLogin implements ActionListener {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    
         if (e.getSource() == vistaOpcions.btnLogout){
-            vistaLogin.setVisible(true);
-            vistaOpcions.setVisible(true);
-            vistaOpcions.dispose();
+            
+            System.out.println("Logout");
+            comunica.setToken(0);
+            
             try {
-                empleats.enviaLogout(Integer.parseInt((vistaOpcions.txtToken.getText())));
+                comunica.enviaLogout(Integer.parseInt((vistaOpcions.txtToken.getText())));
+                
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            System.out.println("Logout");
-            
+           
+          
             
         }
 

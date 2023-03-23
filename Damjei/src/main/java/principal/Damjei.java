@@ -7,6 +7,7 @@ package principal;
 import com.Server;
 import controlador.ctrlLogin;
 import java.io.IOException;
+import java.sql.SQLException;
 import model.Empleats;
 import vista.frmLogin;
 
@@ -16,7 +17,7 @@ import vista.frmLogin;
  */
 public class Damjei {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
         Server server = new Server();
         frmLogin vista = new frmLogin();
         Empleats empleat = new Empleats();

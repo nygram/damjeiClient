@@ -17,9 +17,6 @@ import java.net.Socket;
  */
 public class comDades{
 
-    int port = 10000;
-    String ip = "127.0.0.1";
-    Socket socket;
     public comDades(){
         
     }
@@ -32,16 +29,18 @@ public class comDades{
         OutputStream sortida = socket.getOutputStream();
         sortida.write(json.getBytes());
         
+        
     }
 
     public JsonObject repDades(Socket socket) throws IOException {
         
-        Gson gson2 = new Gson();
+        Gson gson = new Gson();
         InputStream entrada = socket.getInputStream();
         byte[] buffer = new byte[1024];
         int bytesRead = entrada.read(buffer);
         String resposta = new String(buffer, 0, bytesRead);
-        JsonObject objecte = gson2.fromJson(resposta, JsonObject.class);
+        System.out.println(resposta);
+        JsonObject objecte = gson.fromJson(resposta, JsonObject.class);
         return objecte;
         
     }

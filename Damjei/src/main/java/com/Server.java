@@ -9,8 +9,10 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 import model.Empleats;
 
@@ -24,6 +26,9 @@ public class Server {
     boolean correcte = true;
     boolean administrador = false;
     int token = 234;
+    int id = 1;
+    HashMap<Integer, Integer> hash = new HashMap<>();
+    ServerLogin login = new ServerLogin();
 
     public Server() {
 
@@ -33,7 +38,7 @@ public class Server {
         this.puerto = puerto;
     }
 
-    public void iniciar() throws IOException {
+    public void iniciar() throws IOException, SQLException {
         ServerSocket serverSocket = new ServerSocket(puerto);
         System.out.println("Iniciat");
         while (true) {
@@ -45,31 +50,46 @@ public class Server {
             Gson gson = new Gson();
             String json = new String(buffer, 0, count);
             JsonObject objecte = gson.fromJson(json, JsonObject.class);
-            
-            //int accio = objecte.get("accio").getAsInt();
-            //System.out.println("valor accio nova "+accio);
-            
-           
-            Empleats empleat = gson.fromJson(objecte.get("empleat"), Empleats.class);
+
             int accio = objecte.get("accio").getAsInt();
-            String nom = empleat.getNom();
+            System.out.println(accio);
+            switch (accio) {
+                case 0:
+                    correcte = login.Login(objecte, socket);
+                    if (correcte) {
+                        administrador = login.Admin(objecte, socket);
+                        JsonObject obtResposta = new JsonObject();
+                        obtResposta.addProperty("correcte", correcte);
+                        obtResposta.addProperty("administrador", administrador);
+                        obtResposta.addProperty("token", token);
 
+                        String res = gson.toJson(obtResposta);
+                        OutputStream sortida = socket.getOutputStream();
+                        sortida.write(res.getBytes());
+                        sortida.flush();
+                        socket.close();
+                    } else {
+                        correcte = false;
+                        JsonObject obtResposta = new JsonObject();
+                        obtResposta.addProperty("correcte", correcte);
+                        obtResposta.addProperty("administrador", administrador);
+                        obtResposta.addProperty("token", token);
 
-            if (nom.equals("2")) {
-                JsonObject obtResposta = new JsonObject();
-                obtResposta.addProperty("correcte", correcte);
-                obtResposta.addProperty("administrador", administrador);
-                obtResposta.addProperty("token", token);
+                        String res = gson.toJson(obtResposta);
+                        OutputStream sortida = socket.getOutputStream();
+                        sortida.write(res.getBytes());
+                        sortida.flush();
+                        socket.close();
+                        
+                    }
+                    break;
                 
-                String res = gson.toJson(obtResposta);
-                OutputStream sortida = socket.getOutputStream();
-                sortida.write(res.getBytes());
-                sortida.flush();
-            } else {
-                System.out.println("no se cumple");
+                case 1:
+                    int token = objecte.get("token").getAsInt();
+                    
+                    System.out.println(token);
             }
-
         }
-    }
 
+    }
 }
