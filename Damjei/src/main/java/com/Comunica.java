@@ -18,8 +18,9 @@ import com.comDades;
 import model.Empleats;
 
 /**
- *
  * @author JavierFernándezDíaz
+ * Classe que s'encarrea de les comunicacions. Disposa de constants 
+ * per seleccionar la acció que es vol relitzar. 
  */
 public class Comunica {
 
@@ -34,20 +35,39 @@ public class Comunica {
     int token = 0;
     int port = 10000;
     String ip = "127.0.0.1";
-
+    /**
+     * Getter
+     * @return token 
+     */
     public int getToken() {
         return token;
     }
-
+    /**
+     * Setter
+     * @param token 
+     */
     public void setToken(int token) {
         this.token = token;
     }
     
     
-
+    /**
+     * Mètode per fer Login al servidor. Rep un objecte empleat i l'encapsula en un Objecte Json afegint com a propietats
+     * l'acció que volem que el servidor faci i la classe a la que pertany 
+     * @param empleat objecte de la classe Empleats
+     * @return JsonObject que conté l'objecte empleat, l'acció que passem fent servir les constants declarades:
+     * LOGIN = 0;
+     * LOGOUT = 1;
+     * INSERTAR = 2;
+     * ACTUALITZAR = 3;
+     * ELIMINAR = 4;
+     * LLISTAR = 5;
+     * i la classe a la que pertany empleat
+     * @throws IOException 
+     */
     public JsonObject enviaLogin(Empleats empleat) throws IOException {
 
-        ArrayList<Object> List = new ArrayList<Object>();
+        //ArrayList<Object> List = new ArrayList<Object>();
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
 
@@ -63,18 +83,19 @@ public class Comunica {
         JsonObject objecte = com.repDades(socket);
         
         socket.close();
-       /*
-        boolean correcte = objecte.get("correcte").getAsBoolean();
-        boolean administrador = objecte.get("administrador").getAsBoolean();
-        int token = objecte.get("token").getAsInt();
-        
-        List.add(correcte);
-        List.add(administrador);
-        List.add(token);
-        */
+      
         return objecte;
 
     }
+    /**
+     * /**
+     * Mètode per fer Logout al servidor. Rep un int que es el token de la sessió i l'envia al servidor per
+     * comunicar que s'ha fet el Logout. Torna un booleà que ens confirma si s'ha fet el Logout correctement
+     * @param token identifica la sessió oberta amb el servidor
+     * @return boolean en confirma si el Logout s'ha fet correctement
+     * @throws IOException 
+     */
+     
     public boolean enviaLogout(int token) throws IOException{
         
         Socket socket = new Socket(ip, port);
@@ -86,12 +107,10 @@ public class Comunica {
         obtLogout.addProperty("token", token);
         
         com.enviaDades(obtLogout, socket);
-        //JsonObject objecte = com.repDades(socket);
         
         socket.close();
         
         boolean correcte = true;
-                //"objecte.get("correcte").getAsBoolean();"
         return correcte;
     }
 

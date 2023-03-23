@@ -12,15 +12,22 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- *
  * @author Javi
+ * Classe que gestiona enviar i rebre dades del servidor
  */
+
 public class comDades{
 
     public comDades(){
         
     }
-
+    /**
+     * Métode que envia al servidor un objecte de tipus Json fent servir el socket 
+     * que rep com a paàmetre
+     * @param object tipus JsonObject. Rep les dades encapsulades per enviar
+     * @param socket per comunicar amb el servidor
+     * @throws IOException 
+     */
     public void enviaDades(JsonObject object, Socket socket) throws IOException {
         
         Gson gson = new Gson();
@@ -31,7 +38,12 @@ public class comDades{
         
         
     }
-
+    /**
+     * Métode que rep les dades del servidor i les encapsula en un objecte Json
+     * @param socket per comunicar amb el servidor
+     * @return JsonObject on estan encapsulades les dades rebudes del servidor
+     * @throws IOException 
+     */
     public JsonObject repDades(Socket socket) throws IOException {
         
         Gson gson = new Gson();
@@ -39,7 +51,6 @@ public class comDades{
         byte[] buffer = new byte[1024];
         int bytesRead = entrada.read(buffer);
         String resposta = new String(buffer, 0, bytesRead);
-        System.out.println(resposta);
         JsonObject objecte = gson.fromJson(resposta, JsonObject.class);
         return objecte;
         

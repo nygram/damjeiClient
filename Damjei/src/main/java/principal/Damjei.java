@@ -12,8 +12,11 @@ import model.Empleats;
 import vista.frmLogin;
 
 /**
- *
  * @author JavierFernándezDíaz
+ * Classe principal que inicia el servidor simulat, la vista on es fa Login,
+ * el controlador d'aquesta vista passant els paràmetres.
+ * Fa visible la vista i la col·loca en pantalla
+ * 
  */
 public class Damjei {
 

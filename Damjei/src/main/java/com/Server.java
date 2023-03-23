@@ -86,8 +86,8 @@ public class Server {
                 
                 case 1:
                     int token = objecte.get("token").getAsInt();
-                    
                     System.out.println(token);
+                    
             }
         }
 
