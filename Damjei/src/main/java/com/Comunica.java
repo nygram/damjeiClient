@@ -99,7 +99,6 @@ public class Comunica {
         obtEmpleat.addProperty("accio", LOGIN);
         obtEmpleat.addProperty("clase", "Empleats.class");
         
-        
         com.enviaDades(obtEmpleat, socket);
         JsonObject objecte = com.repDades(socket);
         

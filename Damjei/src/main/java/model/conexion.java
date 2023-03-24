@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  *
  * @author Javi
  */
-public class conexion {
+    public class conexion {
     
     /**
      *

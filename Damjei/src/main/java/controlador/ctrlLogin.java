@@ -33,6 +33,7 @@ public class ctrlLogin implements ActionListener {
     private boolean administrador = false;
     private int token;
     private int contador = 1;
+
 /**
  * Constructor de la classe ctrlLogin. 
  * @param vista es la vista que hem de carregar
@@ -104,10 +105,10 @@ public class ctrlLogin implements ActionListener {
     
         if (e.getSource() == vistaOpcions.btnLogout){
             
-            System.out.println("Logout");
             comunica.setToken(0);
             vistaOpcions.dispose();
             vistaLogin.dispose();
+            System.exit(0);
             
             
             try {
