@@ -54,7 +54,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return id de l'empresa
      */
     public int getId_empresa() {
@@ -63,7 +62,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param id_empresa
      */
     public void setId_empresa(int id_empresa) {
@@ -72,7 +70,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return nom empleat
      */
     public String getNom() {
@@ -81,7 +78,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param nom
      */
     public void setNom(String nom) {
@@ -90,7 +86,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return cognoms empleat
      */
     public String getCognoms() {
@@ -99,7 +94,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param cognoms
      */
     public void setCognoms(String cognoms) {
@@ -108,7 +102,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return dni emplat
      */
     public String getDni() {
@@ -117,7 +110,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param dni
      */
     public void setDni(String dni) {
@@ -126,7 +118,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return categoria
      */
     public String getCategoria() {
@@ -135,7 +126,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param categoria
      */
     public void setCategoria(String categoria) {
@@ -144,7 +134,6 @@ public class Empleats {
 
     /**
      * Getter
-     *
      * @return contrasenya
      */
     public String getContrasenya() {
@@ -153,7 +142,6 @@ public class Empleats {
 
     /**
      * Setter
-     *
      * @param contrasenya
      */
     public void setContrasenya(String contrasenya) {

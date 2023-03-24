@@ -21,10 +21,13 @@ import vista.frmLogin;
 public class Damjei {
 
     /**
-     *
+     * Mètode per arrencar el programa on inicialitzem el servidor de probes
+     * la vista inicial del programa i l'empleat per poder, amb el seu 
+     * constructor, iniciar el controlador de login.
+     * Fem visible la vista i la col·loquem
      * @param args
-     * @throws IOException
-     * @throws SQLException
+     * @throws IOException captura errors E/S
+     * @throws SQLException captura errors SQL
      */
     public static void main(String[] args) throws IOException, SQLException {
         Server server = new Server();

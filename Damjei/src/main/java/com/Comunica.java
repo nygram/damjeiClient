@@ -26,32 +26,11 @@ import model.Empleats;
 public class Comunica {
 
     public static final int LOGIN = 0;
-
-    /**
-     *
-     */
     public static final int LOGOUT = 1;
-
-    /**
-     *
-     */
     public static final int INSERTAR = 2;
-
-    /**
-     *
-     */
     public static final int ACTUALITZAR = 3;
-
-    /**
-     *
-     */
     public static final int ELIMINAR = 4;
-
-    /**
-     *
-     */
     public static final int LLISTAR = 5;
-    
 
     int token = 0;
     int port = 10000;
@@ -88,7 +67,6 @@ public class Comunica {
      */
     public JsonObject enviaLogin(Empleats empleat) throws IOException {
 
-        //ArrayList<Object> List = new ArrayList<Object>();
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
 

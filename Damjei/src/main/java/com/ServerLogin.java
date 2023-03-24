@@ -13,7 +13,7 @@ import model.Empleats;
 import model.conexion;
 
 /**
- *
+ * S'encarrega de fer les peticions que necesita el servidor a la base de dades
  * @author Javi
  */
 public class ServerLogin extends conexion {
@@ -28,10 +28,11 @@ public class ServerLogin extends conexion {
     }
 
     /**
-     *
-     * @param object
-     * @param socket
-     * @return
+     * A partir d'un objecte JsonObject i del socket extreu la informació necessària 
+     * i la busca a la base de dades l'usuari i la contrasenya
+     * @param object Objecte de tipus Json
+     * @param socket Socket de conexió del servidor
+     * @return retorna un booleà depenent si ha trobar l'usuari i la contrasenya o no a la base de dades
      * @throws IOException
      * @throws SQLException
      */
@@ -64,10 +65,11 @@ public class ServerLogin extends conexion {
     }
 
     /**
-     *
-     * @param object
-     * @param socket
-     * @return
+     * A partir d'un objecte JsonObject i del socket extreu la informació necessària 
+     * i la busca a la base de dades si l'usuria és administrador
+     * @param object Onjecte de tipus Json
+     * @param socket Socket de conexió del servidor
+     * @return Retorna un booleà segons l'usuari es o no administrador
      * @throws IOException
      * @throws SQLException
      */

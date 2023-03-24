@@ -102,29 +102,21 @@ public class ctrlLogin implements ActionListener {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        /**
+         * Si l'origen de l'esdevenimens es el botó de Logout
+         * envia a través del mètode enviaLogout al servidor
+         * el token per permetre a aquest eliminar-lo de la seva llista
+         * 
+         */
     
         if (e.getSource() == vistaOpcions.btnLogout){
-            
-            comunica.setToken(0);
-            vistaOpcions.dispose();
-            vistaLogin.dispose();
-            System.exit(0);
-            
-            
-            try {
-                Damjei.main(null);
-            } catch (IOException ex) {
-                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                       
+                                   
             try {
                 comunica.enviaLogout(Integer.parseInt((vistaOpcions.txtToken.getText())));
                 
             } catch (IOException ex) {
-                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
+            System.exit(0);
            
           
             

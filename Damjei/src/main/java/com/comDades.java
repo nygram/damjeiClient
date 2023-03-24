@@ -19,11 +19,7 @@ import java.net.Socket;
 
 public class comDades{
 
-    /**
-     *
-     */
     public comDades(){
-        
     }
     /**
      * Métode que envia al servidor un objecte de tipus Json fent servir el socket 
@@ -39,8 +35,6 @@ public class comDades{
         String json = gson.toJson(object);
         OutputStream sortida = socket.getOutputStream();
         sortida.write(json.getBytes());
-        
-        
     }
     /**
      * Métode que rep les dades del servidor i les encapsula en un objecte Json

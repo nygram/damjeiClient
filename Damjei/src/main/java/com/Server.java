@@ -17,7 +17,7 @@ import java.util.Scanner;
 import model.Empleats;
 
 /**
- *
+ * Clase encarregada de simular el servidor 
  * @author nygram
  */
 public class Server {
@@ -43,7 +43,12 @@ public class Server {
     public Server(int puerto) {
         this.puerto = puerto;
     }
-
+    /**
+     * Iniciar el servidor per rebre i poder respondre peticions
+     * Executara la peticio rebuda tenint en compte l'acció demanada per paràmetre
+     * @throws IOException captura les exepcions E/S
+     * @throws SQLException captura les exepcins SQL
+     */
     public void iniciar() throws IOException, SQLException {
         ServerSocket serverSocket = new ServerSocket(puerto);
         System.out.println("Iniciat");

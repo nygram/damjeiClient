@@ -11,7 +11,8 @@ package vista;
 public class frmLogin extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmLogin
+     * Crear formulari de Login iniciant els seus components.
+     * Posem la propietat de exit al tancar
      */
     public frmLogin() {
         initComponents();

@@ -11,7 +11,8 @@ package vista;
 public class frmOpcions extends javax.swing.JFrame {
 
     /**
-     * Creates new form frmOpcions
+     * Crear formulari de Opcions iniciant els seus components.
+     * 
      */
     public frmOpcions() {
         initComponents();
@@ -151,7 +152,7 @@ public class frmOpcions extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAdministracio;
     public javax.swing.JButton btnLogout;
