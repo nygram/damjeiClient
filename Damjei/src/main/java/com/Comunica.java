@@ -33,7 +33,7 @@ public class Comunica {
     public static final int LLISTAR = 5;
 
     int token = 0;
-    int port = 10000;
+    int port = 8180;
     String ip = "127.0.0.1";
     /**
      * Getter

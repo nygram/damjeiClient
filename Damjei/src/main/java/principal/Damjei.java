@@ -30,12 +30,12 @@ public class Damjei {
      * @throws SQLException captura errors SQL
      */
     public static void main(String[] args) throws IOException, SQLException {
-        Server server = new Server();
+        //Server server = new Server();
         frmLogin vista = new frmLogin();
         Empleats empleat = new Empleats();
         ctrlLogin ctrl = new ctrlLogin(vista, empleat);
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
-        server.iniciar();
+        //server.iniciar();
     }
 }

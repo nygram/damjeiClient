@@ -65,14 +65,14 @@ public class ctrlLogin implements ActionListener {
          * i el token de la sessió
          */
         if (e.getSource() == vistaLogin.btnLogin) {
-            usuari.setNom(vistaLogin.txtUsuari.getText());
+            usuari.setDni(vistaLogin.txtUsuari.getText());
             usuari.setContrasenya(vistaLogin.txtPasswd.getText());
 
             try {
                 object = comunica.enviaLogin(usuari);
                     correcte = object.get("correcte").getAsBoolean();
                     administrador = object.get("administrador").getAsBoolean();
-                    token = object.get("token").getAsInt();
+                    //token = object.get("token").getAsInt();
                 
                 if (correcte) {
                     if (administrador) {
