@@ -12,11 +12,12 @@ package model;
  */
 public class Empleats {
 
-    String nom;
-    String cognoms;
+    int idempleado;
+    String nombre;
+    String apellidos;
     String dni;
     String categoria;
-    String contrasenya;
+    String contraseña;
     int id_empresa;
     Boolean administrador;
 
@@ -34,8 +35,8 @@ public class Empleats {
      */
     public Empleats(String nom, String cognoms, String dni, String categoria) {
         //this.id_empresa = id_empresa;
-        this.nom = nom;
-        this.cognoms = cognoms;
+        this.nombre = nom;
+        this.apellidos = cognoms;
         this.dni = dni;
         this.categoria = categoria;
     }
@@ -47,8 +48,8 @@ public class Empleats {
      * @param contrasenya defineix la contrasenya de l'empleat
      */
     public Empleats(String nom, String contrasenya) {
-        this.nom = nom;
-        this.contrasenya = contrasenya;
+        this.nombre = nom;
+        this.contraseña = contrasenya;
 
     }
 
@@ -73,7 +74,7 @@ public class Empleats {
      * @return nom empleat
      */
     public String getNom() {
-        return nom;
+        return nombre;
     }
 
     /**
@@ -81,7 +82,7 @@ public class Empleats {
      * @param nom
      */
     public void setNom(String nom) {
-        this.nom = nom;
+        this.nombre = nom;
     }
 
     /**
@@ -89,7 +90,7 @@ public class Empleats {
      * @return cognoms empleat
      */
     public String getCognoms() {
-        return cognoms;
+        return apellidos;
     }
 
     /**
@@ -97,7 +98,7 @@ public class Empleats {
      * @param cognoms
      */
     public void setCognoms(String cognoms) {
-        this.cognoms = cognoms;
+        this.apellidos = cognoms;
     }
 
     /**
@@ -137,7 +138,7 @@ public class Empleats {
      * @return contrasenya
      */
     public String getContrasenya() {
-        return contrasenya;
+        return contraseña;
     }
 
     /**
@@ -145,7 +146,33 @@ public class Empleats {
      * @param contrasenya
      */
     public void setContrasenya(String contrasenya) {
-        this.contrasenya = contrasenya;
+        this.contraseña = contrasenya;
     }
+
+    public int getIdempleado() {
+        return idempleado;
+    }
+
+    public void setIdempleado(int idempleado) {
+        this.idempleado = idempleado;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public Boolean getAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(Boolean administrador) {
+        this.administrador = administrador;
+    }
+    
+    
 
 }

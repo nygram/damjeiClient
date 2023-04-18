@@ -5,6 +5,7 @@
 package com;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import javax.swing.JOptionPane;
+import model.Empleats;
 
 /**
  * Classe que gestiona enviar i rebre dades del servidor
@@ -49,16 +52,48 @@ public class comDades {
      * @throws IOException
      */
     public JsonObject repDades(Socket socket) throws IOException {
-        
+
         Gson gson = new Gson();
-        
+
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
+        System.out.println(data);
 
-        
         JsonObject objecte = gson.fromJson(data, JsonObject.class);
         return objecte;
+
+    }
+
+    public Object[] repDades2(Socket socket) throws IOException {
+
+        Gson gson = new Gson();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        String data = input.readLine();
+        System.out.println("El que he rebut es :" +data);
+        if (data == "true"){
+            JOptionPane.showMessageDialog(null, "Afegit correctament"); 
+        }
+        Object[] objects = gson.fromJson(data, Object[].class);
+        
+        return objects;
+
+    }
+    public String repDades3(Socket socket) throws IOException {
+
+        Gson gson = new Gson();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        String data = input.readLine();
+        System.out.println("El que he rebut es :" +data);
+        if (data == "true"){
+            JOptionPane.showMessageDialog(null, "Afegit correctament"); 
+        }
+        
+        return data;
 
     }
 }

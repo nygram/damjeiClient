@@ -46,6 +46,11 @@ public class frmOpcions extends javax.swing.JFrame {
         btnRepostatge.setToolTipText("");
 
         btnAdministracio.setText("Administracio");
+        btnAdministracio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministracioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,6 +122,10 @@ public class frmOpcions extends javax.swing.JFrame {
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAdministracioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministracioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdministracioActionPerformed
 
     /**
      * @param args the command line arguments
