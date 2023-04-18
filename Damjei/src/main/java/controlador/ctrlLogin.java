@@ -18,6 +18,7 @@ import vista.frmEmpleats;
 import vista.frmLogin;
 import vista.frmOpcions;
 
+
 /**
  * @author JavierFernándezDíaz Controlador de la part de Login. S'encarregar de
  * comunicar la vista amb el model i de la part lògica. Implmenta la interface

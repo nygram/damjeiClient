@@ -172,6 +172,8 @@ public class consultesEmpleats extends conexion {
         Gson gson = new Gson();
         Socket socket = new Socket(ip, port);
         frmEmpleats vista = new frmEmpleats();
+        Object prova = empleat.getClass();
+         System.out.println("prova "+prova);
          
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));

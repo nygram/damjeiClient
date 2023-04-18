@@ -34,7 +34,7 @@ public class frmLogin extends javax.swing.JFrame {
         lblPasswd = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         txtUsuari = new javax.swing.JTextField();
-        txtPasswd = new javax.swing.JTextField();
+        txtPasswd = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -55,6 +55,9 @@ public class frmLogin extends javax.swing.JFrame {
             }
         });
 
+        txtPasswd.setToolTipText("");
+        txtPasswd.setCaretPosition(0);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -65,13 +68,13 @@ public class frmLogin extends javax.swing.JFrame {
                     .addComponent(lblPasswd)
                     .addComponent(lblUsuari))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsuari, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtUsuari, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(btnLogin)))
-                .addContainerGap(85, Short.MAX_VALUE))
+                        .addComponent(btnLogin))
+                    .addComponent(txtPasswd))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +142,7 @@ public class frmLogin extends javax.swing.JFrame {
     public javax.swing.JButton btnLogin;
     public javax.swing.JLabel lblPasswd;
     public javax.swing.JLabel lblUsuari;
-    public javax.swing.JTextField txtPasswd;
+    public javax.swing.JPasswordField txtPasswd;
     public javax.swing.JTextField txtUsuari;
     // End of variables declaration//GEN-END:variables
 }
