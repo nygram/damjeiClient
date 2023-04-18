@@ -60,6 +60,8 @@
                   <EmptySpace min="34" pref="682" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
+                          <Component id="txtId" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           <Component id="txtToken" min="-2" pref="58" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                       </Group>
@@ -90,7 +92,10 @@
                       <Component id="btnSalir" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="32767" attributes="0"/>
-                  <Component id="txtToken" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="txtToken" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTabbedPane1" min="-2" pref="354" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
@@ -468,6 +473,11 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JTextField" name="txtId">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

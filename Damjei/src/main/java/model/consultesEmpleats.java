@@ -30,6 +30,7 @@ public class consultesEmpleats extends conexion {
     private String token;
     public static final int LLISTAR = 5;
     public static final int INSERTAR = 2;
+    public static final int ELIMINAR = 4;
     int port = 8180;
     String ip = "127.0.0.1";
 
@@ -67,36 +68,69 @@ public class consultesEmpleats extends conexion {
         obtEmpleat.add("empleat", gson.toJsonTree(emp));
         obtEmpleat.addProperty("accio", LLISTAR);
         obtEmpleat.addProperty("token", token);
-        System.out.println(vista.txtToken.getText());
         obtEmpleat.addProperty("clase", "Empleats.class");
 
         com.enviaDades(obtEmpleat, socket);
 
+        modeloTabla.addColumn("Id");
         modeloTabla.addColumn("Dni");
         modeloTabla.addColumn("Nombre");
         modeloTabla.addColumn("Apellidos");
-        modeloTabla.addColumn("Contraseña");
         modeloTabla.addColumn("Administrador");
 
+        Object[] empleat = com.repDades2(socket);
+        for (Object empleats : empleat) {
+            Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
+            int id = emp2.getIdempleado();
+            String dni = emp2.getDni();
+            String nombre = emp2.getNom();
+            String apellido = emp2.getApellidos();
+            Boolean administrador = emp2.getAdministrador();
+            Object[] fila = {id, dni, nombre, apellido, administrador};
+            modeloTabla.addRow(fila);
+        }
+
+    }
+
+    public void carregaEmpleat(int codigo, frmEmpleats vista) throws IOException {
+
+        this.vista = vista;
+        this.token = token;
+        this.vista = vista;
+        
+        
+        Socket socket = new Socket(ip, port);
+        comDades com = new comDades();
+        Empleats emp = new Empleats();
+
+        Gson gson = new Gson();
+        
+        JsonObject obtEmpleat = new JsonObject();
+        obtEmpleat.add("empleat", gson.toJsonTree(emp));
+        obtEmpleat.addProperty("accio", LLISTAR);
+        obtEmpleat.addProperty("token", token);
+        obtEmpleat.addProperty("clase", "Empleats.class");
+        
+        com.enviaDades(obtEmpleat, socket);
+        
         Object[] empleat = com.repDades2(socket);
         for (Object empleats : empleat) {
             Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
             String dni = emp2.getDni();
             String nombre = emp2.getNom();
             String apellido = emp2.getApellidos();
-            String contrasenya = emp2.getContrasenya();
+            String contraseña = emp2.getContrasenya();
             Boolean administrador = emp2.getAdministrador();
-            Object[] fila = {dni, nombre, apellido, contrasenya, administrador};
-            modeloTabla.addRow(fila);
+            
+            vista.txtNom.setText(nombre);
+            vista.txtCognoms.setText(apellido);
+            vista.txtNif.setText(dni);
+            vista.txtContraseña.setText(contraseña);
+            vista.rbtnAdministrador.setSelected(administrador);
+            
+            
+            
         }
-
-    }
-
-    public void carregaEmpleat(int codigo, frmEmpleats vista) {
-
-        this.vista = vista;
-        this.token = token;
-        this.vista = vista;
 
         /*
         try {
@@ -133,7 +167,7 @@ public class consultesEmpleats extends conexion {
         }
          */
     }
-     public void insertarEmpleat(Empleats empleat, String token) throws IOException{
+     public boolean insertarEmpleat(Empleats empleat, String token) throws IOException{
          
         Gson gson = new Gson();
         Socket socket = new Socket(ip, port);
@@ -147,17 +181,33 @@ public class consultesEmpleats extends conexion {
         
         
          com.enviaDades(obtEmpleat, socket);
-         String resposta = com.repDades3(socket);
-         if(resposta == "true"){
-             JOptionPane.showMessageDialog(null, "Insertat correctament");
-             carregaTaula(vista, token);
-             
-         }
+         Boolean resposta = Boolean.parseBoolean(com.repDades3(socket));
+         return resposta;
          
          
          
          
          
      }
+     
+     public boolean eliminarEmpleat(Empleats empleat, String token) throws IOException{
+         
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        frmEmpleats vista = new frmEmpleats();
+         
+        JsonObject obtEmpleat = new JsonObject();
+        obtEmpleat.add("empleat", gson.toJsonTree(empleat));
+        obtEmpleat.addProperty("accio", ELIMINAR);
+        obtEmpleat.addProperty("token", token);
+        obtEmpleat.addProperty("clase", "Empleats.class");
+        
+        
+         com.enviaDades(obtEmpleat, socket);
+         Boolean resposta = Boolean.parseBoolean(com.repDades3(socket));
+         
+          return resposta;
+     }
+    
 
 }
