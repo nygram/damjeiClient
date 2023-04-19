@@ -312,6 +312,8 @@ public class frmEmpleats extends javax.swing.JFrame {
                 .addGap(123, 123, 123))
         );
 
+        jTabbedPane1.getAccessibleContext().setAccessibleDescription("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(

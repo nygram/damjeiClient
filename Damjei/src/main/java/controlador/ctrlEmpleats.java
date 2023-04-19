@@ -4,6 +4,7 @@
  */
 package controlador;
 
+import Utils.Campos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 import model.Empleats;
 import model.consultesEmpleats;
 import vista.frmEmpleats;
+import vista.frmLogin;
 import vista.frmOpcions;
 
 /**
@@ -30,8 +32,10 @@ import vista.frmOpcions;
 public class ctrlEmpleats implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
 
     private frmEmpleats vistaEmpleats;
+    private frmLogin vistaLogin;
     private consultesEmpleats consulta;
     private Empleats empleat;
+    private ctrlLogin controlLogin;
     private String token;
     private String String;
 
@@ -47,13 +51,14 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
         vista.taulaEmpleats.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
         vista.btnBorrar.addMouseListener(this);
+        vista.btnNuevo.addMouseListener(this);
+        vista.btnSalir.addMouseListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-
     }
 
     @Override
@@ -61,8 +66,11 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
         if (me.getSource() == vistaEmpleats.taulaEmpleats) {
             int fila = vistaEmpleats.taulaEmpleats.getSelectedRow();
             String codigo = vistaEmpleats.taulaEmpleats.getValueAt(fila, 0).toString();
+            vistaEmpleats.txtId.setText(codigo);
             if (me.getClickCount() == 2) {
                 vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
+                vistaEmpleats.btnModificar.setVisible(true);
+                vistaEmpleats.btnInsertar.setVisible(false);
                 try {
                     consulta.carregaEmpleat(Integer.parseInt(codigo), vistaEmpleats);
                 } catch (IOException ex) {
@@ -94,7 +102,7 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
                     consulta.carregaTaula(vistaEmpleats, token);
-                    
+
                 } else {
                     JOptionPane.showMessageDialog(null, "No afegit correctament");
 
@@ -103,26 +111,12 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        if (me.getSource() == vistaEmpleats.taulaEmpleats) {
-            int fila = vistaEmpleats.taulaEmpleats.getSelectedRow();
-            String codigo = vistaEmpleats.taulaEmpleats.getValueAt(fila, 0).toString();
-            vistaEmpleats.txtId.setText(codigo);
-            if (me.getClickCount() == 2) {
-                vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
-                try {
-                    consulta.carregaEmpleat(Integer.parseInt(codigo), vistaEmpleats);
-                } catch (IOException ex) {
-                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
-                }
 
-            }
-
-        }
         if (me.getSource() == vistaEmpleats.btnBorrar) {
 
             int fila = vistaEmpleats.taulaEmpleats.getSelectedRow();
             String dni = vistaEmpleats.taulaEmpleats.getValueAt(fila, 1).toString();
-            
+
             empleat.setDni(dni);
 
             try {
@@ -139,6 +133,20 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
             }
 
         }
+        if (me.getSource() == vistaEmpleats.btnNuevo) {
+            vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
+            Campos.limpiarCampos(vistaEmpleats.jPanel2);
+            vistaEmpleats.btnModificar.setVisible(false);
+            vistaEmpleats.btnInsertar.setVisible(true);
+
+        }
+
+        if (me.getSource() == vistaEmpleats.btnSalir) {
+            vistaEmpleats.dispose();
+
+        }
+
+        
     }
 
     @Override

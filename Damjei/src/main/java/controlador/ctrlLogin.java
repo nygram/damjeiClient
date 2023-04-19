@@ -85,7 +85,6 @@ public class ctrlLogin implements ActionListener {
                 correcte = object.get("correcte").getAsBoolean();
                 administrador = object.get("administrador").getAsBoolean();
                 token = object.get("token").getAsString();
-                System.out.println(token);
 
                 if (correcte) {
                     if (administrador) {
@@ -129,7 +128,7 @@ public class ctrlLogin implements ActionListener {
                 vistaEmpleats.setVisible(true);
                 vistaEmpleats.txtToken.setText(token);
                 System.out.println(token);
-                vistaOpcions.setVisible(false);
+                //vistaOpcions.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -137,7 +136,11 @@ public class ctrlLogin implements ActionListener {
 
         }
         if (e.getSource() == vistaOpcions.btnLogout) {
-
+            try {
+                comunica.enviaLogout(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
             System.exit(0);
         }
 

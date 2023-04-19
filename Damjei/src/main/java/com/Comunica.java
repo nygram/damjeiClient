@@ -94,7 +94,7 @@ public class Comunica {
      * @throws IOException 
      */
      
-    public boolean enviaLogout(int token) throws IOException{
+    public boolean enviaLogout(String token) throws IOException{
         
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
