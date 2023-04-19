@@ -19,7 +19,7 @@ public class Empleats {
     String categoria;
     String contraseña;
     int id_empresa;
-    Boolean administrador;
+    boolean administrador;
 
     
     public Empleats() {
@@ -165,11 +165,11 @@ public class Empleats {
         this.apellidos = apellidos;
     }
 
-    public Boolean getAdministrador() {
+    public boolean getAdministrador() {
         return administrador;
     }
 
-    public void setAdministrador(Boolean administrador) {
+    public void setAdministrador(boolean administrador) {
         this.administrador = administrador;
     }
     

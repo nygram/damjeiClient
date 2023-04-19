@@ -78,7 +78,7 @@ public class ctrlLogin implements ActionListener {
          */
         if (e.getSource() == vistaLogin.btnLogin) {
             usuari.setDni(vistaLogin.txtUsuari.getText());
-            usuari.setContrasenya(vistaLogin.txtPasswd.getText());
+            usuari.setContrasenya(String.valueOf(vistaLogin.txtPasswd.getPassword()));
 
             try {
                 object = comunica.enviaLogin(usuari);

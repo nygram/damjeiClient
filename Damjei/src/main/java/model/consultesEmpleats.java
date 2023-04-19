@@ -31,6 +31,7 @@ public class consultesEmpleats extends conexion {
     public static final int LLISTAR = 5;
     public static final int INSERTAR = 2;
     public static final int ELIMINAR = 4;
+    public static final int LISTARID = 7;
     int port = 8180;
     String ip = "127.0.0.1";
 
@@ -102,12 +103,13 @@ public class consultesEmpleats extends conexion {
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
         Empleats emp = new Empleats();
+        emp.setIdempleado(codigo);
 
         Gson gson = new Gson();
         
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(emp));
-        obtEmpleat.addProperty("accio", LLISTAR);
+        obtEmpleat.addProperty("accio", LISTARID);
         obtEmpleat.addProperty("token", token);
         obtEmpleat.addProperty("clase", "Empleats.class");
         
@@ -116,21 +118,31 @@ public class consultesEmpleats extends conexion {
         Object[] empleat = com.repDades2(socket);
         for (Object empleats : empleat) {
             Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
+            System.out.println("Empleat "+emp2);
+            int idempleado = emp2.getIdempleado();
             String dni = emp2.getDni();
+            System.out.println("dni "+dni);
             String nombre = emp2.getNom();
             String apellido = emp2.getApellidos();
             String contraseña = emp2.getContrasenya();
-            Boolean administrador = emp2.getAdministrador();
+            boolean administrador = emp2.getAdministrador();
+            System.out.println("Bool `+"+administrador);
             
             vista.txtNom.setText(nombre);
             vista.txtCognoms.setText(apellido);
             vista.txtNif.setText(dni);
             vista.txtContraseña.setText(contraseña);
-            vista.rbtnAdministrador.setSelected(administrador);
-            
-            
-            
+            if (administrador){
+                vista.rbtnAdministrador.setSelected(true);
+            }else{
+                vista.rbtnAdministrador.setSelected(false);
+            }
+                
         }
+            
+    }
+            
+        
 
         /*
         try {
@@ -166,7 +178,7 @@ public class consultesEmpleats extends conexion {
             System.out.println("Error " + ex);
         }
          */
-    }
+    
      public boolean insertarEmpleat(Empleats empleat, String token) throws IOException{
          
         Gson gson = new Gson();
@@ -183,7 +195,8 @@ public class consultesEmpleats extends conexion {
         
         
          com.enviaDades(obtEmpleat, socket);
-         Boolean resposta = Boolean.parseBoolean(com.repDades3(socket));
+         Boolean resposta = com.repDades3(socket);
+         System.out.println("La resposta es "+resposta);
          return resposta;
          
          
@@ -196,8 +209,7 @@ public class consultesEmpleats extends conexion {
          
         Gson gson = new Gson();
         Socket socket = new Socket(ip, port);
-        frmEmpleats vista = new frmEmpleats();
-         
+        
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));
         obtEmpleat.addProperty("accio", ELIMINAR);
@@ -206,7 +218,7 @@ public class consultesEmpleats extends conexion {
         
         
          com.enviaDades(obtEmpleat, socket);
-         Boolean resposta = Boolean.parseBoolean(com.repDades3(socket));
+         Boolean resposta = com.repDades3(socket);
          
           return resposta;
      }

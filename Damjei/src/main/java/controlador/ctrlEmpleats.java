@@ -46,29 +46,13 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
         consulta.carregaTaula(vista, token);
         vista.taulaEmpleats.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
+        vista.btnBorrar.addMouseListener(this);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == vistaEmpleats.btnBorrar) {
-
-            empleat.setIdempleado(Integer.parseInt(vistaEmpleats.txtId.getText()));
-
-            try {
-                if (consulta.eliminarEmpleat(empleat, token)) {
-                    vistaEmpleats.jTabbedPane1.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(null, "Borrado correctamente");
-                    consulta.carregaTaula(vistaEmpleats, token);
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No borrado");
-                }
-            } catch (IOException ex) {
-                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+        
 
     }
 
@@ -106,6 +90,7 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
 
             try {
                 Boolean resposta = consulta.insertarEmpleat(empleat, token);
+                System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
                     consulta.carregaTaula(vistaEmpleats, token);
@@ -130,6 +115,27 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
                     Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+            }
+
+        }
+        if (me.getSource() == vistaEmpleats.btnBorrar) {
+
+            int fila = vistaEmpleats.taulaEmpleats.getSelectedRow();
+            String dni = vistaEmpleats.taulaEmpleats.getValueAt(fila, 1).toString();
+            
+            empleat.setDni(dni);
+
+            try {
+                if (consulta.eliminarEmpleat(empleat, token)) {
+                    vistaEmpleats.jTabbedPane1.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null, "Borrado correctamente");
+                    consulta.carregaTaula(vistaEmpleats, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No borrado");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
