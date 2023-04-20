@@ -22,7 +22,7 @@ import vista.frmEmpleats;
  *
  * @author Javi
  */
-public class consultesEmpleats extends conexion {
+public class consultesEmpleats {
 
     private frmEmpleats vista;
     comDades com = new comDades();
@@ -141,43 +141,7 @@ public class consultesEmpleats extends conexion {
         }
             
     }
-            
-        
-
-        /*
-        try {
-
-            Conexion con = new Conexion();
-
-            Connection conexion = con.getConnection();
-
-            ps = conexion.prepareStatement("Select * from tecnics where Id = ?");
-
-            ps.setInt(1, ((codigo)));
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                entrad.txtNif.setText(rs.getString("Nif"));
-                entrad.txtAdreca.setText(rs.getString("Adreça"));
-                entrad.txtNom.setText(rs.getString("Nom"));
-                entrad.txtCodipostal.setText(rs.getString("Codi_Postal"));
-                entrad.txtCognoms.setText(rs.getString("Cognoms"));
-                entrad.txtPoblacio.setText(rs.getString("poblacio"));
-                entrad.txtCodi.setText(rs.getString("codi_tecnic"));
-                entrad.txtTelefonParticular.setText(rs.getString("tel_particular"));
-                entrad.txtTelefonEmpresa.setText(rs.getString("tel_empresa"));
-                entrad.txtExtensio.setText(rs.getString("extensio"));
-                entrad.txtId.setText(rs.getString("Id"));
-
-            }
-
-            rs.close();
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            System.out.println("Error " + ex);
-        }
-         */
+           
     
      public boolean insertarEmpleat(Empleats empleat, String token) throws IOException{
          

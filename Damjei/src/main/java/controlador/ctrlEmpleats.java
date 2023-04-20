@@ -29,15 +29,15 @@ import vista.frmOpcions;
  *
  * @author Javi
  */
-public class ctrlEmpleats implements ActionListener, MouseListener, WindowListener, KeyListener, ItemListener {
+public class ctrlEmpleats implements ActionListener, MouseListener {
 
     private frmEmpleats vistaEmpleats;
-    private frmLogin vistaLogin;
+    //private frmLogin vistaLogin;
     private consultesEmpleats consulta;
     private Empleats empleat;
-    private ctrlLogin controlLogin;
+   // private ctrlLogin controlLogin;
     private String token;
-    private String String;
+    // private String String;
 
     public ctrlEmpleats(frmEmpleats vista, consultesEmpleats consulta, Empleats empleat, String token) throws IOException {
         this.vistaEmpleats = vista;
@@ -58,7 +58,7 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
     @Override
@@ -146,7 +146,6 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
 
         }
 
-        
     }
 
     @Override
@@ -163,51 +162,6 @@ public class ctrlEmpleats implements ActionListener, MouseListener, WindowListen
 
     @Override
     public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {
-    }
-
-    @Override
-    public void windowClosed(WindowEvent e) {
-    }
-
-    @Override
-    public void windowIconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-
-    @Override
-    public void itemStateChanged(ItemEvent e) {
     }
 
 }
