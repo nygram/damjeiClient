@@ -11,12 +11,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Empleats;
+import model.Mantenimiento;
+import model.Vehicle;
+import model.consultasManteniment;
+import model.consultasVehicle;
 import model.consultesEmpleats;
 import principal.Damjei;
 import vista.frmEmpleats;
 import vista.frmEmpleats;
 import vista.frmLogin;
+import vista.frmManteniment;
 import vista.frmOpcions;
+import vista.frmVehicle;
 
 
 /**
@@ -28,12 +34,20 @@ import vista.frmOpcions;
 public class ctrlLogin implements ActionListener {
 
     private Socket socket;
+    private ctrlEmpleats controlEmpleats;
+    private ctrlVehiculos controlVehiculos;
+    private ctrlManteniment controlManteniments;
+    private consultesEmpleats consulta = new consultesEmpleats();
+    private consultasVehicle consultasVehiculos = new consultasVehicle();
+    private consultasManteniment consultaManteniment = new consultasManteniment();
+    private frmEmpleats vistaEmpleats = new frmEmpleats();
     private frmLogin vistaLogin;
     private frmOpcions vistaOpcions;
-    private ctrlEmpleats controlEmpleats;
-    private consultesEmpleats consulta = new consultesEmpleats();
-    private frmEmpleats vistaEmpleats = new frmEmpleats();
+    private frmVehicle vistaVehiculos = new frmVehicle();
+    private frmManteniment vistaManteniment = new frmManteniment();
     private Empleats usuari;
+    private Vehicle vehicle;
+    private Mantenimiento manteniment;
     private Comunica comunica = new Comunica();
     private JsonObject object;
     private boolean correcte = false;
@@ -47,9 +61,11 @@ public class ctrlLogin implements ActionListener {
      * @param vista es la vista que hem de carregar
      * @param usuari objecte de la classe Empleats
      */
-    public ctrlLogin(frmLogin vista, Empleats usuari) {
+    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment) {
         this.vistaLogin = vista;
         this.usuari = usuari;
+        this.vehicle = vehicle;
+        this.manteniment = manteniment;
         vistaLogin.btnLogin.addActionListener(this);
         
         vistaOpcions = new frmOpcions();
@@ -57,6 +73,8 @@ public class ctrlLogin implements ActionListener {
         vistaOpcions.setLocationRelativeTo(null);
         vistaOpcions.btnLogout.addActionListener(this);
         vistaOpcions.btnAdministracio.addActionListener(this);
+        vistaOpcions.btnVehicles.addActionListener(this);
+        vistaOpcions.btnManteniments.addActionListener(this);
 
     }
 
@@ -128,13 +146,36 @@ public class ctrlLogin implements ActionListener {
                 vistaEmpleats.setVisible(true);
                 vistaEmpleats.txtToken.setText(token);
                 System.out.println(token);
-                //vistaOpcions.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
             
 
         }
+        
+        if (e.getSource() == vistaOpcions.btnVehicles) {
+            try {
+                controlVehiculos = new ctrlVehiculos(vistaVehiculos, consultasVehiculos, vehicle,  token);
+                vistaVehiculos.setVisible(true);
+                vistaVehiculos.txtToken.setText(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        }
+        if (e.getSource() == vistaOpcions.btnManteniments) {
+            try {
+                controlManteniments = new ctrlManteniment(vistaManteniment, consultaManteniment, manteniment,  token);
+                vistaManteniment.setVisible(true);
+                vistaManteniment.txtToken.setText(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        }
+        
         if (e.getSource() == vistaOpcions.btnLogout) {
             try {
                 comunica.enviaLogout(token);

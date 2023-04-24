@@ -73,14 +73,29 @@ public class comDades {
 
         String data = input.readLine();
         System.out.println("El que he rebut es :" +data);
-        if (data == "true"){
-            JOptionPane.showMessageDialog(null, "Afegit correctament"); 
-        }
         Object[] objects = gson.fromJson(data, Object[].class);
+        System.out.println(objects);
         
         return objects;
 
     }
+    
+     public JsonArray repDades4(Socket socket) throws IOException {
+
+        Gson gson = new Gson();
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        String data = input.readLine();
+        System.out.println("El que he rebut es :" +data);
+        JsonArray objects = gson.fromJson(data, JsonArray.class);
+        System.out.println(objects);
+        
+        return objects;
+
+    }
+    
+    
     public boolean repDades3(Socket socket) throws IOException {
 
         Gson gson = new Gson();

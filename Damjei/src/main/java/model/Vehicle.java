@@ -4,30 +4,39 @@
  */
 package model;
 
-import java.util.Date;
+
+import java.util.ArrayList;
+
 
 /**
  *
- * @author JavierFernándezDíaz
+ * @author Ivimar
  */
-public class Vehiculos {
-    
-    int idvehiculos;
-    String marca;
-    String modelo;
-    String matricula;
-    float kilometros_alta;
-    Date fecha_alta;
-    Date fecha_baja;
-    int conductorid;
-    int kilometros_actuales;
+public class Vehicle {
+  
+    private int idvehiculo;
+    private String marca;
+    private String modelo;
+    private String matricula;
+    private Float kilometros_alta;
+    private String fecha_alta;
+    private String fecha_baja;
+    private int conductorid;
+    private int empresaid;
+    private Float kilometros_actuales;
+   
 
-    public int getIdvehiculos() {
-        return idvehiculos;
+     public Vehicle() {
+    }
+     // getters y setters
+  
+
+    public int getIdvehiculo() {
+        return idvehiculo;
     }
 
-    public void setIdvehiculos(int idvehiculos) {
-        this.idvehiculos = idvehiculos;
+    public void setIdvehiculo(int idvehiculo) {
+        this.idvehiculo = idvehiculo;
     }
 
     public String getMarca() {
@@ -54,29 +63,30 @@ public class Vehiculos {
         this.matricula = matricula;
     }
 
-    public float getKilometros_alta() {
+    public Float getKilometros_alta() {
         return kilometros_alta;
     }
 
-    public void setKilometros_alta(float kilometros_alta) {
+    public void setKilometros_alta(Float kilometros_alta) {
         this.kilometros_alta = kilometros_alta;
     }
 
-    public Date getFecha_alta() {
+    public String getFecha_alta() {
         return fecha_alta;
     }
 
-    public void setFecha_alta(Date fecha_alta) {
+    public void setFecha_alta(String fecha_alta) {
         this.fecha_alta = fecha_alta;
     }
 
-    public Date getFecha_baja() {
+    public String getFecha_baja() {
         return fecha_baja;
     }
 
-    public void setFecha_baja(Date fecha_baja) {
+    public void setFecha_baja(String fecha_baja) {
         this.fecha_baja = fecha_baja;
     }
+
 
     public int getConductorid() {
         return conductorid;
@@ -86,16 +96,21 @@ public class Vehiculos {
         this.conductorid = conductorid;
     }
 
-    public int getKilometros_actuales() {
+    public int getEmpresaid() {
+        return empresaid;
+    }
+
+    public void setEmpresaid(int empresaid) {
+        this.empresaid = empresaid;
+    }
+
+    public Float getKilometros_actuales() {
         return kilometros_actuales;
     }
 
-    public void setKilometros_actuales(int kilometros_actuales) {
+    public void setKilometros_actuales(Float kilometros_actuales) {
         this.kilometros_actuales = kilometros_actuales;
     }
-    
-    
-    
-    
-    
+
+   
 }
