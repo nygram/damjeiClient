@@ -13,46 +13,44 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import model.Empleats;
+import model.Combustible;
 import model.Mantenimiento;
 import model.consultasManteniment;
-import model.consultesEmpleats;
-import vista.frmEmpleats;
+import model.consultesCombustible;
+import vista.frmCombustible;
 import vista.frmManteniment;
 
 /**
- * @author JavierFernándezDíaz Controlador de la part de Manteniment. S'encarregar de
- * comunicar la vista amb el model i de la part lògica. Implmenta la interface
- * ActionListener i MouseListener
  *
+ * @author JavierFernándezDíaz
  */
-public class ctrlManteniment implements ActionListener, MouseListener {
-
-    private frmManteniment vistaManteniment;
-    private consultasManteniment consulta;
-    private Mantenimiento mantenimiento;
+public class ctrlCombustible implements ActionListener, MouseListener{
+    
+    private frmCombustible vistaCombustible;
+    private consultesCombustible consulta;
+    private Combustible combustible;
     private String token;
     
       /**
-     * Constructor del controlador que s'inicialitza amb la vista (frmManteniment), 
-     * consulta (consultasManteniment), mantenimiento (Mantenimiento) i el token. Afegeix Listeners
+     * Constructor del controlador que s'inicialitza amb la vista (frmCombustible), 
+     * consulta (consultesCombustible), empleat (combustible) i el token. Afegeix Listeners
      * als botons i la taula.
      * 
-     * @param vista. Objecte de frmManteniment
-     * @param consulta. Objecte de consultasManteniment
-     * @param mantenimiento. Objecte mantenimiento
+     * @param vista. Objecte de frmCombustible
+     * @param consulta. Objecte de consultesCombustible
+     * @param combustible. Objecte combustible
      * @param token. Token rebut del servidor
      * @throws IOException 
      */
 
-    public ctrlManteniment(frmManteniment vista, consultasManteniment consulta, Mantenimiento mantenimiento, String token) throws IOException {
-        this.vistaManteniment = vista;
+    public ctrlCombustible(frmCombustible vista, consultesCombustible consulta, Combustible combustible, String token) throws IOException {
+        this.vistaCombustible = vista;
         this.consulta = consulta;
         this.token = token;
-        this.mantenimiento = mantenimiento;
-        System.out.println(mantenimiento);
+        this.combustible = combustible;
+        System.out.println(combustible);
         consulta.carregaTaula(vista, token);
-        vista.taulaMantenimiento.addMouseListener(this);
+        vista.taulaCombustible.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
         vista.btnBorrar.addMouseListener(this);
         vista.btnNuevo.addMouseListener(this);
@@ -80,16 +78,16 @@ public class ctrlManteniment implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent me) {
-        if (me.getSource() == vistaManteniment.taulaMantenimiento) {
-            int fila = vistaManteniment.taulaMantenimiento.getSelectedRow();
-            String codigo = vistaManteniment.taulaMantenimiento.getValueAt(fila, 0).toString();
-            vistaManteniment.txtId.setText(codigo);
+        if (me.getSource() == vistaCombustible.taulaCombustible) {
+            int fila = vistaCombustible.taulaCombustible.getSelectedRow();
+            String codigo = vistaCombustible.taulaCombustible.getValueAt(fila, 0).toString();
+            vistaCombustible.txtId.setText(codigo);
             if (me.getClickCount() == 2) {
-                vistaManteniment.jTabbedPane1.setSelectedIndex(1);
-                vistaManteniment.btnModificar.setVisible(true);
-                vistaManteniment.btnInsertar.setVisible(false);
+                vistaCombustible.jTabbedPane1.setSelectedIndex(1);
+                vistaCombustible.btnModificar.setVisible(true);
+                vistaCombustible.btnInsertar.setVisible(false);
                 try {
-                    consulta.carregaManteniment(Integer.parseInt(codigo), vistaManteniment);
+                    consulta.carregaCombustible(Integer.parseInt(codigo), vistaCombustible);
                 } catch (IOException ex) {
                     Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -106,24 +104,20 @@ public class ctrlManteniment implements ActionListener, MouseListener {
          * Si es correcte o no, apareix un JOptionPane.showMessageDialog que ens informa
          */
         
-        if (me.getSource() == vistaManteniment.btnInsertar) {
+        if (me.getSource() == vistaCombustible.btnInsertar) {
             System.out.println("Insertar");
-            String nombre = vistaManteniment.txtNom.getText();
-            /*Float km = null;
-            if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
-                km = Float.valueOf(vistaManteniment.txtKm.getText());
-            }
-            */
-            mantenimiento.setNombre(nombre);
-            //mantenimiento.setKilometros_mantenimiento(km);
+            String nombre = vistaCombustible.txtNom.getText();
+            Float precio = Float.valueOf(vistaCombustible.txtPrecio.getText());
+            combustible.setNombre(nombre);
+            combustible.setPrecio(precio);
            
 
             try {
-                Boolean resposta = consulta.insertarManteniment(mantenimiento, token);
+                Boolean resposta = consulta.insertarCombustible(combustible, token);
                 System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
-                    consulta.carregaTaula(vistaManteniment, token);
+                    consulta.carregaTaula(vistaCombustible, token);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No afegit correctament");
@@ -244,4 +238,6 @@ public class ctrlManteniment implements ActionListener, MouseListener {
     }
 
 }
-
+    
+    
+}
