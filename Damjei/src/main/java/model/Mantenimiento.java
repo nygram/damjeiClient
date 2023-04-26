@@ -12,7 +12,7 @@ public class Mantenimiento {
   
     private int idmantenimiento;
     
-    @SerializedName("nombre_completo")
+    //@SerializedName("nombre_completo")
     private String nombre;
     
     private Float kilometros_mantenimiento;

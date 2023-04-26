@@ -18,8 +18,32 @@ public class Empleats {
     String dni;
     String categoria;
     String contraseña;
-    int id_empresa;
+    int empresaid;
     boolean administrador;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+
+    public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
+    }
+
+    public int getEmpresaid() {
+        return empresaid;
+    }
+
+    public void setEmpresaid(int empresaid) {
+        this.empresaid = empresaid;
+    }
 
     
     public Empleats() {
@@ -57,17 +81,7 @@ public class Empleats {
      * Getter
      * @return id de l'empresa
      */
-    public int getId_empresa() {
-        return id_empresa;
-    }
-
-    /**
-     * Setter
-     * @param id_empresa
-     */
-    public void setId_empresa(int id_empresa) {
-        this.id_empresa = id_empresa;
-    }
+ 
 
     /**
      * Getter

@@ -72,7 +72,7 @@ public class ctrlLogin implements ActionListener {
         vistaOpcions.setVisible(false);
         vistaOpcions.setLocationRelativeTo(null);
         vistaOpcions.btnLogout.addActionListener(this);
-        vistaOpcions.btnAdministracio.addActionListener(this);
+        vistaOpcions.btnEmpleats.addActionListener(this);
         vistaOpcions.btnVehicles.addActionListener(this);
         vistaOpcions.btnManteniments.addActionListener(this);
 
@@ -108,12 +108,12 @@ public class ctrlLogin implements ActionListener {
                     if (administrador) {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
-                        vistaOpcions.btnAdministracio.setVisible(true);
+                        vistaOpcions.btnEmpleats.setVisible(true);
                         vistaOpcions.txtToken.setText(token);
                     } else {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
-                        vistaOpcions.btnAdministracio.setVisible(false);
+                        vistaOpcions.btnEmpleats.setVisible(false);
                         vistaOpcions.txtToken.setText(token);
                     }
                 } else {
@@ -132,26 +132,32 @@ public class ctrlLogin implements ActionListener {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
         /**
-         * Si l'origen de l'esdevenimens es el botó de Logout envia a través del
-         * mètode enviaLogout al servidor el token per permetre a aquest
-         * eliminar-lo de la seva llista
-         *
+         * Si l'origen de l'esdeveniment és el botó empleats inicialitzem el controlador
+         * de empleat passant com a paràmetres la vista, consultes, empleat i el token per
+         * poder fer peticions al servidor
          */
         
-        if (e.getSource() == vistaOpcions.btnAdministracio) {
+        if (e.getSource() == vistaOpcions.btnEmpleats) {
             try {
-                System.out.println("hola");
                 controlEmpleats = new ctrlEmpleats(vistaEmpleats, consulta, usuari, token);
                 vistaEmpleats.setVisible(true);
                 vistaEmpleats.txtToken.setText(token);
-                System.out.println(token);
+                vistaEmpleats.txtId.setVisible(false);
+                vistaEmpleats.txtToken.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
             
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó vehicle inicialitzem el controlador
+         * de vehicle passant com a paràmetres la vista, consultes, vehicle i el token per
+         * poder fer peticions al servidor
+         */
         
         if (e.getSource() == vistaOpcions.btnVehicles) {
             try {
@@ -164,6 +170,13 @@ public class ctrlLogin implements ActionListener {
             
 
         }
+        /**
+         * Si l'origen de l'esdeveniment és el botó manteniment inicialitzem el controlador
+         * de manteniment passant com a paràmetres la vista, consultes, manteniment i el token per
+         * poder fer peticions al servidor
+         */
+        
+        
         if (e.getSource() == vistaOpcions.btnManteniments) {
             try {
                 controlManteniments = new ctrlManteniment(vistaManteniment, consultaManteniment, manteniment,  token);
@@ -175,6 +188,13 @@ public class ctrlLogin implements ActionListener {
             
 
         }
+        
+        /**
+         * Si l'origen de l'esdevenimens es el botó de Logout envia a través del
+         * mètode enviaLogout al servidor el token per permetre a aquest
+         * eliminar-lo de la seva llista
+         *
+         */
         
         if (e.getSource() == vistaOpcions.btnLogout) {
             try {

@@ -26,20 +26,24 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="lblPasswd" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblUsuari" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="txtUsuari" pref="157" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="lblPasswd" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblUsuari" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="txtUsuari" pref="157" max="32767" attributes="0"/>
+                          <Component id="txtPasswd" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="157" max="-2" attributes="0"/>
                       <Component id="btnLogin" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="txtPasswd" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="102" max="32767" attributes="0"/>
           </Group>
@@ -68,7 +72,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lblUsuari">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Usuari"/>
+        <Property name="text" type="java.lang.String" value="DNI"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <AuxValues>
@@ -102,7 +106,6 @@
     <Component class="javax.swing.JPasswordField" name="txtPasswd">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value=""/>
-        <Property name="caretPosition" type="int" value="0"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

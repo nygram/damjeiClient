@@ -21,8 +21,10 @@ import vista.frmEmpleats;
 import vista.frmManteniment;
 
 /**
+ * @author JavierFernándezDíaz Controlador de la part de Manteniment. S'encarregar de
+ * comunicar la vista amb el model i de la part lògica. Implmenta la interface
+ * ActionListener i MouseListener
  *
- * @author Javi
  */
 public class ctrlManteniment implements ActionListener, MouseListener {
 
@@ -30,6 +32,18 @@ public class ctrlManteniment implements ActionListener, MouseListener {
     private consultasManteniment consulta;
     private Mantenimiento mantenimiento;
     private String token;
+    
+      /**
+     * Constructor del controlador que s'inicialitza amb la vista (frmEmpleat), 
+     * consulta (consultesEmpleats), empleat (Empleat) i el token. Afegeix Listeners
+     * als botons i la taula.
+     * 
+     * @param vista. Objecte de frmManteniment
+     * @param consulta. Objecte de consultasManteniment
+     * @param mantenimiento. Objecte vehicle
+     * @param token. Token rebut del servidor
+     * @throws IOException 
+     */
 
     public ctrlManteniment(frmManteniment vista, consultasManteniment consulta, Mantenimiento mantenimiento, String token) throws IOException {
         this.vistaManteniment = vista;
@@ -43,13 +57,26 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         vista.btnBorrar.addMouseListener(this);
         vista.btnNuevo.addMouseListener(this);
         vista.btnSalir.addMouseListener(this);
+        vista.btnModificar.addMouseListener(this);
 
     }
+    
+    /**
+     * Implementació métodes de la interficie
+     * @param e 
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
+    
+    /**
+     * Si l'origen de l'esdeveniment és la taula mateniment, recollim les dades
+     * de la fila on s'ha produït i les guardem. Si fa 2 clicks carreguem la segona pestanya 
+     * amb el detall de l'empleat
+     * @param me 
+     */
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -70,16 +97,25 @@ public class ctrlManteniment implements ActionListener, MouseListener {
             }
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó insertar
+         * recollim les dades dels textBox i radiobutton, les assignem al
+         * mateniment i les enviem al mètode insertarManteniment de la classe 
+         * consultasManteniment per comunicar amb el servidor.
+         * Si es correcte o no, apareix un JOptionPane.showMessageDialog que ens informa
+         */
+        
         if (me.getSource() == vistaManteniment.btnInsertar) {
             System.out.println("Insertar");
-            String nom = vistaManteniment.txtNom.getText();
-            Float km = null;
+            String nombre = vistaManteniment.txtNom.getText();
+            /*Float km = null;
             if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
                 km = Float.valueOf(vistaManteniment.txtKm.getText());
             }
-            
-            mantenimiento.setNombre(nom);
-            mantenimiento.setKilometros_mantenimiento(km);
+            */
+            mantenimiento.setNombre(nombre);
+            //mantenimiento.setKilometros_mantenimiento(km);
            
 
             try {
@@ -97,13 +133,21 @@ public class ctrlManteniment implements ActionListener, MouseListener {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+         /**
+         * Si l'origen de l'esdeveniment és el botó Borrar, recollim el valor de 
+         * la columna 1 de la fila escollida (nom), l'assignem al vehicle i 
+         * l'enviem al mètode eliminarVehicle de consultesVehicle
+         * Si s'inserta correctament o no ens informa
+         */
 
         if (me.getSource() == vistaManteniment.btnBorrar) {
+            
 
             int fila = vistaManteniment.taulaMantenimiento.getSelectedRow();
-            int id = (int) vistaManteniment.taulaMantenimiento.getValueAt(fila, 0);
+            String nombre = (String)vistaManteniment.taulaMantenimiento.getValueAt(fila, 1);
 
-            mantenimiento.setIdmantenimiento(id);
+            mantenimiento.setNombre(nombre);
 
             try {
                 if (consulta.eliminarManteniment(mantenimiento, token)) {
@@ -119,6 +163,13 @@ public class ctrlManteniment implements ActionListener, MouseListener {
             }
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó Nuevo, obrim la segona
+         * pestanya buidant tots els camps amb el mètode limpiarCampos de la
+         * classe Campos del package Utils
+        */
+        
         if (me.getSource() == vistaManteniment.btnNuevo) {
             vistaManteniment.jTabbedPane1.setSelectedIndex(1);
             Campos.limpiarCampos(vistaManteniment.jPanel2);
@@ -126,6 +177,48 @@ public class ctrlManteniment implements ActionListener, MouseListener {
             vistaManteniment.btnInsertar.setVisible(true);
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó Modificar, recollim el valor dels 
+         * textBox, els assignem al manteniment i 
+         * l'enviem al mètode modificarManteniment de consultasManteniment
+         * Si modifica correctament o no ens informa
+         */
+        
+        if (me.getSource() == vistaManteniment.btnModificar) {
+            System.out.println("modifica");
+            String nombre = vistaManteniment.txtNom.getText();
+            /*
+            Float km = null;
+            if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
+                km = Float.valueOf(vistaManteniment.txtKm.getText());
+            }
+            */
+            
+            mantenimiento.setNombre(nombre);
+            //mantenimiento.setKilometros_mantenimiento(km);
+           
+
+            try {
+                Boolean resposta = consulta.modificarManteniment(mantenimiento, token);
+                if (resposta) {
+                    JOptionPane.showMessageDialog(null, "Modificat correctament");
+                    consulta.carregaTaula(vistaManteniment, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No modificat");
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó Salir, 
+         * sortim de la pantalla de Manteniments i tornem a la
+         * d'Opcions
+         */
 
         if (me.getSource() == vistaManteniment.btnSalir) {
             vistaManteniment.dispose();

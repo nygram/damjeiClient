@@ -19,8 +19,10 @@ import vista.frmEmpleats;
 import vista.frmVehicle;
 
 /**
+ * @author JavierFernándezDíaz Controlador de la part de Vehicle. S'encarregar de
+ * comunicar la vista amb el model i de la part lògica. Implementa la interface
+ * ActionListener i MouseListener
  *
- * @author JavierFernándezDíaz
  */
 public class ctrlVehiculos implements ActionListener, MouseListener {
 
@@ -28,6 +30,18 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
     private consultasVehicle consulta;
     private Vehicle vehicle;
     private String token;
+    
+    /**
+     * Constructor del controlador que s'inicialitza amb la vista (frmVehicle), 
+     * consulta (consultesVehicles), vehicle (Vehicle) i el token. Afegeix Listeners
+     * als botons i la taula.
+     * 
+     * @param vista. Objecte de frmVehicle
+     * @param consulta. Objecte de consultesVehicles
+     * @param vehicle. Objecte vehicle
+     * @param token. Token rebut del servidor
+     * @throws IOException 
+     */
 
     public ctrlVehiculos(frmVehicle vista, consultasVehicle consulta, Vehicle vehicle, String token) throws IOException {
         this.vistaVehicle = vista;
@@ -43,11 +57,24 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
         vista.btnBorrar.addMouseListener(this);
         vista.btnNuevo.addMouseListener(this);
         vista.btnSalir.addMouseListener(this);
+        vista.btnModificar.addMouseListener(this);
     }
+    
+    /**
+     * Implementació métodes de la interficie
+     * @param e 
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
     }
+    
+    /**
+     * Si l'origen de l'esdeveniment és la taula vehicles, recollim les dades
+     * de la fila on s'ha produït i les guardem. Si fa 2 clicks carreguem la segona pestanya 
+     * amb el detall del vehicle
+     * @param me esdeveniment click
+     */
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -68,6 +95,14 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
             }
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó insertar
+         * recollim les dades dels textBox i radiobutton, les assignem al
+         * vehicle i les enviem al mètode insertarVehicle de la classe 
+         * consultesVehicles per comunicar amb el servidor.
+         * Si es correcte o no, apareix un JOptionPane.showMessageDialog que ens informa
+         */
 
         if (me.getSource() == vistaVehicle.btnInsertar) {
             System.out.println("Insertar");
@@ -105,6 +140,57 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+         /**
+         * Si l'origen de l'esdeveniment és el botó Modificar, recollim el valor dels 
+         * textBox, els assignem al vehicle i 
+         * l'enviem al mètode modificarVehicle de consultesVehicles
+         * Si modifica correctament o no ens informa
+         */
+        
+        if (me.getSource() == vistaVehicle.btnModificar) {
+            String matricula = vistaVehicle.txtMatricula.getText();
+            String marca = vistaVehicle.txtMarca.getText();
+            String model = vistaVehicle.txtModel.getText();
+            Float kmactu = Float.valueOf(vistaVehicle.txtKmActu.getText());
+            Float kmalta = Float.valueOf(vistaVehicle.txt_KmAlta.getText());
+            String dataalta = vistaVehicle.txtDataAlta.getText();
+            String databaixa = vistaVehicle.txtDataBaixa.getText();
+            
+
+            vehicle.setMatricula(matricula);
+            vehicle.setMarca(marca);
+            vehicle.setModelo(model);
+            vehicle.setKilometros_actuales(kmactu);
+            vehicle.setKilometros_alta(kmalta);
+            vehicle.setFecha_alta(dataalta);
+            vehicle.setFecha_baja(databaixa);
+            vehicle.setConductorid(1);
+            vehicle.setEmpresaid(1);
+
+            try {
+                Boolean resposta = consulta.modificarVehicle(vehicle, token);
+                System.out.println("");
+                if (resposta) {
+                    JOptionPane.showMessageDialog(null, "Modificat correctament");
+                    consulta.carregaTaula(vistaVehicle, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No modificat correctament");
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó Borrar, recollim el valor de 
+         * la columna 3 de la fila escollida (matricula), l'assignem al vehicle i 
+         * l'enviem al mètode eliminarVehicle de consultesVehicle
+         * Si s'inserta correctament o no ens informa
+         */
+        
 
         if (me.getSource() == vistaVehicle.btnBorrar) {
             
@@ -127,6 +213,12 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
             }
 
         }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó Nuevo, obrim la segona
+         * pestanya buidant tots els camps amb el mètode limpiarCampos de la
+         * classe Campos del package Utils
+        */
 
         if (me.getSource() == vistaVehicle.btnNuevo) {
             vistaVehicle.jTabbedPane1.setSelectedIndex(1);
@@ -135,6 +227,12 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
             vistaVehicle.btnInsertar.setVisible(true);
 
         }
+        
+         /**
+         * Si l'origen de l'esdeveniment és el botó Salir, 
+         * sortim de la pantalla de Empleats i tornem a la
+         * d'Opcions
+         */
 
         if (me.getSource() == vistaVehicle.btnSalir) {
             vistaVehicle.dispose();

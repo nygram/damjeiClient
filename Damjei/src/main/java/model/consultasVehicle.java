@@ -20,7 +20,11 @@ import vista.frmEmpleats;
 import vista.frmVehicle;
 
 /**
- *
+ * classe que s'encarrega de recollir les dades enviades per el controlador
+ * i, un cop formatades, enviarles al servidor amb l'acció que volem fer 
+ * amb aquestes dades: llistar, insertar, eliminar, modificar, llistar un únic
+ * vehicle
+ * Seguidament recull la resposta i la tracta segons convingui
  * @author JavierFernándezDíaz
  */
 public class consultasVehicle {
@@ -32,12 +36,22 @@ public class consultasVehicle {
     public static final int LLISTAR = 5;
     public static final int INSERTAR = 2;
     public static final int ELIMINAR = 4;
+    public static final int MODIFICAR = 6;
     public static final int LISTARID = 7;
     int port = 8180;
     String ip = "127.0.0.1";
     
     public consultasVehicle() {
     }
+    
+     /**
+     * Mètode que s'encarrega d'emplenar la taula. Rep la vista i el token.
+     * Crea el model de la taula. Crida al servidor per obtenir les dades per
+     * emplenar la taula i emplena la taula amb aquestes dades.
+     * @param vista frmVehicles
+     * @param token per poder comunicar amb el servidor
+     * @throws IOException 
+     */
 
     public void carregaTaula(frmVehicle vista, String token) throws IOException {
 
@@ -58,6 +72,11 @@ public class consultasVehicle {
 
         vista.btnModificar.setVisible(false);
         vista.jTabbedPane1.setSelectedIndex(0);
+        
+          /**
+         * Inicialitzazem Socket i comDades, encarregats de la cominiació
+         * amb el servidor
+         */
 
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
@@ -65,6 +84,11 @@ public class consultasVehicle {
         Vehicle veh = new Vehicle();
 
         Gson gson = new Gson();
+        
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe).
+         */
 
         JsonObject obtVehiculo = new JsonObject();
         obtVehiculo.add("vehicle", gson.toJsonTree(veh));
@@ -78,6 +102,11 @@ public class consultasVehicle {
         modeloTabla.addColumn("Marca");
         modeloTabla.addColumn("Modelo");
         modeloTabla.addColumn("Matricula");
+        
+        /**
+         * Rebem les dades com a array de Objects. Fent recorrgut per l'array, 
+         * recollim les dades i les afegim a les files de la taula
+         */
 
         Object[] vehiculo = com.repDades2(socket);
         System.out.println(vehiculo);
@@ -93,12 +122,24 @@ public class consultasVehicle {
      
 
     }
+    
+     /**
+     * Mètode que s'encarrega de rebre les dades d'un vehicle concret per poder
+     * emplenar els camps de la pestanya de detalls de vehicle
+     * @param codigo es la id que identifica al vehicle
+     * @param vista frmVehicle
+     * @throws IOException 
+     */
  public void carregaVehicle(int codigo, frmVehicle vista) throws IOException {
 
         this.vista = vista;
         this.token = token;
         this.vista = vista;
         
+        /**
+         * Inicialitzazem Socket i comDades, encarregats de la cominiació
+         * amb el servidor
+         */
         
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
@@ -107,11 +148,21 @@ public class consultasVehicle {
 
         Gson gson = new Gson();
         
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+        
         JsonObject obtVehicle = new JsonObject();
         obtVehicle.add("vehicle", gson.toJsonTree(veh));
         obtVehicle.addProperty("accio", LISTARID);
         obtVehicle.addProperty("token", token);
         obtVehicle.addProperty("clase", "Vehicle.class");
+        
+        /**
+         * Rebem les dades com a array de Objects. Fent recorrgut per l'array, 
+         * recollim les dades i les afegim als textBox de la vista
+         */
         
         com.enviaDades(obtVehicle, socket);
         
@@ -140,14 +191,24 @@ public class consultasVehicle {
             
     }
            
-    
+    /**
+     * Mètode que s'encarrega d'afegir un nou vehicle. 
+     * @param vehicle el que volem afegir
+     * @param token per poder parlar amb el server
+     * @return
+     * @throws IOException 
+     */
      public boolean insertarVehicle(Vehicle vehicle, String token) throws IOException{
          
         Gson gson = new Gson();
         Socket socket = new Socket(ip, port);
         frmVehicle vista = new frmVehicle();
-        Object prova = vehicle.getClass();
-        System.out.println("prova "+prova);
+        
+        
+         /**
+         * Generem objecte Json amb l'objecte vehicle i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
          
         JsonObject obtVehicle = new JsonObject();
         obtVehicle.add("vehicle", gson.toJsonTree(vehicle));
@@ -155,6 +216,9 @@ public class consultasVehicle {
         obtVehicle.addProperty("token", token);
         obtVehicle.addProperty("clase", "Vehicle.class");
         
+         /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
         
          com.enviaDades(obtVehicle, socket);
          Boolean resposta = com.repDades3(socket);
@@ -166,11 +230,61 @@ public class consultasVehicle {
          
          
      }
+      /**
+     * Mètode que s'encarrega de modificar un vehicle existent
+     * @param vehicle el que volem modificar
+     * @param token per poder parlar amb el server
+     * @return
+     * @throws IOException 
+     */
+     
+     public boolean  modificarVehicle(Vehicle vehicle, String token) throws IOException{
+         
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        frmVehicle vista = new frmVehicle();
+        
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+         
+        JsonObject obtVehicle = new JsonObject();
+        obtVehicle.add("vehicle", gson.toJsonTree(vehicle));
+        obtVehicle.addProperty("accio", MODIFICAR);
+        obtVehicle.addProperty("token", token);
+        obtVehicle.addProperty("clase", "Vehicle.class");
+        
+         /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
+         com.enviaDades(obtVehicle, socket);
+         Boolean resposta = com.repDades3(socket);
+         return resposta;
+         
+         
+         
+         
+         
+     }
+      /**
+     * Mètode que s'encarrega d'eliminar un vehicle. 
+     * @param vehicle el que volem eliminar
+     * @param token per poder parlar amb el server
+     * @return
+     * @throws IOException 
+     */
+     
      
      public boolean eliminarVehicle(Vehicle vehicle, String token) throws IOException{
          
         Gson gson = new Gson();
         Socket socket = new Socket(ip, port);
+        
+         /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
         
         JsonObject obtVehicle = new JsonObject();
         obtVehicle.add("vehicle", gson.toJsonTree(vehicle));
@@ -178,6 +292,9 @@ public class consultasVehicle {
         obtVehicle.addProperty("token", token);
         obtVehicle.addProperty("clase", "Vehicle.class");
         
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
         
          com.enviaDades(obtVehicle, socket);
          Boolean resposta = com.repDades3(socket);
