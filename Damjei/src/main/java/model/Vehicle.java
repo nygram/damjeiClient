@@ -29,7 +29,7 @@ public class Vehicle {
      public Vehicle() {
     }
      // getters y setters
-  
+
 
     public int getIdvehiculo() {
         return idvehiculo;

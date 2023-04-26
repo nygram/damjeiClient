@@ -58,7 +58,6 @@ public class comDades {
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
-        System.out.println(" En RED DADES " +data);
 
         JsonObject objecte = gson.fromJson(data, JsonObject.class);
         return objecte;
@@ -72,7 +71,6 @@ public class comDades {
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
-        System.out.println("El que he rebut es :" +data);
         Object[] objects = gson.fromJson(data, Object[].class);
         System.out.println(objects);
         
@@ -87,7 +85,6 @@ public class comDades {
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
-        System.out.println("El que he rebut es :" +data);
         JsonArray objects = gson.fromJson(data, JsonArray.class);
         System.out.println(objects);
         
@@ -104,7 +101,6 @@ public class comDades {
 
         String data = input.readLine();
         JsonObject objecte = gson.fromJson(data, JsonObject.class);
-        System.out.println("El que he rebut es data:" +data);
         Boolean correcte = objecte.get("correcte").getAsBoolean();
                
         return correcte;
