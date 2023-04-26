@@ -10,13 +10,16 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
 import model.Vehicle;
 import model.consultasManteniment;
 import model.consultasVehicle;
+import model.consultesCombustible;
 import model.consultesEmpleats;
 import principal.Damjei;
+import vista.frmCombustible;
 import vista.frmEmpleats;
 import vista.frmEmpleats;
 import vista.frmLogin;
@@ -37,10 +40,13 @@ public class ctrlLogin implements ActionListener {
     private ctrlEmpleats controlEmpleats;
     private ctrlVehiculos controlVehiculos;
     private ctrlManteniment controlManteniments;
+    private ctrlCombustible controlCombustible;
     private consultesEmpleats consulta = new consultesEmpleats();
     private consultasVehicle consultasVehiculos = new consultasVehicle();
     private consultasManteniment consultaManteniment = new consultasManteniment();
+    private consultesCombustible consultaCombustible = new consultesCombustible();
     private frmEmpleats vistaEmpleats = new frmEmpleats();
+    private frmCombustible vistaCombustible = new frmCombustible();
     private frmLogin vistaLogin;
     private frmOpcions vistaOpcions;
     private frmVehicle vistaVehiculos = new frmVehicle();
@@ -48,6 +54,7 @@ public class ctrlLogin implements ActionListener {
     private Empleats usuari;
     private Vehicle vehicle;
     private Mantenimiento manteniment;
+    private Combustible combustible;
     private Comunica comunica = new Comunica();
     private JsonObject object;
     private boolean correcte = false;
@@ -61,7 +68,7 @@ public class ctrlLogin implements ActionListener {
      * @param vista es la vista que hem de carregar
      * @param usuari objecte de la classe Empleats
      */
-    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment) {
+    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible) {
         this.vistaLogin = vista;
         this.usuari = usuari;
         this.vehicle = vehicle;
@@ -75,6 +82,7 @@ public class ctrlLogin implements ActionListener {
         vistaOpcions.btnEmpleats.addActionListener(this);
         vistaOpcions.btnVehicles.addActionListener(this);
         vistaOpcions.btnManteniments.addActionListener(this);
+        vistaOpcions.btnCombustible.addActionListener(this);
 
     }
 
@@ -182,6 +190,24 @@ public class ctrlLogin implements ActionListener {
                 controlManteniments = new ctrlManteniment(vistaManteniment, consultaManteniment, manteniment,  token);
                 vistaManteniment.setVisible(true);
                 vistaManteniment.txtToken.setText(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        }
+        
+        /**
+         * Si l'origen de l'esdeveniment és el botó combustible inicialitzem el controlador
+         * de manteniment passant com a paràmetres la vista, consultes, manteniment i el token per
+         * poder fer peticions al servidor
+         */
+        
+        if (e.getSource() == vistaOpcions.btnCombustible) {
+            try {
+                controlCombustible = new ctrlCombustible(vistaCombustible, consultaCombustible, combustible,  token);
+                vistaCombustible.setVisible(true);
+                vistaCombustible.txtToken.setText(token);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }

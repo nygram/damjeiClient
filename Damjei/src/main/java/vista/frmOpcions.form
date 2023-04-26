@@ -61,25 +61,25 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnEmpleats" alignment="0" min="-2" pref="138" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="btnRepostatge" min="-2" pref="138" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnVehicles" min="-2" pref="138" max="-2" attributes="0"/>
-                              <Component id="btnManteniment" min="-2" pref="138" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                  <Component id="btnRepostatge" min="-2" pref="138" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="btnManteniment" min="-2" pref="138" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="btnRevisions" min="-2" pref="143" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                  <Component id="btnEmpleats" min="-2" pref="138" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <Component id="btnVehicles" min="-2" pref="138" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="btnRevisions" max="32767" attributes="0"/>
-                      <Component id="btnManteniments" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="207" max="32767" attributes="0"/>
+                  <Component id="btnManteniments" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="btnCombustible" min="-2" pref="143" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -97,6 +97,7 @@
                       <Component id="btnEmpleats" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="btnManteniments" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="btnVehicles" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="btnCombustible" alignment="3" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="127" max="32767" attributes="0"/>
               </Group>
@@ -152,6 +153,14 @@
         <Component class="javax.swing.JButton" name="btnManteniments">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gesti&#xf3; Manteniments"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnCombustible">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Gesti&#xf3; Combutible"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

@@ -135,19 +135,20 @@ public class ctrlCombustible implements ActionListener, MouseListener{
          * Si s'inserta correctament o no ens informa
          */
 
-        if (me.getSource() == vistaManteniment.btnBorrar) {
+        if (me.getSource() == vistaCombustible.btnBorrar) {
             
 
-            int fila = vistaManteniment.taulaMantenimiento.getSelectedRow();
-            String nombre = (String)vistaManteniment.taulaMantenimiento.getValueAt(fila, 1);
+            int fila = vistaCombustible.taulaCombustible.getSelectedRow();
+            String nombre = vistaCombustible.taulaCombustible.getValueAt(fila, 1).toString();
+            System.out.println("nombre es "+nombre);
 
-            mantenimiento.setNombre(nombre);
+            combustible.setNombre(nombre);
 
             try {
-                if (consulta.eliminarManteniment(mantenimiento, token)) {
-                    vistaManteniment.jTabbedPane1.setSelectedIndex(0);
+                if (consulta.eliminarCombustible(combustible, token)) {
+                    vistaCombustible.jTabbedPane1.setSelectedIndex(0);
                     JOptionPane.showMessageDialog(null, "Borrado correctamente");
-                    consulta.carregaTaula(vistaManteniment, token);
+                    consulta.carregaTaula(vistaCombustible, token);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No borrado");
@@ -164,11 +165,11 @@ public class ctrlCombustible implements ActionListener, MouseListener{
          * classe Campos del package Utils
         */
         
-        if (me.getSource() == vistaManteniment.btnNuevo) {
-            vistaManteniment.jTabbedPane1.setSelectedIndex(1);
-            Campos.limpiarCampos(vistaManteniment.jPanel2);
-            vistaManteniment.btnModificar.setVisible(false);
-            vistaManteniment.btnInsertar.setVisible(true);
+        if (me.getSource() == vistaCombustible.btnNuevo) {
+            vistaCombustible.jTabbedPane1.setSelectedIndex(1);
+            Campos.limpiarCampos(vistaCombustible.jPanel2);
+            vistaCombustible.btnModificar.setVisible(false);
+            vistaCombustible.btnInsertar.setVisible(true);
 
         }
         
@@ -179,9 +180,9 @@ public class ctrlCombustible implements ActionListener, MouseListener{
          * Si modifica correctament o no ens informa
          */
         
-        if (me.getSource() == vistaManteniment.btnModificar) {
+        if (me.getSource() == vistaCombustible.btnModificar) {
             System.out.println("modifica");
-            String nombre = vistaManteniment.txtNom.getText();
+            String nombre = vistaCombustible.txtNom.getText();
             /*
             Float km = null;
             if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
@@ -189,15 +190,15 @@ public class ctrlCombustible implements ActionListener, MouseListener{
             }
             */
             
-            mantenimiento.setNombre(nombre);
+            combustible.setNombre(nombre);
             //mantenimiento.setKilometros_mantenimiento(km);
            
 
             try {
-                Boolean resposta = consulta.modificarManteniment(mantenimiento, token);
+                Boolean resposta = consulta.modificarCombustible(combustible, token);
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Modificat correctament");
-                    consulta.carregaTaula(vistaManteniment, token);
+                    consulta.carregaTaula(vistaCombustible, token);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No modificat");
@@ -214,8 +215,8 @@ public class ctrlCombustible implements ActionListener, MouseListener{
          * d'Opcions
          */
 
-        if (me.getSource() == vistaManteniment.btnSalir) {
-            vistaManteniment.dispose();
+        if (me.getSource() == vistaCombustible.btnSalir) {
+            vistaCombustible.dispose();
 
         }
 
@@ -238,6 +239,4 @@ public class ctrlCombustible implements ActionListener, MouseListener{
     }
 
 }
-    
-    
-}
+

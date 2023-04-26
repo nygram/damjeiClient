@@ -11,8 +11,11 @@ import java.io.IOException;
 import java.net.Socket;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import static model.consultasManteniment.ELIMINAR;
+import static model.consultasManteniment.INSERTAR;
 import static model.consultasManteniment.LISTARID;
 import static model.consultasManteniment.LLISTAR;
+import static model.consultasManteniment.MODIFICAR;
 import vista.frmCombustible;
 import vista.frmManteniment;
 
@@ -135,7 +138,7 @@ public class consultesCombustible {
          */
 
         JsonObject obtCombustible = new JsonObject();
-        obtCombustible.add("mantenimiento", gson.toJsonTree(co));
+        obtCombustible.add("combustible", gson.toJsonTree(co));
         obtCombustible.addProperty("accio", LISTARID);
         obtCombustible.addProperty("token", token);
         obtCombustible.addProperty("clase", "Combustible.class");
@@ -167,6 +170,105 @@ public class consultesCombustible {
 
     }
     
+    public boolean insertarCombustible(Combustible combustible, String token) throws IOException {
+
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        frmCombustible vista = new frmCombustible();
+        
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+        
+        JsonObject obtCombustible = new JsonObject();
+        obtCombustible.add("combustible", gson.toJsonTree(combustible));
+        obtCombustible.addProperty("accio", INSERTAR);
+        obtCombustible.addProperty("token", token);
+        obtCombustible.addProperty("clase", "Combustible.class");
+        
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
+        
+        com.enviaDades(obtCombustible, socket);
+        Boolean resposta = com.repDades3(socket);
+        System.out.println("La resposta es " + resposta);
+        return resposta;
+
+    }
     
+     /**
+     * Mètode que s'encarrega de modificar un manteniment existent
+     * @param manteniment el que volem modificar
+     * @param token per poder parlar amb el server
+     * @return
+     * @throws IOException 
+     */
+    
+    public boolean modificarCombustible(Combustible combustible, String token) throws IOException {
+
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        frmCombustible vista = new frmCombustible();
+        
+        /**
+         * Generem objecte Json amb l'objecte modificar i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+        
+        JsonObject obtCombustible = new JsonObject();
+        obtCombustible.add("combustible", gson.toJsonTree(combustible));
+        obtCombustible.addProperty("accio", MODIFICAR);
+        obtCombustible.addProperty("token", token);
+        obtCombustible.addProperty("clase", "Mantenimiento.class");
+        
+         /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
+
+        com.enviaDades(obtCombustible, socket);
+        Boolean resposta = com.repDades3(socket);
+        System.out.println("La resposta es " + resposta);
+        return resposta;
+
+    }
+    
+      /**
+     * Mètode que s'encarrega d'eliminar un manteniment. 
+     * @param manteniment el que volem eliminar
+     * @param token per poder parlar amb el server
+     * @return
+     * @throws IOException 
+     */
+
+    public boolean eliminarCombustible(Combustible combustible, String token) throws IOException {
+
+        
+        
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+
+        JsonObject obtCombustible = new JsonObject();
+        obtCombustible.add("combustible", gson.toJsonTree(combustible));
+        obtCombustible.addProperty("accio", ELIMINAR);
+        obtCombustible.addProperty("token", token);
+        obtCombustible.addProperty("clase", "Combustible.class");
+        
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
+
+        com.enviaDades(obtCombustible, socket);
+        Boolean resposta = com.repDades3(socket);
+
+        return resposta;
+    }
+
     
 }

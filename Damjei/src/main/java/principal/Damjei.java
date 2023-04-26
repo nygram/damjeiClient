@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
 import model.Vehicle;
@@ -44,7 +45,8 @@ public class Damjei {
         Empleats empleat = new Empleats();
         Vehicle vehicle = new Vehicle();
         Mantenimiento manteniment = new Mantenimiento();
-        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment);
+        Combustible combustible = new Combustible();
+        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible);
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         //server.iniciar();
