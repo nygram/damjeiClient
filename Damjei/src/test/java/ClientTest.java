@@ -35,7 +35,6 @@ public class ClientTest {
         vista = new frmLogin();
         empleat = new Empleats();
         comunica = new Comunica();
-        controlador = new ctrlLogin(vista, empleat);
 
     }
     /**
@@ -44,8 +43,8 @@ public class ClientTest {
      */
     @Test
     public void testLoginValid() throws IOException {
-        empleat.setNom("Javier");
-        empleat.setContrasenya("1234");
+        empleat.setDni("40447212x");
+        empleat.setContrasenya("0000");
         objecte = comunica.enviaLogin(empleat);
         correcte = objecte.get("correcte").getAsBoolean();
         assertTrue(correcte);
@@ -57,7 +56,7 @@ public class ClientTest {
      */
     @Test
     public void testLoginInvalid() throws IOException {
-        empleat.setNom("Jordi");
+        empleat.setDni("098767534F");
         empleat.setContrasenya("2345");
         objecte = comunica.enviaLogin(empleat);
         correcte = objecte.get("correcte").getAsBoolean();
@@ -70,8 +69,8 @@ public class ClientTest {
      */
     @Test
     public void testAdminValid() throws IOException {
-        empleat.setNom("Iván");
-        empleat.setContrasenya("1234");
+        empleat.setDni("40447212x");
+        empleat.setContrasenya("0000");
         objecte = comunica.enviaLogin(empleat);
         administrador = objecte.get("administrador").getAsBoolean();
         assertTrue(administrador);
@@ -83,8 +82,8 @@ public class ClientTest {
      */
     @Test
     public void testAdminInValid() throws IOException {
-        empleat.setNom("Javier");
-        empleat.setContrasenya("1234");
+        empleat.setDni("12345678f");
+        empleat.setContrasenya("1111");
         objecte = comunica.enviaLogin(empleat);
         administrador = objecte.get("administrador").getAsBoolean();
         assertFalse(administrador);

@@ -109,13 +109,15 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         if (me.getSource() == vistaManteniment.btnInsertar) {
             System.out.println("Insertar");
             String nombre = vistaManteniment.txtNom.getText();
-            /*Float km = null;
-            if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
-                km = Float.valueOf(vistaManteniment.txtKm.getText());
-            }
-            */
+            Float km = Float.valueOf(vistaManteniment.txtKm.getText());
+            /*
+            if (km == null){
+                km = 0f;
+            }*/
             mantenimiento.setNombre(nombre);
-            //mantenimiento.setKilometros_mantenimiento(km);
+            mantenimiento.setKilometros_mantenimiento(km);
+            
+            
            
 
             try {
@@ -188,15 +190,16 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         if (me.getSource() == vistaManteniment.btnModificar) {
             System.out.println("modifica");
             String nombre = vistaManteniment.txtNom.getText();
-            /*
-            Float km = null;
+            Float km = 0.0f;
             if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
                 km = Float.valueOf(vistaManteniment.txtKm.getText());
             }
-            */
+            String fecha = vistaManteniment.txtFecha.getText();
+           
             
             mantenimiento.setNombre(nombre);
-            //mantenimiento.setKilometros_mantenimiento(km);
+            mantenimiento.setKilometros_mantenimiento(km);
+            mantenimiento.setFecha_mantenimiento(fecha);
            
 
             try {

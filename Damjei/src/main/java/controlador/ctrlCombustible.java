@@ -48,7 +48,6 @@ public class ctrlCombustible implements ActionListener, MouseListener{
         this.consulta = consulta;
         this.token = token;
         this.combustible = combustible;
-        System.out.println(combustible);
         consulta.carregaTaula(vista, token);
         vista.taulaCombustible.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
@@ -108,6 +107,7 @@ public class ctrlCombustible implements ActionListener, MouseListener{
             System.out.println("Insertar");
             String nombre = vistaCombustible.txtNom.getText();
             Float precio = Float.valueOf(vistaCombustible.txtPrecio.getText());
+            
             combustible.setNombre(nombre);
             combustible.setPrecio(precio);
            
@@ -141,8 +141,10 @@ public class ctrlCombustible implements ActionListener, MouseListener{
             int fila = vistaCombustible.taulaCombustible.getSelectedRow();
             String nombre = vistaCombustible.taulaCombustible.getValueAt(fila, 1).toString();
             System.out.println("nombre es "+nombre);
+            Float precio = Float.parseFloat(vistaCombustible.txtPrecio.getText());
 
             combustible.setNombre(nombre);
+            combustible.setPrecio(precio);
 
             try {
                 if (consulta.eliminarCombustible(combustible, token)) {
@@ -183,15 +185,11 @@ public class ctrlCombustible implements ActionListener, MouseListener{
         if (me.getSource() == vistaCombustible.btnModificar) {
             System.out.println("modifica");
             String nombre = vistaCombustible.txtNom.getText();
-            /*
-            Float km = null;
-            if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
-                km = Float.valueOf(vistaManteniment.txtKm.getText());
-            }
-            */
-            
+            Float precio = Float.parseFloat(vistaCombustible.txtPrecio.getText());
+                        
             combustible.setNombre(nombre);
-            //mantenimiento.setKilometros_mantenimiento(km);
+            combustible.setPrecio(precio);
+            
            
 
             try {

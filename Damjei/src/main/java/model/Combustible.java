@@ -10,20 +10,13 @@ package model;
  */
 public class Combustible {
     
-    int idcombustible;
-    String nombre;
-    Float precio;
+    private int idcombustible;
+    private String nombre;
+    private Float precio;
 
     public Combustible() {
     }
-    
-
-    public Combustible(int idcombustible, String nombre, Float precio) {
-        this.idcombustible = idcombustible;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
-
+   
     public int getIdcombustible() {
         return idcombustible;
     }

@@ -4,17 +4,12 @@
  */
 package model;
 
-import com.google.gson.annotations.SerializedName;
-
 
 
 public class Mantenimiento {
   
     private int idmantenimiento;
-    
-    //@SerializedName("nombre_completo")
     private String nombre;
-    
     private Float kilometros_mantenimiento;
     private String fecha_mantenimiento;
    

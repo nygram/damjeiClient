@@ -166,18 +166,22 @@ public class consultasManteniment {
             JsonObject manteniments = mantenimientos.getAsJsonObject();
             int id = manteniments.get("idmantenimiento").getAsInt();
             String nombre = manteniments.get("nombre").getAsString();
-            Float km = null;
+            /*Float km = null;
             if (manteniments.has("kilometros_mantenimiento")) {
                 km = manteniments.get("kilometros_mantenimiento").getAsFloat();
             }
+            //String fecha = manteniments.get("fecha_mantenimientos").getAsString();
+            */
 
             Mantenimiento man2 = new Mantenimiento();
             man2.setIdmantenimiento(id);
             man2.setNombre(nombre);
-            man2.setKilometros_mantenimiento(km);
+            //man2.setKilometros_mantenimiento(km);
+            //man2.setFecha_mantenimiento(fecha);
 
             vista.txtNom.setText(nombre);
-            vista.txtKm.setText(km.toString());
+            //vista.txtKm.setText(km.toString());
+            //vista.txtFecha.setText(fecha);
 
         }
 

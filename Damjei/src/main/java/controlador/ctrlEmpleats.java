@@ -193,15 +193,17 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
          */
         
         if (me.getSource() == vistaEmpleats.btnModificar) {
+            int id = Integer.parseInt(vistaEmpleats.txtId.getText());
             String nom = vistaEmpleats.txtNom.getText();
             String apellido = vistaEmpleats.txtCognoms.getText();
             String dni = vistaEmpleats.txtNif.getText();
             String contraseña = vistaEmpleats.txtContraseña.getText();
             Boolean administrador = vistaEmpleats.rbtnAdministrador.isSelected();
 
+            empleat.setIdempleado(id);
             empleat.setNom(nom);
             empleat.setApellidos(apellido);
-            //empleat.setDni(dni);
+            empleat.setDni(dni);
             empleat.setCategoria("conductor");
             empleat.setEmpresaid(1);
             empleat.setContraseña(contraseña);

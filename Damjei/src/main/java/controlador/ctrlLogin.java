@@ -73,6 +73,7 @@ public class ctrlLogin implements ActionListener {
         this.usuari = usuari;
         this.vehicle = vehicle;
         this.manteniment = manteniment;
+        this.combustible = combustible;
         vistaLogin.btnLogin.addActionListener(this);
         
         vistaOpcions = new frmOpcions();

@@ -100,6 +100,7 @@ public class comDades {
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
+        System.out.println(" Data es :"+data );
         JsonObject objecte = gson.fromJson(data, JsonObject.class);
         Boolean correcte = objecte.get("correcte").getAsBoolean();
                

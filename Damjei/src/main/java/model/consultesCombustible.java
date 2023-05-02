@@ -221,7 +221,7 @@ public class consultesCombustible {
         obtCombustible.add("combustible", gson.toJsonTree(combustible));
         obtCombustible.addProperty("accio", MODIFICAR);
         obtCombustible.addProperty("token", token);
-        obtCombustible.addProperty("clase", "Mantenimiento.class");
+        obtCombustible.addProperty("clase", "Combustible.class");
         
          /**
          * Rebem un booleà que ens indica si s'ha fet correctament. 
