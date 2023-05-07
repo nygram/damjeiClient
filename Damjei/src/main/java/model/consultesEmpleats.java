@@ -169,15 +169,15 @@ public class consultesEmpleats {
         Object[] empleat = com.repDades2(socket);
         for (Object empleats : empleat) {
             Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
-            System.out.println("Empleat "+emp2);
             int idempleado = emp2.getIdempleado();
             String dni = emp2.getDni();
-            System.out.println("dni "+dni);
             String nombre = emp2.getNom();
             String apellido = emp2.getApellidos();
             String contraseña = emp2.getContrasenya();
             boolean administrador = emp2.getAdministrador();
-            System.out.println("Bool `+"+administrador);
+            String categoria = emp2.getCategoria();
+            System.out.println("Conductor es :"+categoria);
+            
             
             vista.txtNom.setText(nombre);
             vista.txtCognoms.setText(apellido);
@@ -188,6 +188,7 @@ public class consultesEmpleats {
             }else{
                 vista.rbtnAdministrador.setSelected(false);
             }
+            vista.cmbCategoria.setSelectedItem(categoria);
                 
         }
             

@@ -25,33 +25,30 @@ import vista.frmEmpleats;
 import vista.frmLogin;
 import vista.frmOpcions;
 
-
 /**
- * @author JavierFernándezDíaz Controlador de la part de Empleat. S'encarregar de
- * comunicar la vista amb el model i de la part lògica. Implmenta la interface
- * ActionListener i MouseListener
+ * @author JavierFernándezDíaz Controlador de la part de Empleat. S'encarregar
+ * de comunicar la vista amb el model i de la part lògica. Implmenta la
+ * interface ActionListener i MouseListener
  *
  */
-
 public class ctrlEmpleats implements ActionListener, MouseListener {
 
     private frmEmpleats vistaEmpleats;
     private consultesEmpleats consulta;
     private Empleats empleat;
     private String token;
-    
+
     /**
-     * Constructor del controlador que s'inicialitza amb la vista (frmEmpleat), 
-     * consulta (consultesEmpleats), empleat (Empleat) i el token. Afegeix Listeners
-     * als botons i la taula.
-     * 
+     * Constructor del controlador que s'inicialitza amb la vista (frmEmpleat),
+     * consulta (consultesEmpleats), empleat (Empleat) i el token. Afegeix
+     * Listeners als botons i la taula.
+     *
      * @param vista. Objecte de frmEmpleats
      * @param consulta. Objecte de consulteEmpleats
      * @param empleat. Objecte empleat
      * @param token. Token rebut del servidor
-     * @throws IOException 
+     * @throws IOException
      */
-
     public ctrlEmpleats(frmEmpleats vista, consultesEmpleats consulta, Empleats empleat, String token) throws IOException {
         this.vistaEmpleats = vista;
         this.consulta = consulta;
@@ -64,26 +61,27 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
         vista.btnNuevo.addMouseListener(this);
         vista.btnSalir.addMouseListener(this);
         vista.btnModificar.addMouseListener(this);
+        vista.cmbCategoria.addMouseListener(this);
 
     }
-    
+
     /**
      * Implementació métodes de la interficie
-     * @param e 
+     *
+     * @param e
      */
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
     }
-    
+
     /**
-     * Si l'origen de l'esdeveniment és la taula empleats, recollim les dades
-     * de la fila on s'ha produït i les guardem. Si fa 2 clicks carreguem la segona pestanya 
-     * amb el detall de l'empleat
-     * @param me 
+     * Si l'origen de l'esdeveniment és la taula empleats, recollim les dades de
+     * la fila on s'ha produït i les guardem. Si fa 2 clicks carreguem la segona
+     * pestanya amb el detall de l'empleat
+     *
+     * @param me
      */
-    
     @Override
     public void mouseClicked(MouseEvent me) {
         if (me.getSource() == vistaEmpleats.taulaEmpleats) {
@@ -94,8 +92,19 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                 vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
                 vistaEmpleats.btnModificar.setVisible(true);
                 vistaEmpleats.btnInsertar.setVisible(false);
+                vistaEmpleats.txtCarnet.setVisible(false);
+                vistaEmpleats.txtCarnetCad.setVisible(false);
+                vistaEmpleats.lblCarnet.setVisible(false);
+                vistaEmpleats.lblCarnetCad.setVisible(false);
                 try {
                     consulta.carregaEmpleat(Integer.parseInt(codigo), vistaEmpleats);
+                    if (vistaEmpleats.cmbCategoria.getSelectedItem() == "conductor") {
+                        vistaEmpleats.txtCarnet.setVisible(true);
+                        vistaEmpleats.txtCarnetCad.setVisible(true);
+                        vistaEmpleats.lblCarnet.setVisible(true);
+                        vistaEmpleats.lblCarnetCad.setVisible(true);
+
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -104,24 +113,31 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
 
         }
         /**
-         * Si l'origen de l'esdeveniment és el botó insertar
-         * recollim les dades dels textBox i radiobutton, les assignem a
-         * l'empleat i les enviem al mètode insertarEmpleat de la classe 
-         * consultesEmpleats per comunicar amb el servidor.
-         * Si es correcte o no, apareix un JOptionPane.showMessageDialog que ens informa
+         * Si l'origen de l'esdeveniment és el botó insertar recollim les dades
+         * dels textBox i radiobutton, les assignem a l'empleat i les enviem al
+         * mètode insertarEmpleat de la classe consultesEmpleats per comunicar
+         * amb el servidor. Si es correcte o no, apareix un
+         * JOptionPane.showMessageDialog que ens informa
          */
-        
+
         if (me.getSource() == vistaEmpleats.btnInsertar) {
             String nom = vistaEmpleats.txtNom.getText();
             String apellido = vistaEmpleats.txtCognoms.getText();
             String dni = vistaEmpleats.txtNif.getText();
             String contrasenya = vistaEmpleats.txtContraseña.getText();
             Boolean administrador = vistaEmpleats.rbtnAdministrador.isSelected();
+            String categoria = (String) vistaEmpleats.cmbCategoria.getSelectedItem();
+            String fecha_carnet = vistaEmpleats.txtCarnet.getText();
+            String fecha_caducidad_carnet = vistaEmpleats.txtCarnetCad.getText();
 
             empleat.setNom(nom);
             empleat.setApellidos(apellido);
             empleat.setDni(dni);
-            empleat.setCategoria("rrhh");
+            empleat.setCategoria(categoria);
+            if (categoria == "conductor") {
+                empleat.setFecha_carnet(fecha_carnet);
+                empleat.setFecha_caducidad_carnet(fecha_caducidad_carnet);
+            }
             empleat.setEmpresaid(1);
             empleat.setContrasenya(contrasenya);
             empleat.setAdministrador(administrador);
@@ -141,14 +157,13 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-        /**
-         * Si l'origen de l'esdeveniment és el botó Borrar, recollim el valor de 
-         * la columna 2 de la fila escollida (DNI), l'assignem a l'empleat i 
-         * l'enviem al mètode eliminarEmpleat de consultesEmpleats
-         * Si s'inserta correctament o no ens informa
-         */
 
+        /**
+         * Si l'origen de l'esdeveniment és el botó Borrar, recollim el valor de
+         * la columna 2 de la fila escollida (DNI), l'assignem a l'empleat i
+         * l'enviem al mètode eliminarEmpleat de consultesEmpleats Si s'inserta
+         * correctament o no ens informa
+         */
         if (me.getSource() == vistaEmpleats.btnBorrar) {
 
             int fila = vistaEmpleats.taulaEmpleats.getSelectedRow();
@@ -170,13 +185,12 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
             }
 
         }
-        
+
         /**
          * Si l'origen de l'esdeveniment és el botó Nuevo, obrim la segona
          * pestanya buidant tots els camps amb el mètode limpiarCampos de la
          * classe Campos del package Utils
-        */
-        
+         */
         if (me.getSource() == vistaEmpleats.btnNuevo) {
             vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
             Campos.limpiarCampos(vistaEmpleats.jPanel2);
@@ -184,14 +198,13 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
             vistaEmpleats.btnInsertar.setVisible(true);
 
         }
-        
+
         /**
-         * Si l'origen de l'esdeveniment és el botó Modificar, recollim el valor dels 
-         * textBox, els assignem a l'empleat i 
-         * l'enviem al mètode modificarEmpleat de consultesEmpleats
-         * Si modifica correctament o no ens informa
+         * Si l'origen de l'esdeveniment és el botó Modificar, recollim el valor
+         * dels textBox, els assignem a l'empleat i l'enviem al mètode
+         * modificarEmpleat de consultesEmpleats Si modifica correctament o no
+         * ens informa
          */
-        
         if (me.getSource() == vistaEmpleats.btnModificar) {
             int id = Integer.parseInt(vistaEmpleats.txtId.getText());
             String nom = vistaEmpleats.txtNom.getText();
@@ -224,13 +237,11 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         /**
-         * Si l'origen de l'esdeveniment és el botó Salir, 
-         * sortim de la pantalla de Empleats i tornem a la
-         * d'Opcions
+         * Si l'origen de l'esdeveniment és el botó Salir, sortim de la pantalla
+         * de Empleats i tornem a la d'Opcions
          */
-        
         if (me.getSource() == vistaEmpleats.btnSalir) {
             vistaEmpleats.dispose();
 

@@ -20,6 +20,8 @@ public class Empleats {
     String contraseña;
     int empresaid;
     boolean administrador;
+    String fecha_caducidad_carnet;
+    String fecha_carnet;        
 
     public String getNombre() {
         return nombre;
@@ -44,6 +46,24 @@ public class Empleats {
     public void setEmpresaid(int empresaid) {
         this.empresaid = empresaid;
     }
+
+    public String getFecha_caducidad_carnet() {
+        return fecha_caducidad_carnet;
+    }
+
+    public void setFecha_caducidad_carnet(String fecha_caducidad_carnet) {
+        this.fecha_caducidad_carnet = fecha_caducidad_carnet;
+    }
+
+    public String getFecha_carnet() {
+        return fecha_carnet;
+    }
+
+    public void setFecha_carnet(String fecha_carnet) {
+        this.fecha_carnet = fecha_carnet;
+    }
+    
+    
 
     
     public Empleats() {
