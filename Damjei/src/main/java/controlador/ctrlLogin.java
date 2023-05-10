@@ -13,11 +13,13 @@ import javax.swing.JOptionPane;
 import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
+import model.Repostar;
 import model.Vehicle;
 import model.consultasManteniment;
 import model.consultasVehicle;
 import model.consultesCombustible;
 import model.consultesEmpleats;
+import model.consultesRepostatge;
 import principal.Damjei;
 import vista.frmCombustible;
 import vista.frmEmpleats;
@@ -25,6 +27,7 @@ import vista.frmEmpleats;
 import vista.frmLogin;
 import vista.frmManteniment;
 import vista.frmOpcions;
+import vista.frmRepostatge;
 import vista.frmVehicle;
 
 
@@ -41,20 +44,24 @@ public class ctrlLogin implements ActionListener {
     private ctrlVehiculos controlVehiculos;
     private ctrlManteniment controlManteniments;
     private ctrlCombustible controlCombustible;
+    private ctrlRepostar controlRepostar;
     private consultesEmpleats consulta = new consultesEmpleats();
     private consultasVehicle consultasVehiculos = new consultasVehicle();
     private consultasManteniment consultaManteniment = new consultasManteniment();
     private consultesCombustible consultaCombustible = new consultesCombustible();
+    private consultesRepostatge consultaRepostatge = new consultesRepostatge();
     private frmEmpleats vistaEmpleats = new frmEmpleats();
     private frmCombustible vistaCombustible = new frmCombustible();
     private frmLogin vistaLogin;
     private frmOpcions vistaOpcions;
     private frmVehicle vistaVehiculos = new frmVehicle();
     private frmManteniment vistaManteniment = new frmManteniment();
+    private frmRepostatge vistaRepostatge = new frmRepostatge();
     private Empleats usuari;
     private Vehicle vehicle;
     private Mantenimiento manteniment;
     private Combustible combustible;
+    private Repostar repostatge;
     private Comunica comunica = new Comunica();
     private JsonObject object;
     private boolean correcte = false;
@@ -68,12 +75,13 @@ public class ctrlLogin implements ActionListener {
      * @param vista es la vista que hem de carregar
      * @param usuari objecte de la classe Empleats
      */
-    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible) {
+    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible, Repostar repostatge) {
         this.vistaLogin = vista;
         this.usuari = usuari;
         this.vehicle = vehicle;
         this.manteniment = manteniment;
         this.combustible = combustible;
+        this.repostatge = repostatge;
         vistaLogin.btnLogin.addActionListener(this);
         
         vistaOpcions = new frmOpcions();
@@ -84,6 +92,7 @@ public class ctrlLogin implements ActionListener {
         vistaOpcions.btnVehicles.addActionListener(this);
         vistaOpcions.btnManteniments.addActionListener(this);
         vistaOpcions.btnCombustible.addActionListener(this);
+        vistaOpcions.btnRepostatge.addActionListener(this);
 
     }
 
@@ -209,6 +218,18 @@ public class ctrlLogin implements ActionListener {
                 controlCombustible = new ctrlCombustible(vistaCombustible, consultaCombustible, combustible,  token);
                 vistaCombustible.setVisible(true);
                 vistaCombustible.txtToken.setText(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        }
+        
+        if (e.getSource() == vistaOpcions.btnRepostatge) {
+            try {
+                controlRepostar = new ctrlRepostar(vistaRepostatge, consultaRepostatge, repostatge,  token);
+                vistaRepostatge.setVisible(true);
+                vistaRepostatge.txtToken.setText(token);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }

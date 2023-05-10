@@ -14,6 +14,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
+import model.Repostar;
 import model.Vehicle;
 import vista.frmLogin;
 
@@ -46,7 +47,8 @@ public class Damjei {
         Vehicle vehicle = new Vehicle();
         Mantenimiento manteniment = new Mantenimiento();
         Combustible combustible = new Combustible();
-        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible);
+        Repostar repostar = new Repostar();
+        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible, repostar);
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         //server.iniciar();
