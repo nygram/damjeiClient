@@ -5,8 +5,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import controlador.ctrlLogin;
+import controlador.ctrlRepostar;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import static model.consultesCombustible.LLISTAR;
 import vista.frmCombustible;
 import vista.frmRepostatge;
@@ -29,7 +37,7 @@ public class consultesRepostatge {
     int port = 8180;
     String ip = "127.0.0.1";
 
-    public void carregaComboVehicle(frmRepostatge vista, String token) throws IOException {
+    public JsonArray vehicleCombo(frmRepostatge vista, String token) throws IOException {
 
         Socket socket = new Socket(ip, port);
         comDades com = new comDades();
@@ -37,7 +45,7 @@ public class consultesRepostatge {
         Vehicle ve = new Vehicle();
 
         Gson gson = new Gson();
-        
+
         JsonObject obtVehiculo = new JsonObject();
         obtVehiculo.add("vehicle", gson.toJsonTree(ve));
         obtVehiculo.addProperty("accio", LLISTAR);
@@ -45,17 +53,44 @@ public class consultesRepostatge {
         obtVehiculo.addProperty("clase", "Vehicle.class");
 
         com.enviaDades(obtVehiculo, socket);
-        
+
         JsonArray vehicle = com.repDades4(socket);
-        for (JsonElement vehicles : vehicle) {
-            JsonObject veh = vehicles.getAsJsonObject();
-            //int id = veh.get("idvehiculo").getAsInt();
-            //String modelo = veh.get("modelo").getAsString();
-           String matricula = veh.get("matricula").getAsString();
+        System.out.println("Vehicle es "+vehicle);
+
+        return vehicle;
+    }
+
+    public Vector<Vehicle> mostrarVehicles(String token) {
+        JsonArray vehicle;
+        Vector<Vehicle> vectorVehicles = new Vector<Vehicle>();
+        Vehicle vehi;
+
+        try {
+            vehi = new Vehicle();
+            vehi.setIdvehiculo(0);
+            vehi.setMatricula("Seleccioni un vehicle");
+            vectorVehicles.add(vehi);
+
+            vehicle = vehicleCombo(vista, token);
+
+            for (JsonElement vehicles : vehicle) {
+                JsonObject veh = vehicles.getAsJsonObject();
+                vehi = new Vehicle();
+                vehi.setIdvehiculo(Integer.parseInt(veh.get("idvehiculo").getAsString()));
+                vehi.setMatricula(veh.get("matricula").getAsString());
+                //vehi.setKilometros_actuales(veh.get);
+                //vehi.setMarca(token);
+                vehi.setModelo(veh.get("modelo").getAsString());
+                
+                System.out.println("Object es :"+veh);
+                vectorVehicles.add(vehi);
+                
+            }  
             
-            vista.cmbVehicles.addItem(matricula);
-            
+        } catch (IOException ex) {
+            Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+        return vectorVehicles;
+
     }
 }

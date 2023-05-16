@@ -4,16 +4,14 @@
  */
 package model;
 
-
 import java.util.ArrayList;
-
 
 /**
  *
  * @author Ivimar
  */
 public class Vehicle {
-  
+
     private int idvehiculo;
     private String marca;
     private String modelo;
@@ -24,12 +22,10 @@ public class Vehicle {
     private int conductorid;
     private int empresaid;
     private Float kilometros_actuales;
-   
 
-     public Vehicle() {
+    public Vehicle() {
     }
-     // getters y setters
-
+    // getters y setters
 
     public int getIdvehiculo() {
         return idvehiculo;
@@ -87,7 +83,6 @@ public class Vehicle {
         this.fecha_baja = fecha_baja;
     }
 
-
     public int getConductorid() {
         return conductorid;
     }
@@ -112,5 +107,7 @@ public class Vehicle {
         this.kilometros_actuales = kilometros_actuales;
     }
 
-   
+    public String toString() {
+        return this.matricula;
+    }
 }

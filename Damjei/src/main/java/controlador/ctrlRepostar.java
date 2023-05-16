@@ -4,10 +4,15 @@
  */
 package controlador;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,16 +56,7 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (combo == false) {
-            if (e.getSource() == vistaRepostatge.cmbVehicles) {
-                try {
-                    consulta.carregaComboVehicle(vistaRepostatge, token);
-                    combo = true;
-                } catch (IOException ex) {
-                    Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        
 
     }
 
@@ -70,20 +66,28 @@ public class ctrlRepostar implements MouseListener, ActionListener {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e
+    ) {
     }
 
     @Override
-    public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e
+    ) {
     }
 
     @Override
-    public void mouseExited(MouseEvent e) {
+    public void mouseExited(MouseEvent e
+    ) {
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        if (e.getSource() == vistaRepostatge.cmbVehicles){
+           String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
+            System.out.println("matriucla es "+matricula);
+        }
+
     }
 
 }
