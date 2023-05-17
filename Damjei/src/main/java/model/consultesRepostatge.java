@@ -59,6 +59,29 @@ public class consultesRepostatge {
 
         return vehicle;
     }
+    
+    public JsonArray combustibleCombo(frmRepostatge vista, String token) throws IOException {
+
+        Socket socket = new Socket(ip, port);
+        comDades com = new comDades();
+        System.out.println("token " + token);
+        Combustible combus = new Combustible();
+
+        Gson gson = new Gson();
+
+        JsonObject obtCombustible = new JsonObject();
+        obtCombustible.add("combustible", gson.toJsonTree(combus));
+        obtCombustible.addProperty("accio", LLISTAR);
+        obtCombustible.addProperty("token", token);
+        obtCombustible.addProperty("clase", "Combustible.class");
+
+        com.enviaDades(obtCombustible, socket);
+
+        JsonArray combustible = com.repDades4(socket);
+        System.out.println("Vehicle es "+combustible);
+
+        return combustible;
+    }
 
     public Vector<Vehicle> mostrarVehicles(String token) {
         JsonArray vehicle;
@@ -78,8 +101,7 @@ public class consultesRepostatge {
                 vehi = new Vehicle();
                 vehi.setIdvehiculo(Integer.parseInt(veh.get("idvehiculo").getAsString()));
                 vehi.setMatricula(veh.get("matricula").getAsString());
-                //vehi.setKilometros_actuales(veh.get);
-                //vehi.setMarca(token);
+                vehi.setKilometros_actuales(veh.get("kilometros_actuales").getAsFloat());
                 vehi.setModelo(veh.get("modelo").getAsString());
                 
                 System.out.println("Object es :"+veh);
@@ -91,6 +113,37 @@ public class consultesRepostatge {
             Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vectorVehicles;
+
+    }
+    
+    public Vector<Combustible> mostrarCombustible(String token) {
+        JsonArray combustible;
+        Vector<Combustible> vectorCombustible = new Vector<Combustible>();
+        Combustible combu;
+
+        try {
+            combu = new Combustible();
+            combu.setIdcombustible(0);
+            combu.setNombre("Seleccioni un combustible");
+            vectorCombustible.add(combu);
+
+            combustible = combustibleCombo(vista, token);
+
+            for (JsonElement vehicles : combustible) {
+                JsonObject com = vehicles.getAsJsonObject();
+                combu = new Combustible();
+                combu.setIdcombustible(Integer.parseInt(com.get("idcombustible").getAsString()));
+                combu.setNombre(com.get("nombre").getAsString());
+                               
+                System.out.println("Object es :"+combu);
+                vectorCombustible.add(combu);
+                
+            }  
+            
+        } catch (IOException ex) {
+            Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vectorCombustible;
 
     }
 }

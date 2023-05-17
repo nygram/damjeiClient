@@ -16,6 +16,7 @@ import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Repostar;
 import model.consultesRepostatge;
 import vista.frmRepostatge;
@@ -85,7 +86,41 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         
         if (e.getSource() == vistaRepostatge.cmbVehicles){
            String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
-            System.out.println("matriucla es "+matricula);
+           System.out.println("matriucla es "+matricula);
+        }
+        
+        if (e.getSource() == vistaRepostatge.btnRegistrar){
+            int idVehicle = Integer.parseInt(vistaRepostatge.txtId.getText());
+            String data = vistaRepostatge.txtDataActual.getText();
+            Float imp = Float.parseFloat(vistaRepostatge.txtImport.getText());
+            Float km = Float.parseFloat(vistaRepostatge.txtKmActuals.getText());
+            int idCombustible = Integer.parseInt(vistaRepostatge.txtCombustibleId.getText());
+            int idConductor = Integer.parseInt(vistaRepostatge.txtConductorId.getText());
+            Float litres = Float.parseFloat(vistaRepostatge.txtLitres.getText());
+            
+            repostatge.setVehiculoid(idVehicle);
+            repostatge.setFecha_repostar(data);
+            repostatge.setImporte_repostar(imp);
+            repostatge.setKilometros_repostar(km);
+            repostatge.setCombustibleid(idCombustible);
+            repostatge.setConductorid(idConductor);
+            repostatge.setLitros(litres);
+           
+
+            try {
+                Boolean resposta = consulta.insertarCombustible(combustible, token);
+                System.out.println("");
+                if (resposta) {
+                    JOptionPane.showMessageDialog(null, "Afegit correctament");
+                    consulta.carregaTaula(vistaCombustible, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No afegit correctament");
+
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

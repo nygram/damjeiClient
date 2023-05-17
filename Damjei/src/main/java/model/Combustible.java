@@ -40,6 +40,9 @@ public class Combustible {
     public void setPrecio(Float precio) {
         this.precio = precio;
     }
+    public String toString() {
+        return this.nombre;
+    }
     
     
     

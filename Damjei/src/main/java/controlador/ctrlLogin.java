@@ -1,5 +1,6 @@
 package controlador;
 
+import Utils.Fechas;
 import com.Comunica;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -215,8 +216,6 @@ public class ctrlLogin implements ActionListener {
                 vistaCombustible.setVisible(true);
                 vistaCombustible.txtToken.setText(token);
 
-                
-
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -229,13 +228,19 @@ public class ctrlLogin implements ActionListener {
                 vistaRepostatge.setVisible(true);
                 vistaRepostatge.txtToken.setText(token);
                 
-                
                 Vector<Vehicle> vectorVehicles = consultaRepostatge.mostrarVehicles(token);
 
-                    DefaultComboBoxModel com = new DefaultComboBoxModel (vectorVehicles);
-                    vistaRepostatge.cmbVehicles.setModel(com);
-
+                DefaultComboBoxModel com = new DefaultComboBoxModel(vectorVehicles);
+                vistaRepostatge.cmbVehicles.setModel(com);
                 
+                vistaRepostatge.txtDataActual.setText(Fechas.donaDataActual().toString());
+                
+                
+                Vector<Combustible> vectorCombustible = consultaRepostatge.mostrarCombustible(token);
+
+                DefaultComboBoxModel com2 = new DefaultComboBoxModel(vectorCombustible);
+                vistaRepostatge.cmbCombustible.setModel(com2);
+
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
