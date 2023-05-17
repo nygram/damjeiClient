@@ -4,7 +4,7 @@
  */
 package controlador;
 
-import Utils.Campos;
+import Utils.Camps;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -169,7 +169,7 @@ public class ctrlCombustible implements ActionListener, MouseListener{
         
         if (me.getSource() == vistaCombustible.btnNuevo) {
             vistaCombustible.jTabbedPane1.setSelectedIndex(1);
-            Campos.limpiarCampos(vistaCombustible.jPanel2);
+            Camps.netejaCamps(vistaCombustible.jPanel2);
             vistaCombustible.btnModificar.setVisible(false);
             vistaCombustible.btnInsertar.setVisible(true);
 

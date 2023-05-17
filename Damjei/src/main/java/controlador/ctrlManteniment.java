@@ -4,7 +4,7 @@
  */
 package controlador;
 
-import Utils.Campos;
+import Utils.Camps;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -174,7 +174,7 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         
         if (me.getSource() == vistaManteniment.btnNuevo) {
             vistaManteniment.jTabbedPane1.setSelectedIndex(1);
-            Campos.limpiarCampos(vistaManteniment.jPanel2);
+            Camps.netejaCamps(vistaManteniment.jPanel2);
             vistaManteniment.btnModificar.setVisible(false);
             vistaManteniment.btnInsertar.setVisible(true);
 

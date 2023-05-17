@@ -1,6 +1,6 @@
 package controlador;
 
-import Utils.Campos;
+import Utils.Camps;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -222,7 +222,7 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
 
         if (me.getSource() == vistaVehicle.btnNuevo) {
             vistaVehicle.jTabbedPane1.setSelectedIndex(1);
-            Campos.limpiarCampos(vistaVehicle.jPanel2);
+            Camps.netejaCamps(vistaVehicle.jPanel2);
             vistaVehicle.btnModificar.setVisible(false);
             vistaVehicle.btnInsertar.setVisible(true);
 

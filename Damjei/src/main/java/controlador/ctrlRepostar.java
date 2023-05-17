@@ -19,7 +19,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Repostar;
 import model.consultesRepostatge;
+import org.postgresql.core.Utils;
 import vista.frmRepostatge;
+import Utils.Camps;
 
 /**
  *
@@ -53,11 +55,11 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         this.repostatge = repostatge;
         System.out.println(repostatge);
         vista.cmbVehicles.addMouseListener(this);
+        vista.btnRegistrar.addActionListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
 
     }
 
@@ -83,13 +85,16 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (e.getSource() == vistaRepostatge.cmbVehicles){
-           String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
-           System.out.println("matriucla es "+matricula);
+
+        if (e.getSource() == vistaRepostatge.cmbVehicles) {
+            String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
+            System.out.println("matriucla es " + matricula);
         }
-        
-        if (e.getSource() == vistaRepostatge.btnRegistrar){
+
+        if (e.getSource() == vistaRepostatge.btnRegistrar) {
+
+            Camps camp = new Camps();
+
             int idVehicle = Integer.parseInt(vistaRepostatge.txtId.getText());
             String data = vistaRepostatge.txtDataActual.getText();
             Float imp = Float.parseFloat(vistaRepostatge.txtImport.getText());
@@ -97,7 +102,7 @@ public class ctrlRepostar implements MouseListener, ActionListener {
             int idCombustible = Integer.parseInt(vistaRepostatge.txtCombustibleId.getText());
             int idConductor = Integer.parseInt(vistaRepostatge.txtConductorId.getText());
             Float litres = Float.parseFloat(vistaRepostatge.txtLitres.getText());
-            
+
             repostatge.setVehiculoid(idVehicle);
             repostatge.setFecha_repostar(data);
             repostatge.setImporte_repostar(imp);
@@ -105,14 +110,14 @@ public class ctrlRepostar implements MouseListener, ActionListener {
             repostatge.setCombustibleid(idCombustible);
             repostatge.setConductorid(idConductor);
             repostatge.setLitros(litres);
-           
 
             try {
-                Boolean resposta = consulta.insertarCombustible(combustible, token);
+                Boolean resposta = consulta.insertarRepostatge(repostatge, token);
                 System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
-                    consulta.carregaTaula(vistaCombustible, token);
+                    camp.netejaCamps(vistaRepostatge.jPanel1);
+                    
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No afegit correctament");

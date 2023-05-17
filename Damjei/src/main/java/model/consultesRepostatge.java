@@ -102,6 +102,7 @@ public class consultesRepostatge {
                 vehi.setIdvehiculo(Integer.parseInt(veh.get("idvehiculo").getAsString()));
                 vehi.setMatricula(veh.get("matricula").getAsString());
                 vehi.setKilometros_actuales(veh.get("kilometros_actuales").getAsFloat());
+                vehi.setConductorid(veh.get("conductorid").getAsInt());
                 vehi.setModelo(veh.get("modelo").getAsString());
                 
                 System.out.println("Object es :"+veh);
@@ -144,6 +145,33 @@ public class consultesRepostatge {
             Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vectorCombustible;
+
+    }
+     public boolean insertarRepostatge(Repostar repostar, String token) throws IOException {
+
+        Gson gson = new Gson();
+        Socket socket = new Socket(ip, port);
+        frmRepostatge vista = new frmRepostatge();
+        
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe). 
+         */
+        
+        JsonObject obtRepostatge = new JsonObject();
+        obtRepostatge.add("repostar", gson.toJsonTree(repostar));
+        obtRepostatge.addProperty("accio", INSERTAR);
+        obtRepostatge.addProperty("token", token);
+        obtRepostatge.addProperty("clase", "Repostar.class");
+        
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament. 
+         */
+        
+        com.enviaDades(obtRepostatge, socket);
+        Boolean resposta = com.repDades3(socket);
+        System.out.println("La resposta es " + resposta);
+        return resposta;
 
     }
 }

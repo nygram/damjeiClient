@@ -4,7 +4,7 @@
  */
 package controlador;
 
-import Utils.Campos;
+import Utils.Camps;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -193,7 +193,7 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
          */
         if (me.getSource() == vistaEmpleats.btnNuevo) {
             vistaEmpleats.jTabbedPane1.setSelectedIndex(1);
-            Campos.limpiarCampos(vistaEmpleats.jPanel2);
+            Camps.netejaCamps(vistaEmpleats.jPanel2);
             vistaEmpleats.btnModificar.setVisible(false);
             vistaEmpleats.btnInsertar.setVisible(true);
 
