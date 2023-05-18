@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import controlador.ctrlLogin;
 import controlador.ctrlRepostar;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.HashSet;
@@ -15,6 +16,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import static model.consultesCombustible.LLISTAR;
 import vista.frmCombustible;
 import vista.frmRepostatge;
@@ -172,6 +175,79 @@ public class consultesRepostatge {
         Boolean resposta = com.repDades3(socket);
         System.out.println("La resposta es " + resposta);
         return resposta;
+
+    }
+     
+     public void carregaTaula(frmRepostatge vista, String token) throws IOException {
+
+        this.vista = vista;
+        this.token = token;
+
+        DefaultTableModel modeloTabla = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        };
+        vista.taulaRespostatge.setModel(modeloTabla);
+        vista.taulaRespostatge.setRowSorter(new TableRowSorter<DefaultTableModel>(modeloTabla));
+        vista.taulaRespostatge.setAutoCreateRowSorter(true);
+        vista.taulaRespostatge.setBackground(Color.WHITE);
+        vista.taulaRespostatge.setSelectionBackground(new Color(250, 201, 104));
+        vista.taulaRespostatge.setOpaque(true);
+
+        //vista.btnModificar.setVisible(false);
+        
+        
+        /**
+         * Inicialitzazem Socket i comDades, encarregats de la cominiació
+         * amb el servidor
+         */
+
+        Socket socket = new Socket(ip, port);
+        comDades com = new comDades();
+        System.out.println("token " + token);
+        Repostar re = new Repostar();
+
+        Gson gson = new Gson();
+        
+         /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi volem
+         * afegir (accio, token i classe).
+         */
+
+        JsonObject obtRepostatge = new JsonObject();
+        obtRepostatge.add("repostar", gson.toJsonTree(re));
+        obtRepostatge.addProperty("accio", LLISTAR);
+        obtRepostatge.addProperty("token", token);
+        obtRepostatge.addProperty("clase", "Repostar.class");
+
+        com.enviaDades(obtRepostatge, socket);
+
+        modeloTabla.addColumn("Matricula");
+        modeloTabla.addColumn("Model");
+        modeloTabla.addColumn("Data");
+        modeloTabla.addColumn("Import");
+        
+        
+        
+        /**
+         * Rebem les dades com a array de Objects. Fent recorrgut per l'array, 
+         * recollim les dades i les afegim a les files de la taula
+         */
+
+        JsonArray repostatge = com.repDades4(socket);
+        for (JsonElement repostatges : repostatge) {
+
+            JsonObject repo = repostatges.getAsJsonObject();
+            int idvehiculo = repo.get("vehiculoid").getAsInt();
+            int idconductor = repo.get("conductorid").getAsInt();
+            String dat = repo.get("fecha_repostar").getAsString();
+            Float precio = repo.get("importe_repostar").getAsFloat();
+            
+
+            Object[] fila = {idvehiculo, idconductor, dat, precio};
+            modeloTabla.addRow(fila);
+        }
 
     }
 }

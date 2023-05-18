@@ -10,6 +10,7 @@ public class frmRepostatge extends javax.swing.JFrame {
     public frmRepostatge() {
         initComponents();
         this.setLocationRelativeTo(null);
+        jTabbedPane1.setSelectedIndex(0);
     }
     
     
@@ -45,13 +46,8 @@ public class frmRepostatge extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        btnModificar = new javax.swing.JButton();
-        btnInsertar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        txtNom = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtPrecio = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taulaRespostatge = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         txtToken = new javax.swing.JTextField();
         txtCombustibleId = new javax.swing.JTextField();
@@ -174,72 +170,33 @@ public class frmRepostatge extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Detalles Combustible");
-
-        btnModificar.setText("Modificar");
-
-        btnInsertar.setBackground(new java.awt.Color(229, 172, 19));
-        btnInsertar.setText("Insertar");
-        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertarActionPerformed(evt);
+        taulaRespostatge.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
-
-        jLabel9.setText("Combustible");
-
-        txtNom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Preu");
+        ));
+        jScrollPane1.setViewportView(taulaRespostatge);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnInsertar)
-                .addGap(18, 18, 18)
-                .addComponent(btnModificar)
-                .addGap(106, 106, 106))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(229, 229, 229)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                            .addComponent(txtPrecio)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(329, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar)
-                    .addComponent(btnInsertar))
-                .addGap(32, 32, 32))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Històric repostatges", jPanel2);
@@ -312,14 +269,6 @@ public class frmRepostatge extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInsertarActionPerformed
-
-    private void txtNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomActionPerformed
-
     private void cmbVehiclesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbVehiclesItemStateChanged
         // TODO add your handling code here:
         if (evt.getStateChange() == ItemEvent.SELECTED){
@@ -348,15 +297,11 @@ public class frmRepostatge extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBorrar;
-    public javax.swing.JButton btnInsertar;
-    public javax.swing.JButton btnModificar;
     public javax.swing.JButton btnNuevo;
     public javax.swing.JButton btnRegistrar;
     public javax.swing.JButton btnSalir;
     public javax.swing.JComboBox<String> cmbCombustible;
     public javax.swing.JComboBox<String> cmbVehicles;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -364,11 +309,12 @@ public class frmRepostatge extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JTable taulaRespostatge;
     public javax.swing.JTextField txtCombustibleId;
     public javax.swing.JTextField txtConductorId;
     public javax.swing.JTextField txtDataActual;
@@ -377,8 +323,6 @@ public class frmRepostatge extends javax.swing.JFrame {
     public javax.swing.JTextField txtKmActuals;
     public javax.swing.JTextField txtLitres;
     public javax.swing.JTextField txtModel;
-    public javax.swing.JTextField txtNom;
-    public javax.swing.JTextField txtPrecio;
     public javax.swing.JTextField txtToken;
     // End of variables declaration//GEN-END:variables
 }

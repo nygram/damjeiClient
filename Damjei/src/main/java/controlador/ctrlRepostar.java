@@ -34,6 +34,7 @@ public class ctrlRepostar implements MouseListener, ActionListener {
     private Repostar repostatge;
     private String token;
     boolean combo = false;
+    
 
     /**
      * Constructor del controlador que s'inicialitza amb la vista (frmVehicle),
@@ -50,10 +51,8 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         this.vistaRepostatge = vista;
         this.consulta = consulta;
         this.token = token;
-        System.out.println(token);
-        System.out.println(consulta);
         this.repostatge = repostatge;
-        System.out.println(repostatge);
+        consulta.carregaTaula(vista, token);
         vista.cmbVehicles.addMouseListener(this);
         vista.btnRegistrar.addActionListener(this);
     }
@@ -88,7 +87,6 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
         if (e.getSource() == vistaRepostatge.cmbVehicles) {
             String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
-            System.out.println("matriucla es " + matricula);
         }
 
         if (e.getSource() == vistaRepostatge.btnRegistrar) {
@@ -113,10 +111,12 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
             try {
                 Boolean resposta = consulta.insertarRepostatge(repostatge, token);
-                System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
                     camp.netejaCamps(vistaRepostatge.jPanel1);
+                    consulta.carregaTaula(vistaRepostatge, token);
+                    vistaRepostatge.jTabbedPane1.setSelectedIndex(1);
+                    
                     
 
                 } else {
