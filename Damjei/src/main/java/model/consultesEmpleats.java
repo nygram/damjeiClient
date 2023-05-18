@@ -116,6 +116,7 @@ public class consultesEmpleats {
             String nombre = emp2.getNom();
             String apellido = emp2.getApellidos();
             Boolean administrador = emp2.getAdministrador();
+            
             Object[] fila = {id, dni, nombre, apellido, administrador};
             modeloTabla.addRow(fila);
         }
