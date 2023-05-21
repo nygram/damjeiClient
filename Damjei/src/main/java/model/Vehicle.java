@@ -107,6 +107,7 @@ public class Vehicle {
         this.kilometros_actuales = kilometros_actuales;
     }
 
+    @Override
     public String toString() {
         return this.matricula;
     }

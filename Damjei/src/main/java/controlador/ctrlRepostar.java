@@ -22,6 +22,12 @@ import model.consultesRepostatge;
 import org.postgresql.core.Utils;
 import vista.frmRepostatge;
 import Utils.Camps;
+import java.io.FileNotFoundException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 
 /**
  *
@@ -46,16 +52,15 @@ public class ctrlRepostar implements MouseListener, ActionListener {
      * @param token. Token rebut del servidor
      * @throws IOException
      */
-    public ctrlRepostar(frmRepostatge vista, consultesRepostatge consulta, Repostar repostatge, String token) throws IOException {
+    public ctrlRepostar(frmRepostatge vista, consultesRepostatge consulta, Repostar repostatge, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         this.vistaRepostatge = vista;
         this.consulta = consulta;
         this.token = token;
-        System.out.println(token);
-        System.out.println(consulta);
         this.repostatge = repostatge;
-        System.out.println(repostatge);
+        consulta.carregaTaula(vista, token);
         vista.cmbVehicles.addMouseListener(this);
         vista.btnRegistrar.addActionListener(this);
+        vista.btnSalir.addActionListener(this);
     }
 
     @Override
@@ -88,7 +93,6 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
         if (e.getSource() == vistaRepostatge.cmbVehicles) {
             String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
-            System.out.println("matriucla es " + matricula);
         }
 
         if (e.getSource() == vistaRepostatge.btnRegistrar) {
@@ -97,11 +101,11 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
             int idVehicle = Integer.parseInt(vistaRepostatge.txtId.getText());
             String data = vistaRepostatge.txtDataActual.getText();
-            Float imp = Float.parseFloat(vistaRepostatge.txtImport.getText());
-            Float km = Float.parseFloat(vistaRepostatge.txtKmActuals.getText());
+            float imp = Float.parseFloat(vistaRepostatge.txtImport.getText());
+            float km = Float.parseFloat(vistaRepostatge.txtKmActuals.getText());
             int idCombustible = Integer.parseInt(vistaRepostatge.txtCombustibleId.getText());
             int idConductor = Integer.parseInt(vistaRepostatge.txtConductorId.getText());
-            Float litres = Float.parseFloat(vistaRepostatge.txtLitres.getText());
+            float litres = Float.parseFloat(vistaRepostatge.txtLitres.getText());
 
             repostatge.setVehiculoid(idVehicle);
             repostatge.setFecha_repostar(data);
@@ -113,19 +117,34 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
             try {
                 Boolean resposta = consulta.insertarRepostatge(repostatge, token);
-                System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
                     camp.netejaCamps(vistaRepostatge.jPanel1);
-                    
+                    consulta.carregaTaula(vistaRepostatge, token);
+                    vistaRepostatge.jTabbedPane1.setSelectedIndex(1);
 
                 } else {
                     JOptionPane.showMessageDialog(null, "No afegit correctament");
+                    consulta.carregaTaula(vistaRepostatge, token);
 
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        if (e.getSource() == vistaRepostatge.btnSalir) {
+            vistaRepostatge.dispose();
+
         }
 
     }

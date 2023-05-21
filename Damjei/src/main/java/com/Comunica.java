@@ -15,13 +15,20 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import com.comDades;
+import java.io.FileNotFoundException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import model.Empleats;
 
 /**
- * Classe que s'encarrea de les comunicacions. Disposa de constants 
- * per seleccionar la acció que es vol relitzar. 
+ * Classe que s'encarrea de les comunicacions. Disposa de constants per
+ * seleccionar la acció que es vol relitzar.
+ *
  * @author JavierFernándezDíaz
- * 
+ *
  */
 public class Comunica {
 
@@ -35,39 +42,44 @@ public class Comunica {
     int token = 0;
     int port = 8180;
     String ip = "127.0.0.1";
+
     /**
      * Getter
-     * @return token 
+     *
+     * @return token
      */
     public int getToken() {
         return token;
     }
+
     /**
      * Setter
-     * @param token 
+     *
+     * @param token
      */
     public void setToken(int token) {
         this.token = token;
     }
-    
-    
-    /**
-     * Mètode per fer Login al servidor. Rep un objecte empleat i l'encapsula en un Objecte Json afegint com a propietats
-     * l'acció que volem que el servidor faci i la classe a la que pertany 
-     * @param empleat objecte de la classe Empleats
-     * @return JsonObject que conté l'objecte empleat, l'acció que passem fent servir les constants declarades:
-     * LOGIN = 0;
-     * LOGOUT = 1;
-     * INSERTAR = 2;
-     * ACTUALITZAR = 3;
-     * ELIMINAR = 4;
-     * LLISTAR = 5;
-     * i la classe a la que pertany empleat
-     * @throws IOException 
-     */
-    public JsonObject enviaLogin(Empleats empleat) throws IOException {
 
-        Socket socket = new Socket(ip, port);
+    /**
+     * Mètode per fer Login al servidor. Rep un objecte empleat i l'encapsula en
+     * un Objecte Json afegint com a propietats l'acció que volem que el
+     * servidor faci i la classe a la que pertany
+     *
+     * @param empleat objecte de la classe Empleats
+     * @return JsonObject que conté l'objecte empleat, l'acció que passem fent
+     * servir les constants declarades: LOGIN = 0; LOGOUT = 1; INSERTAR = 2;
+     * ACTUALITZAR = 3; ELIMINAR = 4; LLISTAR = 5; i la classe a la que pertany
+     * empleat
+     * @throws IOException
+     */
+    public JsonObject enviaLogin(Empleats empleat) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
+
+        //Socket socket = new Socket(ip, port);
         comDades com = new comDades();
 
         Gson gson = new Gson();
@@ -76,42 +88,44 @@ public class Comunica {
         obtEmpleat.add("empleat", gson.toJsonTree(empleat));
         obtEmpleat.addProperty("accio", LOGIN);
         obtEmpleat.addProperty("clase", "Empleats.class");
-        
+
         com.enviaDades(obtEmpleat, socket);
         JsonObject objecte = com.repDades(socket);
-        
+
         socket.close();
-      
+
         return objecte;
 
     }
+
     /**
      * /**
-     * Mètode per fer Logout al servidor. Rep un int que es el token de la sessió i l'envia al servidor per
-     * comunicar que s'ha fet el Logout. Torna un booleà que ens confirma si s'ha fet el Logout correctement
+     * Mètode per fer Logout al servidor. Rep un int que es el token de la
+     * sessió i l'envia al servidor per comunicar que s'ha fet el Logout. Torna
+     * un booleà que ens confirma si s'ha fet el Logout correctement
+     *
      * @param token identifica la sessió oberta amb el servidor
      * @return boolean ens confirma si el Logout s'ha fet correctement
-     * @throws IOException 
+     * @throws IOException
      */
-     
-    public boolean enviaLogout(String token) throws IOException{
-        
-        Socket socket = new Socket(ip, port);
+
+    public boolean enviaLogout(String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         comDades com = new comDades();
         Gson gson = new Gson();
-        
+
         JsonObject obtLogout = new JsonObject();
         obtLogout.addProperty("accio", LOGOUT);
         obtLogout.addProperty("token", token);
-        
+
         com.enviaDades(obtLogout, socket);
-        
+
         socket.close();
-        
+
         boolean correcte = true;
         return correcte;
     }
-
-    
 
 }

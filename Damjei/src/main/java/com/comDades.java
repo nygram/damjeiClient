@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,8 +16,18 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Empleats;
+import static org.apache.maven.wagon.PathUtils.port;
+
+
 
 /**
  * Classe que gestiona enviar i rebre dades del servidor
@@ -25,6 +36,10 @@ import model.Empleats;
  *
  */
 public class comDades {
+
+    Socket socket;
+    int port = 8180;
+    String ip = "127.0.0.1";
 
     public comDades() {
     }
@@ -73,12 +88,12 @@ public class comDades {
         String data = input.readLine();
         Object[] objects = gson.fromJson(data, Object[].class);
         System.out.println(objects);
-        
+
         return objects;
 
     }
-    
-     public JsonArray repDades4(Socket socket) throws IOException {
+
+    public JsonArray repDades4(Socket socket) throws IOException {
 
         Gson gson = new Gson();
 
@@ -86,26 +101,26 @@ public class comDades {
 
         String data = input.readLine();
         JsonArray objects = gson.fromJson(data, JsonArray.class);
-        System.out.println(objects);
-        
+
         return objects;
 
     }
-    
-    
-    public boolean repDades3(Socket socket) throws IOException {
+
+    public boolean repDades3(Socket socket) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
 
+        this.socket = socket;
+        
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
         String data = input.readLine();
-        System.out.println(" Data es :"+data );
+        System.out.println(" Data es :" + data);
         JsonObject objecte = gson.fromJson(data, JsonObject.class);
         Boolean correcte = objecte.get("correcte").getAsBoolean();
-               
+
         return correcte;
 
     }
-    
+
 }

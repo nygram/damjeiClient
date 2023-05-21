@@ -9,7 +9,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -43,7 +49,7 @@ public class ctrlCombustible implements ActionListener, MouseListener{
      * @throws IOException 
      */
 
-    public ctrlCombustible(frmCombustible vista, consultesCombustible consulta, Combustible combustible, String token) throws IOException {
+    public ctrlCombustible(frmCombustible vista, consultesCombustible consulta, Combustible combustible, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
         this.vistaCombustible = vista;
         this.consulta = consulta;
         this.token = token;
@@ -89,6 +95,16 @@ public class ctrlCombustible implements ActionListener, MouseListener{
                     consulta.carregaCombustible(Integer.parseInt(codigo), vistaCombustible);
                 } catch (IOException ex) {
                     Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyStoreException ex) {
+                    Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+                }  catch (CertificateException ex) {
+                    Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnrecoverableKeyException ex) {
+                    Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -125,6 +141,16 @@ public class ctrlCombustible implements ActionListener, MouseListener{
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            }  catch (CertificateException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -157,6 +183,16 @@ public class ctrlCombustible implements ActionListener, MouseListener{
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -204,6 +240,16 @@ public class ctrlCombustible implements ActionListener, MouseListener{
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlCombustible.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         

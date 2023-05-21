@@ -15,6 +15,7 @@ import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
 import model.Repostar;
+import model.Revisiones;
 import model.Vehicle;
 import vista.frmLogin;
 
@@ -47,8 +48,9 @@ public class Damjei {
         Vehicle vehicle = new Vehicle();
         Mantenimiento manteniment = new Mantenimiento();
         Combustible combustible = new Combustible();
+        Revisiones revisio = new Revisiones();
         Repostar repostar = new Repostar();
-        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible, repostar);
+        ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible, repostar, revisio);
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         //server.iniciar();

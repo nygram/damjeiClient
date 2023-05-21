@@ -1,14 +1,21 @@
 
 package model;
 
+import com.SocketSSL_Conexio;
 import com.comDades;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.awt.Color;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import static model.consultasManteniment.ELIMINAR;
@@ -40,7 +47,7 @@ public class consultesCombustible {
     public consultesCombustible() {
     }
     
-    public void carregaTaula(frmCombustible vista, String token) throws IOException {
+    public void carregaTaula(frmCombustible vista, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
 
         this.vista = vista;
         this.token = token;
@@ -65,7 +72,8 @@ public class consultesCombustible {
          * amb el servidor
          */
 
-        Socket socket = new Socket(ip, port);
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         comDades com = new comDades();
         System.out.println("token " + token);
         Combustible co = new Combustible();
@@ -115,7 +123,7 @@ public class consultesCombustible {
      * @throws IOException 
      */
 
-    public void carregaCombustible(int codigo, frmCombustible vista) throws IOException {
+    public void carregaCombustible(int codigo, frmCombustible vista) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         this.vista = vista;
         this.token = token;
@@ -125,7 +133,8 @@ public class consultesCombustible {
          * amb el servidor
          */
 
-        Socket socket = new Socket(ip, port);
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         comDades com = new comDades();
         Combustible co = new Combustible();
         co.setIdcombustible(codigo);
@@ -170,10 +179,11 @@ public class consultesCombustible {
 
     }
     
-    public boolean insertarCombustible(Combustible combustible, String token) throws IOException {
+    public boolean insertarCombustible(Combustible combustible, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
-        Socket socket = new Socket(ip, port);
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         frmCombustible vista = new frmCombustible();
         
         /**
@@ -206,10 +216,11 @@ public class consultesCombustible {
      * @throws IOException 
      */
     
-    public boolean modificarCombustible(Combustible combustible, String token) throws IOException {
+    public boolean modificarCombustible(Combustible combustible, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
-        Socket socket = new Socket(ip, port);
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         frmCombustible vista = new frmCombustible();
         
         /**
@@ -242,12 +253,13 @@ public class consultesCombustible {
      * @throws IOException 
      */
 
-    public boolean eliminarCombustible(Combustible combustible, String token) throws IOException {
+    public boolean eliminarCombustible(Combustible combustible, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         
         
         Gson gson = new Gson();
-        Socket socket = new Socket(ip, port);
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
         
         /**
          * Generem objecte Json amb l'objecte empleat i les propietats que hi volem

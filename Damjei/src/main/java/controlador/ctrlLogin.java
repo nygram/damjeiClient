@@ -2,13 +2,20 @@ package controlador;
 
 import Utils.Fechas;
 import com.Comunica;
+import com.Encriptador;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.Socket;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.sql.SQLException;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -19,8 +26,10 @@ import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
 import model.Repostar;
+import model.Revisiones;
 import model.Vehicle;
 import model.consultasManteniment;
+import model.consultasRevisiones;
 import model.consultasVehicle;
 import model.consultesCombustible;
 import model.consultesEmpleats;
@@ -33,6 +42,7 @@ import vista.frmLogin;
 import vista.frmManteniment;
 import vista.frmOpcions;
 import vista.frmRepostatge;
+import vista.frmRevisions;
 import vista.frmVehicle;
 
 /**
@@ -49,11 +59,13 @@ public class ctrlLogin implements ActionListener {
     private ctrlManteniment controlManteniments;
     private ctrlCombustible controlCombustible;
     private ctrlRepostar controlRepostar;
+    private ctrlRevisions controlRevisions;
     private consultesEmpleats consulta = new consultesEmpleats();
     private consultasVehicle consultasVehiculos = new consultasVehicle();
     private consultasManteniment consultaManteniment = new consultasManteniment();
     private consultesCombustible consultaCombustible = new consultesCombustible();
     private consultesRepostatge consultaRepostatge = new consultesRepostatge();
+    private consultasRevisiones consultaRevision = new consultasRevisiones();
     private frmEmpleats vistaEmpleats = new frmEmpleats();
     private frmCombustible vistaCombustible = new frmCombustible();
     private frmLogin vistaLogin;
@@ -61,11 +73,13 @@ public class ctrlLogin implements ActionListener {
     private frmVehicle vistaVehiculos = new frmVehicle();
     private frmManteniment vistaManteniment = new frmManteniment();
     private frmRepostatge vistaRepostatge = new frmRepostatge();
+    private frmRevisions vistaRevisions = new frmRevisions();
     private Empleats usuari;
     private Vehicle vehicle;
     private Mantenimiento manteniment;
     private Combustible combustible;
     private Repostar repostatge;
+    private Revisiones revision;
     private Comunica comunica = new Comunica();
     private JsonObject object;
     private boolean correcte = false;
@@ -79,13 +93,14 @@ public class ctrlLogin implements ActionListener {
      * @param vista es la vista que hem de carregar
      * @param usuari objecte de la classe Empleats
      */
-    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible, Repostar repostatge) {
+    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible, Repostar repostatge, Revisiones revision) {
         this.vistaLogin = vista;
         this.usuari = usuari;
         this.vehicle = vehicle;
         this.manteniment = manteniment;
         this.combustible = combustible;
         this.repostatge = repostatge;
+        this.revision = revision;
         vistaLogin.btnLogin.addActionListener(this);
 
         vistaOpcions = new frmOpcions();
@@ -97,6 +112,7 @@ public class ctrlLogin implements ActionListener {
         vistaOpcions.btnManteniments.addActionListener(this);
         vistaOpcions.btnCombustible.addActionListener(this);
         vistaOpcions.btnRepostatge.addActionListener(this);
+        vistaOpcions.btnRevisions.addActionListener(this);
 
     }
 
@@ -118,15 +134,17 @@ public class ctrlLogin implements ActionListener {
          */
         if (e.getSource() == vistaLogin.btnLogin) {
             usuari.setDni(vistaLogin.txtUsuari.getText());
-            usuari.setContrasenya(String.valueOf(vistaLogin.txtPasswd.getPassword()));
+            Encriptador hash = new Encriptador();
+            String contraseña = hash.encriptarConSha256(String.valueOf(vistaLogin.txtPasswd.getPassword()));
+
+            usuari.setContrasenya(contraseña);
 
             try {
                 object = comunica.enviaLogin(usuari);
                 correcte = object.get("correcte").getAsBoolean();
-                administrador = object.get("administrador").getAsBoolean();
-                token = object.get("token").getAsString();
-
                 if (correcte) {
+                    administrador = object.get("administrador").getAsBoolean();
+                    token = object.get("token").getAsString();
                     if (administrador) {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
@@ -147,10 +165,19 @@ public class ctrlLogin implements ActionListener {
                         vistaLogin.dispose();
                         System.exit(0);
                     }
-
                 }
 
             } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -169,6 +196,16 @@ public class ctrlLogin implements ActionListener {
                 vistaEmpleats.txtToken.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -184,6 +221,16 @@ public class ctrlLogin implements ActionListener {
                 vistaVehiculos.setVisible(true);
                 vistaVehiculos.txtToken.setText(token);
             } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -218,6 +265,16 @@ public class ctrlLogin implements ActionListener {
 
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -227,15 +284,14 @@ public class ctrlLogin implements ActionListener {
                 controlRepostar = new ctrlRepostar(vistaRepostatge, consultaRepostatge, repostatge, token);
                 vistaRepostatge.setVisible(true);
                 vistaRepostatge.txtToken.setText(token);
-                
+
                 Vector<Vehicle> vectorVehicles = consultaRepostatge.mostrarVehicles(token);
 
                 DefaultComboBoxModel com = new DefaultComboBoxModel(vectorVehicles);
                 vistaRepostatge.cmbVehicles.setModel(com);
-                
+
                 vistaRepostatge.txtDataActual.setText(Fechas.donaDataActual().toString());
-                
-                
+
                 Vector<Combustible> vectorCombustible = consultaRepostatge.mostrarCombustible(token);
 
                 DefaultComboBoxModel com2 = new DefaultComboBoxModel(vectorCombustible);
@@ -243,25 +299,66 @@ public class ctrlLogin implements ActionListener {
 
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
+        if (e.getSource() == vistaOpcions.btnRevisions) {
 
-        /**
-         * Si l'origen de l'esdevenimens es el botó de Logout envia a través del
-         * mètode enviaLogout al servidor el token per permetre a aquest
-         * eliminar-lo de la seva llista
-         *
-         */
-        if (e.getSource() == vistaOpcions.btnLogout) {
             try {
-                comunica.enviaLogout(token);
+                controlRevisions = new ctrlRevisions(vistaRevisions, consultaRevision, revision, token);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.exit(0);
+            vistaRevisions.setVisible(true);
+            vistaRevisions.txtToken.setText(token);
+            
+
+            /**
+             * Si l'origen de l'esdevenimens es el botó de Logout envia a través
+             * del mètode enviaLogout al servidor el token per permetre a aquest
+             * eliminar-lo de la seva llista
+             *
+             */
+            if (e.getSource() == vistaOpcions.btnLogout) {
+                try {
+                    comunica.enviaLogout(token);
+                } catch (IOException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyStoreException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CertificateException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnrecoverableKeyException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                System.exit(0);
+            }
+
         }
 
     }
-
 }

@@ -15,7 +15,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -49,7 +55,7 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
      * @param token. Token rebut del servidor
      * @throws IOException
      */
-    public ctrlEmpleats(frmEmpleats vista, consultesEmpleats consulta, Empleats empleat, String token) throws IOException {
+    public ctrlEmpleats(frmEmpleats vista, consultesEmpleats consulta, Empleats empleat, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         this.vistaEmpleats = vista;
         this.consulta = consulta;
         this.token = token;
@@ -107,6 +113,16 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyStoreException ex) {
+                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (CertificateException ex) {
+                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnrecoverableKeyException ex) {
+                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (KeyManagementException ex) {
+                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -155,6 +171,16 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -181,6 +207,16 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
                     JOptionPane.showMessageDialog(null, "No borrado");
                 }
             } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -212,15 +248,23 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
             String dni = vistaEmpleats.txtNif.getText();
             String contraseña = vistaEmpleats.txtContraseña.getText();
             Boolean administrador = vistaEmpleats.rbtnAdministrador.isSelected();
-
+            String categoria = (String) vistaEmpleats.cmbCategoria.getSelectedItem();
+            String fechacar = vistaEmpleats.txtCarnet.getText();
+            String fechacarcad = vistaEmpleats.txtCarnetCad.getText();
+            
+            
             empleat.setIdempleado(id);
             empleat.setNom(nom);
             empleat.setApellidos(apellido);
             empleat.setDni(dni);
-            empleat.setCategoria("conductor");
+            empleat.setCategoria(categoria);
             empleat.setEmpresaid(1);
             empleat.setContraseña(contraseña);
             empleat.setAdministrador(administrador);
+            if (categoria == "conductor") {
+                empleat.setFecha_carnet(fechacar);
+                empleat.setFecha_caducidad_carnet(fechacarcad);
+            }
 
             try {
                 Boolean resposta = consulta.modificarEmpleat(empleat, token);
@@ -234,6 +278,16 @@ public class ctrlEmpleats implements ActionListener, MouseListener {
 
                 }
             } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

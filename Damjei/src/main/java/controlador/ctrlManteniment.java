@@ -9,7 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -51,7 +58,21 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         this.token = token;
         this.mantenimiento = mantenimiento;
         System.out.println(mantenimiento);
-        consulta.carregaTaula(vista, token);
+        try {
+            consulta.carregaTaula(vista, token);
+        } catch (KeyStoreException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CertificateException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnrecoverableKeyException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (KeyManagementException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+        }
         vista.taulaMantenimiento.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
         vista.btnBorrar.addMouseListener(this);
@@ -109,11 +130,18 @@ public class ctrlManteniment implements ActionListener, MouseListener {
         if (me.getSource() == vistaManteniment.btnInsertar) {
             System.out.println("Insertar");
             String nombre = vistaManteniment.txtNom.getText();
-            Float km = Float.valueOf(vistaManteniment.txtKm.getText());
+            Float km = 0.0f;
+            String km2 = vistaManteniment.txtKm.getText();
+            if (!km2.isBlank()){
+                km = Float.parseFloat(km2);
+            }
+            
             /*
-            if (km == null){
-                km = 0f;
-            }*/
+            if ( km2 != null){
+                km = km2;
+            }
+            */
+           
             mantenimiento.setNombre(nombre);
             mantenimiento.setKilometros_mantenimiento(km);
             
@@ -133,6 +161,16 @@ public class ctrlManteniment implements ActionListener, MouseListener {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            }  catch (CertificateException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -162,6 +200,16 @@ public class ctrlManteniment implements ActionListener, MouseListener {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -188,15 +236,15 @@ public class ctrlManteniment implements ActionListener, MouseListener {
          */
         
         if (me.getSource() == vistaManteniment.btnModificar) {
-            System.out.println("modifica");
+            int idmantenimiento = Integer.parseInt(vistaManteniment.txtId.getText());
             String nombre = vistaManteniment.txtNom.getText();
-            Float km = 0.0f;
+            float km = 0.0f;
             if (Float.valueOf(vistaManteniment.txtKm.getText()) != null){
                 km = Float.valueOf(vistaManteniment.txtKm.getText());
             }
             String fecha = vistaManteniment.txtFecha.getText();
            
-            
+            mantenimiento.setIdmantenimiento(idmantenimiento);
             mantenimiento.setNombre(nombre);
             mantenimiento.setKilometros_mantenimiento(km);
             mantenimiento.setFecha_mantenimiento(fecha);
@@ -214,6 +262,16 @@ public class ctrlManteniment implements ActionListener, MouseListener {
                 }
             } catch (IOException ex) {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlManteniment.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         

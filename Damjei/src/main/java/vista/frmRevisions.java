@@ -1,9 +1,9 @@
 package vista;
 
 
-public class frmManteniment extends javax.swing.JFrame {
+public class frmRevisions extends javax.swing.JFrame {
 
-    public frmManteniment() {
+    public frmRevisions() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -26,17 +26,23 @@ public class frmManteniment extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        taulaMantenimiento = new javax.swing.JTable();
+        taulaRevisions = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
         btnInsertar = new javax.swing.JButton();
-        jLabel9 = new javax.swing.JLabel();
-        txtNom = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        txtKm = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtVehicle = new javax.swing.JTextField();
+        txtManteniment = new javax.swing.JTextField();
+        txtKm = new javax.swing.JTextField();
+        txtData = new javax.swing.JTextField();
+        txtEstat = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtKmActuals = new javax.swing.JTextField();
         btnSalir = new javax.swing.JButton();
         txtToken = new javax.swing.JTextField();
 
@@ -51,22 +57,22 @@ public class frmManteniment extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        taulaMantenimiento.setModel(new javax.swing.table.DefaultTableModel(
+        taulaRevisions.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Id", "Matricula", "Model"
+                "Id", "Vehiculo", "Mantenimiento", "Estado Revision", "Km"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.Float.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -77,11 +83,13 @@ public class frmManteniment extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(taulaMantenimiento);
-        if (taulaMantenimiento.getColumnModel().getColumnCount() > 0) {
-            taulaMantenimiento.getColumnModel().getColumn(0).setResizable(false);
-            taulaMantenimiento.getColumnModel().getColumn(1).setResizable(false);
-            taulaMantenimiento.getColumnModel().getColumn(2).setResizable(false);
+        jScrollPane1.setViewportView(taulaRevisions);
+        if (taulaRevisions.getColumnModel().getColumnCount() > 0) {
+            taulaRevisions.getColumnModel().getColumn(0).setResizable(false);
+            taulaRevisions.getColumnModel().getColumn(1).setResizable(false);
+            taulaRevisions.getColumnModel().getColumn(2).setResizable(false);
+            taulaRevisions.getColumnModel().getColumn(3).setResizable(false);
+            taulaRevisions.getColumnModel().getColumn(4).setResizable(false);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -95,12 +103,12 @@ public class frmManteniment extends javax.swing.JFrame {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Mantenimiento", jPanel1);
+        jTabbedPane1.addTab("Revisions", jPanel1);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel10.setText("Detalles Mantenimiento");
+        jLabel10.setText("Detalles Revisió");
 
         btnModificar.setText("Modificar");
 
@@ -112,13 +120,17 @@ public class frmManteniment extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Nombre Mantenimiento");
+        jLabel2.setText("Vehicle");
 
-        jLabel1.setText("Kms mantenimiento");
+        jLabel3.setText("Manteniment");
 
-        txtKm.setText("0.0");
+        jLabel4.setText("Km revisió");
 
-        jLabel2.setText("Fecha mantenimiento");
+        jLabel5.setText("Data revisió");
+
+        jLabel6.setText("Estat Revisió");
+
+        jLabel1.setText("Km Actuals");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -133,45 +145,65 @@ public class frmManteniment extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(229, 229, 229)
+                        .addGap(102, 102, 102)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(28, 28, 28)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel1))
+                        .addGap(34, 34, 34)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNom, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                            .addComponent(txtKm)
-                            .addComponent(txtFecha)))
+                            .addComponent(txtVehicle)
+                            .addComponent(txtManteniment)
+                            .addComponent(txtKm, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(txtKmActuals))
+                        .addGap(70, 70, 70)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                            .addComponent(txtEstat)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(316, Short.MAX_VALUE))
+                .addContainerGap(266, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                    .addComponent(jLabel6)
+                    .addComponent(txtVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEstat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtManteniment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtKmActuals, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar)
                     .addComponent(btnInsertar))
                 .addGap(32, 32, 32))
         );
 
-        jTabbedPane1.addTab("Detalle Mantenimiento", jPanel2);
+        jTabbedPane1.addTab("Detall revisió", jPanel2);
 
         btnSalir.setText("Salir");
 
@@ -249,17 +281,23 @@ public class frmManteniment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTabbedPane jTabbedPane1;
-    public javax.swing.JTable taulaMantenimiento;
-    public javax.swing.JTextField txtFecha;
+    public javax.swing.JTable taulaRevisions;
+    public javax.swing.JTextField txtData;
+    public javax.swing.JTextField txtEstat;
     public javax.swing.JTextField txtId;
     public javax.swing.JTextField txtKm;
-    public javax.swing.JTextField txtNom;
+    public javax.swing.JTextField txtKmActuals;
+    public javax.swing.JTextField txtManteniment;
     public javax.swing.JTextField txtToken;
+    public javax.swing.JTextField txtVehicle;
     // End of variables declaration//GEN-END:variables
 }
