@@ -357,12 +357,13 @@ public class consultasVehicle {
                 empe.setDni(em.get("dni").getAsString());
                 
                 System.out.println("dni es "+empe.getDni());
-/*
-                if (empe.getCategoria() == "conductor") {
+                System.out.println("categoria "+empe.getCategoria());
+
+                if (empe.getCategoria().equals("conductor")) {
                     vectorEmpleats.add(empe);
                 }
-*/
-                 vectorEmpleats.add(empe);
+
+                 //vectorEmpleats.add(empe);
             }
 
         } catch (IOException ex) {
