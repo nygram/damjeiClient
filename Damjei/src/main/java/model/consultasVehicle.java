@@ -304,24 +304,27 @@ public class consultasVehicle {
         return resposta;
     }
 
-    public JsonArray empleatCombo(frmVehicle vista, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+    public JsonArray empleatCombo(String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
         SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
         Socket socket = conexioSSL.connect(ip, port);
         comDades com = new comDades();
-        Empleats empleat = new Empleats();
+        Empleats em = new Empleats();
+        
+        
 
         /**
          * Generem objecte Json amb l'objecte empleat i les propietats que hi
          * volem afegir (accio, token i classe).
          */
         JsonObject obtEmpleat = new JsonObject();
-        obtEmpleat.add("empleat", gson.toJsonTree(empleat));
+        obtEmpleat.add("empleat", gson.toJsonTree(em));
         obtEmpleat.addProperty("accio", LLISTAR);
         obtEmpleat.addProperty("token", token);
         obtEmpleat.addProperty("clase", "Empleats.class");
 
+        com.enviaDades(obtEmpleat, socket);
         JsonArray emp = com.repDades4(socket);
 
         return emp;
@@ -332,26 +335,34 @@ public class consultasVehicle {
         JsonArray empleat;
         Vector<Empleats> vectorEmpleats = new Vector<Empleats>();
         Empleats empe;
+        System.out.println("comença vector");
 
         try {
             empe = new Empleats();
             empe.setIdempleado(0);
-            empe.setNombre("Seleccioni un vehicle");
             vectorEmpleats.add(empe);
+            empe.setNombre("Seleccioni un vehicle");
+            System.out.println("mes vector");
 
-            empleat = empleatCombo(vista, token);
+            empleat = empleatCombo(token);
+            System.out.println("segueix vector");
 
             for (JsonElement empleats : empleat) {
                 JsonObject em = empleats.getAsJsonObject();
+                System.out.println("dins bucle");
                 empe = new Empleats();
                 empe.setIdempleado(em.get("idempleado").getAsInt());
                 empe.setNombre(em.get("nombre").getAsString());
                 empe.setCategoria(em.get("categoria").getAsString());
-
+                empe.setDni(em.get("dni").getAsString());
+                
+                System.out.println("dni es "+empe.getDni());
+/*
                 if (empe.getCategoria() == "conductor") {
                     vectorEmpleats.add(empe);
                 }
-
+*/
+                 vectorEmpleats.add(empe);
             }
 
         } catch (IOException ex) {

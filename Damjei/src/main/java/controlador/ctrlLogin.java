@@ -229,12 +229,16 @@ public class ctrlLogin implements ActionListener {
                 vistaVehiculos.txtToken.setText(token);
                 vistaVehiculos.txtToken.setVisible(false);
                 vistaVehiculos.txtId.setVisible(false);
-                /*
+                
+                System.out.println("Arriba fins ctrlLogin");
+                
                 Vector<Empleats> vectorEmpleats = consultasVehiculos.mostrarEmpleats(token);
 
                 DefaultComboBoxModel com = new DefaultComboBoxModel(vectorEmpleats);
                 vistaVehiculos.cmbConductor.setModel(com);
-                 */
+                
+                System.out.println("Arriba fins passat ctrlLogin");
+                 
 
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);

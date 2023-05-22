@@ -209,7 +209,7 @@ public class Empleats {
     
     @Override
     public String toString() {
-        return this.nombre;
+        return this.dni;
     }
     
     
