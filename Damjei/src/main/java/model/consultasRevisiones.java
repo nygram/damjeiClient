@@ -107,6 +107,7 @@ public class consultasRevisiones {
         for (JsonElement revisions : revisio) {
 
             JsonObject revi = revisions.getAsJsonObject();
+            int idrevision = revi.get("idrevision").getAsInt();
             int idvehiculo = revi.get("vehiculoid").getAsInt();
             String matriculaVeh = dades.nomVehicle(idvehiculo, token);
             int idmantenimiento = revi.get("mantenimientoid").getAsInt();
@@ -114,7 +115,7 @@ public class consultasRevisiones {
             Boolean estado = revi.get("estado_revision").getAsBoolean();
             Float km = revi.get("kilometros_revision").getAsFloat();
 
-            Object[] fila = {idvehiculo, matriculaVeh, mantenimiento, estado, km};
+            Object[] fila = {idrevision, matriculaVeh, mantenimiento, estado, km};
             modeloTabla.addRow(fila);
         }
 
@@ -183,4 +184,32 @@ public class consultasRevisiones {
         }
 
     }
+    
+    public boolean eliminarRevisio(Revisiones revisio, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        
+            Gson gson = new Gson();
+            SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+            Socket socket = conexioSSL.connect(ip, port);
+
+            /**
+             * Generem objecte Json amb l'objecte empleat i les propietats que
+             * hi volem afegir (accio, token i classe).
+             */
+            JsonObject obtRevisio = new JsonObject();
+            obtRevisio.add("revision", gson.toJsonTree(revisio));
+            obtRevisio.addProperty("accio", ELIMINAR);
+            obtRevisio.addProperty("token", token);
+            obtRevisio.addProperty("clase", "Revisiones.class");
+
+            /**
+             * Rebem un booleà que ens indica si s'ha fet correctament.
+             */
+            com.enviaDades(obtRevisio, socket);
+            Boolean resposta = com.repDades3(socket);
+
+            return resposta;
+             
+
+        } 
 }

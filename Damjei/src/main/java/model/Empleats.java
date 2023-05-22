@@ -207,6 +207,11 @@ public class Empleats {
         this.administrador = administrador;
     }
     
+    @Override
+    public String toString() {
+        return this.nombre;
+    }
+    
     
 
 }

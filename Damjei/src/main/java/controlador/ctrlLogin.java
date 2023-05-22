@@ -3,9 +3,11 @@ package controlador;
 import Utils.Fechas;
 import com.Comunica;
 import com.Encriptador;
+import com.formdev.flatlaf.FlatLightLaf;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -22,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import model.Combustible;
 import model.Empleats;
 import model.Mantenimiento;
@@ -93,7 +97,7 @@ public class ctrlLogin implements ActionListener {
      * @param vista es la vista que hem de carregar
      * @param usuari objecte de la classe Empleats
      */
-    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible, Repostar repostatge, Revisiones revision) {
+    public ctrlLogin(frmLogin vista, Empleats usuari, Vehicle vehicle, Mantenimiento manteniment, Combustible combustible, Repostar repostatge, Revisiones revision) throws UnsupportedLookAndFeelException {
         this.vistaLogin = vista;
         this.usuari = usuari;
         this.vehicle = vehicle;
@@ -154,6 +158,9 @@ public class ctrlLogin implements ActionListener {
                         vistaLogin.setVisible(false);
                         vistaOpcions.setVisible(true);
                         vistaOpcions.btnEmpleats.setVisible(false);
+                        vistaOpcions.btnCombustible.setVisible(false);
+                        vistaOpcions.btnVehicles.setVisible(false);
+                        vistaOpcions.btnManteniments.setVisible(false);
                         vistaOpcions.txtToken.setText(token);
                     }
                 } else {
@@ -220,6 +227,15 @@ public class ctrlLogin implements ActionListener {
                 controlVehiculos = new ctrlVehiculos(vistaVehiculos, consultasVehiculos, vehicle, token);
                 vistaVehiculos.setVisible(true);
                 vistaVehiculos.txtToken.setText(token);
+                vistaVehiculos.txtToken.setVisible(false);
+                vistaVehiculos.txtId.setVisible(false);
+                /*
+                Vector<Empleats> vectorEmpleats = consultasVehiculos.mostrarEmpleats(token);
+
+                DefaultComboBoxModel com = new DefaultComboBoxModel(vectorEmpleats);
+                vistaVehiculos.cmbConductor.setModel(com);
+                 */
+
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             } catch (KeyStoreException ex) {
@@ -246,6 +262,8 @@ public class ctrlLogin implements ActionListener {
                 controlManteniments = new ctrlManteniment(vistaManteniment, consultaManteniment, manteniment, token);
                 vistaManteniment.setVisible(true);
                 vistaManteniment.txtToken.setText(token);
+                vistaManteniment.txtToken.setVisible(false);
+                vistaManteniment.txtId.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -262,6 +280,8 @@ public class ctrlLogin implements ActionListener {
                 controlCombustible = new ctrlCombustible(vistaCombustible, consultaCombustible, combustible, token);
                 vistaCombustible.setVisible(true);
                 vistaCombustible.txtToken.setText(token);
+                vistaCombustible.txtToken.setVisible(false);
+                vistaCombustible.txtId.setVisible(false);
 
             } catch (IOException ex) {
                 Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
@@ -284,6 +304,10 @@ public class ctrlLogin implements ActionListener {
                 controlRepostar = new ctrlRepostar(vistaRepostatge, consultaRepostatge, repostatge, token);
                 vistaRepostatge.setVisible(true);
                 vistaRepostatge.txtToken.setText(token);
+                vistaRepostatge.txtToken.setVisible(false);
+                vistaRepostatge.txtId.setVisible(false);
+                vistaRepostatge.txtCombustibleId.setVisible(false);
+                vistaRepostatge.txtConductorId.setVisible(false);
 
                 Vector<Vehicle> vectorVehicles = consultaRepostatge.mostrarVehicles(token);
 
@@ -331,34 +355,35 @@ public class ctrlLogin implements ActionListener {
             }
             vistaRevisions.setVisible(true);
             vistaRevisions.txtToken.setText(token);
-            
+            vistaRevisions.txtToken.setVisible(false);
+            vistaRevisions.txtId.setVisible(false);
 
-            /**
-             * Si l'origen de l'esdevenimens es el botó de Logout envia a través
-             * del mètode enviaLogout al servidor el token per permetre a aquest
-             * eliminar-lo de la seva llista
-             *
-             */
-            if (e.getSource() == vistaOpcions.btnLogout) {
-                try {
-                    comunica.enviaLogout(token);
-                } catch (IOException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (KeyStoreException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (CertificateException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (UnrecoverableKeyException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (KeyManagementException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (NoSuchAlgorithmException ex) {
-                    Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                System.exit(0);
+        }
+        /**
+         * Si l'origen de l'esdevenimens es el botó de Logout envia a través del
+         * mètode enviaLogout al servidor el token per permetre a aquest
+         * eliminar-lo de la seva llista
+         *
+         */
+        if (e.getSource() == vistaOpcions.btnLogout) {
+            try {
+                comunica.enviaLogout(token);
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            System.exit(0);
         }
 
     }
+
 }

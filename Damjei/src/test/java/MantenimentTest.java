@@ -1,10 +1,17 @@
 
 import com.Comunica;
+import com.Encriptador;
 import com.comDades;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controlador.ctrlLogin;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import model.Empleats;
 import model.Mantenimiento;
 import model.consultasManteniment;
@@ -42,15 +49,15 @@ public class MantenimentTest {
     String ip = "127.0.0.1";
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         vista = new frmLogin();
         manteniment = new Mantenimiento();
         empleat = new Empleats();
         consulta = new consultasManteniment();
         comunica = new Comunica();
-        gson = new Gson();
+        Encriptador hash = new Encriptador();
         empleat.setDni("40447212x");
-        empleat.setContrasenya("0000");
+        empleat.setContrasenya(hash.encriptarConSha256("0000"));
         objecte = comunica.enviaLogin(empleat);
         token = objecte.get("token").getAsString();
 
@@ -58,7 +65,7 @@ public class MantenimentTest {
 
     @Test
     @Order(1)
-    public void testInsertar() throws IOException {
+    public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         manteniment.setIdmantenimiento(1234);
         manteniment.setNombre("escapaments");
@@ -72,7 +79,7 @@ public class MantenimentTest {
 
     @Test
     @Order(2)
-    public void testModificar() throws IOException, InterruptedException {
+    public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(1000);
         manteniment.setNombre("escapaments");
         manteniment.setKilometros_mantenimiento(45.5f);
@@ -86,7 +93,7 @@ public class MantenimentTest {
 
     @Test
     @Order(3)
-    public void testEliminar() throws IOException, InterruptedException {
+    public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(2000);
 
         manteniment.setNombre("escapaments");

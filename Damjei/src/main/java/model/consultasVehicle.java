@@ -7,7 +7,10 @@ package model;
 import com.SocketSSL_Conexio;
 import com.comDades;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import controlador.ctrlLogin;
 import java.awt.Color;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +20,9 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import static model.consultesEmpleats.ELIMINAR;
@@ -113,16 +119,18 @@ public class consultasVehicle {
          * Rebem les dades com a array de Objects. Fent recorrgut per l'array,
          * recollim les dades i les afegim a les files de la taula
          */
-        Object[] vehiculo = com.repDades2(socket);
-        System.out.println(vehiculo);
-        for (Object vehiculos : vehiculo) {
-            Vehicle veh2 = gson.fromJson(vehiculos.toString(), Vehicle.class);
-            int id = veh2.getIdvehiculo();
-            String marca = veh2.getMarca();
-            String modelo = veh2.getModelo();
-            String matricula = veh2.getMatricula();
+        JsonArray vehiculo = com.repDades4(socket);
+        for (JsonElement vehiculos : vehiculo) {
+
+            JsonObject vehicles = vehiculos.getAsJsonObject();
+            int id = vehicles.get("idvehiculo").getAsInt();
+            String marca = vehicles.get("marca").getAsString();
+            String modelo = vehicles.get("modelo").getAsString();
+            String matricula = vehicles.get("matricula").getAsString();
+
             Object[] fila = {id, marca, modelo, matricula};
             modeloTabla.addRow(fila);
+
         }
 
     }
@@ -202,7 +210,7 @@ public class consultasVehicle {
      * @return
      * @throws IOException
      */
-    public boolean insertarVehicle(Vehicle vehicle, String token) throws IOException, KeyStoreException, FileNotFoundException, UnrecoverableKeyException, CertificateException, KeyManagementException, NoSuchAlgorithmException{
+    public boolean insertarVehicle(Vehicle vehicle, String token) throws IOException, KeyStoreException, FileNotFoundException, UnrecoverableKeyException, CertificateException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
         SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
@@ -237,7 +245,6 @@ public class consultasVehicle {
      * @return
      * @throws IOException
      */
-
     public boolean modificarVehicle(Vehicle vehicle, String token) throws IOException, KeyStoreException, FileNotFoundException, UnrecoverableKeyException, CertificateException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
@@ -272,7 +279,6 @@ public class consultasVehicle {
      * @return
      * @throws IOException
      */
-
     public boolean eliminarVehicle(Vehicle vehicle, String token) throws IOException, KeyStoreException, FileNotFoundException, UnrecoverableKeyException, CertificateException, KeyManagementException, NoSuchAlgorithmException {
 
         Gson gson = new Gson();
@@ -296,6 +302,63 @@ public class consultasVehicle {
         Boolean resposta = com.repDades3(socket);
 
         return resposta;
+    }
+
+    public JsonArray empleatCombo(frmVehicle vista, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        Gson gson = new Gson();
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
+        comDades com = new comDades();
+        Empleats empleat = new Empleats();
+
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi
+         * volem afegir (accio, token i classe).
+         */
+        JsonObject obtEmpleat = new JsonObject();
+        obtEmpleat.add("empleat", gson.toJsonTree(empleat));
+        obtEmpleat.addProperty("accio", LLISTAR);
+        obtEmpleat.addProperty("token", token);
+        obtEmpleat.addProperty("clase", "Empleats.class");
+
+        JsonArray emp = com.repDades4(socket);
+
+        return emp;
+
+    }
+
+    public Vector<Empleats> mostrarEmpleats(String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+        JsonArray empleat;
+        Vector<Empleats> vectorEmpleats = new Vector<Empleats>();
+        Empleats empe;
+
+        try {
+            empe = new Empleats();
+            empe.setIdempleado(0);
+            empe.setNombre("Seleccioni un vehicle");
+            vectorEmpleats.add(empe);
+
+            empleat = empleatCombo(vista, token);
+
+            for (JsonElement empleats : empleat) {
+                JsonObject em = empleats.getAsJsonObject();
+                empe = new Empleats();
+                empe.setIdempleado(em.get("idempleado").getAsInt());
+                empe.setNombre(em.get("nombre").getAsString());
+                empe.setCategoria(em.get("categoria").getAsString());
+
+                if (empe.getCategoria() == "conductor") {
+                    vectorEmpleats.add(empe);
+                }
+
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(ctrlLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return vectorEmpleats;
+
     }
 
 }

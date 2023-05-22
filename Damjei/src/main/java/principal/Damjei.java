@@ -53,6 +53,7 @@ public class Damjei {
         ctrlLogin ctrl = new ctrlLogin(vista, empleat, vehicle, manteniment, combustible, repostar, revisio);
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
+        
         //server.iniciar();
     }
 }

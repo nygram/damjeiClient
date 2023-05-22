@@ -61,6 +61,7 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         vista.cmbVehicles.addMouseListener(this);
         vista.btnRegistrar.addActionListener(this);
         vista.btnSalir.addActionListener(this);
+        vista.btnBorrar.addActionListener(this);
     }
 
     @Override
@@ -145,6 +146,36 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         if (e.getSource() == vistaRepostatge.btnSalir) {
             vistaRepostatge.dispose();
 
+        }
+        if (e.getSource() == vistaRepostatge.btnBorrar){
+            int fila = vistaRepostatge.taulaRespostatge.getSelectedRow();
+            int id = (int) vistaRepostatge.taulaRespostatge.getValueAt(fila, 0);
+            
+
+            repostatge.setIdrepostar(id);
+
+            try {
+                if (consulta.eliminarRepostatge(repostatge, token)) {
+                    vistaRepostatge.jTabbedPane1.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(null, "Borrat correctament");
+                    consulta.carregaTaula(vistaRepostatge, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No borrado");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlRepostar.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
     }

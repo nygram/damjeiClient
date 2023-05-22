@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import controlador.ctrlLogin;
 import java.awt.List;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,11 +21,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static model.consultasManteniment.LISTARID;
 import static model.consultasVehicle.LLISTAR;
 import static model.consultesEmpleats.LISTARID;
 import static model.consultesEmpleats.LLISTAR;
 import static org.apache.maven.wagon.PathUtils.port;
+import vista.frmVehicle;
 
 /**
  *
@@ -304,5 +309,7 @@ public class DemanaDades {
         return datescarnet;
 
     }
+    
+    
 
 }

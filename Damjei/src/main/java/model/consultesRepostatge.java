@@ -24,6 +24,7 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import static model.consultesCombustible.LLISTAR;
@@ -185,8 +186,12 @@ public class consultesRepostatge {
         com.enviaDades(obtRepostatge, socket);
         JsonObject respon = com.repDades(socket);
         correcte = respon.get("correcte").getAsBoolean();
-        //String aviso = respon.get("aviso").getAsString();
+        String aviso = respon.get("aviso").getAsString();
+        if (aviso == null){
+            aviso = "No te revisions pendents";
+        }
         Boolean estado_revision = respon.get("estado_revision").getAsBoolean();
+        JOptionPane.showMessageDialog(null, aviso);
 
         return correcte;
     }
@@ -235,6 +240,7 @@ public class consultesRepostatge {
 
         com.enviaDades(obtRepostatge, socket);
 
+        modeloTabla.addColumn("Id");
         modeloTabla.addColumn("Conductor");
         modeloTabla.addColumn("Matricula");
         modeloTabla.addColumn("Vehicle");
@@ -249,6 +255,7 @@ public class consultesRepostatge {
         for (JsonElement repostatges : repostatge) {
 
             JsonObject repo = repostatges.getAsJsonObject();
+            int idrepostatge = repo.get("idrepostar").getAsInt();
             int idvehiculo = repo.get("vehiculoid").getAsInt();
             String mat = dades.nomVehicle(idvehiculo, token);
             int idconductor = repo.get("conductorid").getAsInt();
@@ -256,10 +263,34 @@ public class consultesRepostatge {
             String dat = repo.get("fecha_repostar").getAsString();
             Float precio = repo.get("importe_repostar").getAsFloat();
             
-            Object[] fila = {idconductor, mat, nomvehicle, dat, precio};
+            Object[] fila = {idrepostatge, idconductor, mat, nomvehicle, dat, precio};
             modeloTabla.addRow(fila);
             
         }
 
+    }
+    public boolean eliminarRepostatge(Repostar repostatge, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        Gson gson = new Gson();
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
+
+        /**
+         * Generem objecte Json amb l'objecte empleat i les propietats que hi
+         * volem afegir (accio, token i classe).
+         */
+        JsonObject obtRepostatge = new JsonObject();
+        obtRepostatge.add("repostar", gson.toJsonTree(repostatge));
+        obtRepostatge.addProperty("accio", ELIMINAR);
+        obtRepostatge.addProperty("token", token);
+        obtRepostatge.addProperty("clase", "Repostar.class");
+
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament.
+         */
+        com.enviaDades(obtRepostatge, socket);
+        Boolean resposta = com.repDades3(socket);
+
+        return resposta;
     }
 }

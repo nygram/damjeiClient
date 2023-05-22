@@ -1,10 +1,17 @@
 
 import com.Comunica;
+import com.Encriptador;
 import com.comDades;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controlador.ctrlLogin;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import model.Empleats;
 import model.consultesEmpleats;
 import static org.junit.Assert.assertTrue;
@@ -40,14 +47,15 @@ public class EmpleatTest {
     String ip = "127.0.0.1";
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         vista = new frmLogin();
         empleat = new Empleats();
         consulta = new consultesEmpleats();
         comunica = new Comunica();
+        Encriptador hash = new Encriptador();
         gson = new Gson();
         empleat.setDni("40447212x");
-        empleat.setContrasenya("0000");
+        empleat.setContrasenya(hash.encriptarConSha256("0000"));
         objecte = comunica.enviaLogin(empleat);
         token = objecte.get("token").getAsString();
 
@@ -55,7 +63,7 @@ public class EmpleatTest {
 
     @Test
     @Order(1)
-    public void testInsertar() throws IOException {
+    public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
         empleat.setNom("Cristina");
         empleat.setApellidos("Espigule");
@@ -72,7 +80,7 @@ public class EmpleatTest {
 
     @Test
     @Order(2)
-    public void testModificar() throws IOException {
+    public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         
         empleat.setDni("00000009f");
         empleat.setContrasenya("0987");
@@ -85,7 +93,7 @@ public class EmpleatTest {
 
     @Test
     @Order(3)
-    public void testEliminar() throws IOException{
+    public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
         
         empleat.setDni("00000009f");
 

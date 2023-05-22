@@ -1,9 +1,16 @@
 import com.Comunica;
+import com.Encriptador;
 import com.comDades;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controlador.ctrlLogin;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.concurrent.CountDownLatch;
 import model.Combustible;
 import model.Empleats;
@@ -45,15 +52,16 @@ public class CombustibleTest {
     String ip = "127.0.0.1";
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
         vista = new frmLogin();
         combustible = new Combustible();
         empleat = new Empleats();
         consulta = new consultesCombustible();
         comunica = new Comunica();
+        Encriptador hash = new Encriptador();
         gson = new Gson();
         empleat.setDni("40447212x");
-        empleat.setContrasenya("0000");
+        empleat.setContrasenya(hash.encriptarConSha256("0000"));
         objecte = comunica.enviaLogin(empleat);
         token = objecte.get("token").getAsString();
 
@@ -61,8 +69,8 @@ public class CombustibleTest {
 
     @Test
     @Order(1)
-    public void testInsertar() throws IOException {
-        combustible.setNombre("GLP+");
+    public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+        combustible.setNombre("GLP++++");
         combustible.setPrecio(23.9f);
         
         correcte = consulta.insertarCombustible(combustible, token);
@@ -72,8 +80,8 @@ public class CombustibleTest {
     
     @Test
     @Order(2)
-    public void testModificar() throws IOException {
-        combustible.setNombre("GLP+");
+    public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+        combustible.setNombre("GLP++++");
         combustible.setPrecio(45.5f);
         correcte = consulta.modificarCombustible(combustible, token);
         System.out.println("Correcte de modificar " + correcte);
@@ -83,8 +91,8 @@ public class CombustibleTest {
 
     @Test
     @Order(3)
-    public void testEliminar() throws IOException {
-        combustible.setNombre("GLP+");
+    public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+        combustible.setNombre("GLP++++");
 
         correcte = consulta.eliminarCombustible(combustible, token);
         assertTrue(correcte);
