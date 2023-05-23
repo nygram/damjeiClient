@@ -78,16 +78,16 @@ public class RepostatgeTest {
         assertTrue(correcte);
 
     }
-/*
+
     @Test
     @Order(2)
     public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(1000);
-        manteniment.setNombre("escapaments");
-        manteniment.setKilometros_mantenimiento(45.5f);
-        manteniment.setFecha_mantenimiento("2001-03-03");
+        repostar.setNombre("escapaments");
+        repostar.setKilometros_mantenimiento(45.5f);
+        repostar.setFecha_mantenimiento("2001-03-03");
 
-        correcte = consulta.modificarManteniment(manteniment, token);
+        correcte = consulta.modificarManteniment(repostar, token);
         System.out.println("Correcte de modificar " + correcte);
         assertTrue(correcte);
 
@@ -98,12 +98,12 @@ public class RepostatgeTest {
     public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(2000);
 
-        manteniment.setNombre("escapaments");
+        repostar.setIdrepostar(3);
 
-        correcte = consulta.eliminarManteniment(manteniment, token);
+        correcte = consulta.eliminarRepostatge(repostar, token);
         assertTrue(correcte);
 
     }
- */   
+  
     
 }
