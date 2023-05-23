@@ -82,10 +82,11 @@ public class comDades {
     public Object[] repDades2(Socket socket) throws IOException {
 
         Gson gson = new Gson();
-
+        System.out.println("intenra rebre dades");
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
+        System.out.println("repdades buffer");
         String data = input.readLine();
+        System.out.println("data es "+data);
         Object[] objects = gson.fromJson(data, Object[].class);
         System.out.println(objects);
 

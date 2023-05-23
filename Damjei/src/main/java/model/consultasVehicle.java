@@ -46,6 +46,7 @@ public class consultasVehicle {
     comDades com = new comDades();
     private Socket socket;
     private String token;
+    DemanaDades dades = new DemanaDades();
     public static final int LLISTAR = 5;
     public static final int INSERTAR = 2;
     public static final int ELIMINAR = 4;
@@ -189,7 +190,11 @@ public class consultasVehicle {
             Float kilometros_actu = veh2.getKilometros_actuales();
             String fecha_alta = veh2.getFecha_alta();
             String fecha_baja = veh2.getFecha_baja();
-            
+            int idconductor = veh2.getConductorid();
+            int empleadoid = dades.idEmpleat(idconductor, token);
+            String nom = dades.nomEmpleat(empleadoid, token);
+            String dni = dades.dniEmpleat(empleadoid, token);
+            System.out.println(dni);
 
             vista.txtMatricula.setText(matricula);
             vista.txtMarca.setText(marca);
@@ -198,6 +203,9 @@ public class consultasVehicle {
             vista.txtKmActu.setText((kilometros_actu).toString());
             vista.txtDataAlta.setText(fecha_alta);
             vista.txtDataBaixa.setText(fecha_baja);
+            vista.txtIdConductor.setText(String.valueOf(idconductor));
+            vista.lblConductor.setText(nom);
+            vista.cmbConductor.setSelectedItem(dni);
             
 
         }

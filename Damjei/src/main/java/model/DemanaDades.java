@@ -55,7 +55,7 @@ public class DemanaDades {
     String ip = "127.0.0.1";
     SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
 
-    public String nomEmpleat(int idconductor, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, NoSuchAlgorithmException, KeyManagementException, UnrecoverableKeyException {
+    public int idEmpleat(int idconductor, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, NoSuchAlgorithmException, KeyManagementException, UnrecoverableKeyException {
 
         this.idconductor = idconductor;
 
@@ -67,6 +67,7 @@ public class DemanaDades {
         conductor.setIdconductor(idconductor);
 
         Gson gson = new Gson();
+        System.out.println("dintre");
 
         /**
          * Generem objecte Json amb l'objecte empleat i les propietats que hi
@@ -77,34 +78,89 @@ public class DemanaDades {
         obtConductor.addProperty("accio", LISTARID);
         obtConductor.addProperty("token", token);
         obtConductor.addProperty("clase", "Conductor.class");
+        System.out.println("ebviadades");
 
         com.enviaDades(obtConductor, socket);
 
         JsonArray conduc = com.repDades4(socket);
+        System.out.println("repdades");
         for (JsonElement conducs : conduc) {
 
             JsonObject conductors = conducs.getAsJsonObject();
             empleadoid = conductors.get("empleadoid").getAsInt();
-
+            System.out.println("empleadoid es "+ empleadoid);
+            
         }
+        return empleadoid;
+        
+    }
+    
+    public String nomEmpleat (int idempleado, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
+        
+        this.empleadoid = idempleado;
+        Empleats emp = new Empleats();
+        Gson gson = new Gson();
+        
+        Socket socket = conexioSSL.connect(ip, port);
+        comDades com = new comDades();
+        
+        emp.setIdempleado(empleadoid);
 
         JsonObject obtEmpleat = new JsonObject();
         obtEmpleat.add("empleat", gson.toJsonTree(emp));
         obtEmpleat.addProperty("accio", LISTARID);
         obtEmpleat.addProperty("token", token);
         obtEmpleat.addProperty("clase", "Empleats.class");
-
+        System.out.println("enviadades2");
         com.enviaDades(obtEmpleat, socket);
-
-        JsonArray emple = com.repDades4(socket);
-        for (JsonElement emples : emple) {
-
-            JsonObject empleats = emples.getAsJsonObject();
-            nomEmpleat = empleats.get("nombre").getAsString();
-            socket.close();
+        
+        
+        Object[] empleat = com.repDades2(socket);
+        System.out.println("repdades2");
+        for (Object empleats : empleat) {
+            Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
+            
+            String nombre = emp2.getNom();
+            String apellido = emp2.getApellidos();
+            nomEmpleat = nombre+ " " +apellido;
         }
+
         socket.close();
         return nomEmpleat;
+
+    }
+    public String dniEmpleat (int idempleado, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
+        
+        this.empleadoid = idempleado;
+        Empleats emp = new Empleats();
+        Gson gson = new Gson();
+        String dniEmpleat = "";
+        
+        Socket socket = conexioSSL.connect(ip, port);
+        comDades com = new comDades();
+        
+        emp.setIdempleado(empleadoid);
+
+        JsonObject obtEmpleat = new JsonObject();
+        obtEmpleat.add("empleat", gson.toJsonTree(emp));
+        obtEmpleat.addProperty("accio", LISTARID);
+        obtEmpleat.addProperty("token", token);
+        obtEmpleat.addProperty("clase", "Empleats.class");
+        System.out.println("enviadades2");
+        com.enviaDades(obtEmpleat, socket);
+        
+        
+        Object[] empleat = com.repDades2(socket);
+        System.out.println("repdades2");
+        for (Object empleats : empleat) {
+            Empleats emp2 = gson.fromJson(empleats.toString(), Empleats.class);
+            
+            dniEmpleat = emp2.getDni();
+            
+        }
+
+        socket.close();
+        return dniEmpleat;
 
     }
 
