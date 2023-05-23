@@ -13,8 +13,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import model.Empleats;
+import model.Vehicle;
+import model.consultasVehicle;
 import model.consultesEmpleats;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Test;
+import org.junit.jupiter.api.Order;
 import vista.frmLogin;
 
 /*
@@ -29,9 +34,10 @@ import vista.frmLogin;
 public class VehicleTest {
     
     private ctrlLogin controlador;
+    private Vehicle vehicle;
     private Empleats empleat;
     private frmLogin vista;
-    private consultesEmpleats consulta;
+    private consultasVehicle consulta;
     private JsonObject objecte;
     private String token;
     private Comunica comunica;
@@ -43,10 +49,12 @@ public class VehicleTest {
 
     @Before
     public void setUp() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
         vista = new frmLogin();
-        empleat = new Empleats();
-        consulta = new consultesEmpleats();
+        vehicle = new Vehicle();
+        consulta = new consultasVehicle();
         comunica = new Comunica();
+        empleat = new Empleats();
         Encriptador hash = new Encriptador();
         empleat.setDni("40447212x");
         empleat.setContrasenya(hash.encriptarConSha256("0000"));
@@ -54,5 +62,46 @@ public class VehicleTest {
         token = objecte.get("token").getAsString();
 
     }
-    
+    @Test
+    @Order(1)
+    public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        vehicle.setMatricula("5443FFF");
+            vehicle.setMarca("Nissan");
+            vehicle.setModelo("Micar");
+            vehicle.setKilometros_actuales(10000f);
+            vehicle.setKilometros_alta(1000f);
+            vehicle.setFecha_alta("2023-01-01");
+            vehicle.setFecha_baja("2023-03-03");
+            vehicle.setConductorid(3);
+            vehicle.setEmpresaid(1);
+        
+        correcte = consulta.insertarVehicle(vehicle, token);
+        assertTrue(correcte);
+
+    }
+
+    @Test
+    @Order(2)
+    public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
+        
+        Thread.sleep(1000);
+        vehicle.setMatricula("5655CCC");
+        vehicle.setKilometros_actuales(12000f);
+
+        correcte = consulta.modificarVehicle(vehicle, token);
+        assertTrue(correcte);
+
+    }
+
+    @Test
+    @Order(3)
+    public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
+        Thread.sleep(2000);
+
+        vehicle.setMatricula("5655CCC");
+        correcte = consulta.eliminarVehicle(vehicle, token);
+        assertTrue(correcte);
+
+    }
 }
