@@ -53,10 +53,7 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
         this.vistaVehicle = vista;
         this.consulta = consulta;
         this.token = token;
-        System.out.println(token);
-        System.out.println(consulta);
         this.vehicle = vehicle;
-        System.out.println(vehicle);
         consulta.carregaTaula(vista, token);
         vista.taulaVehicles.addMouseListener(this);
         vista.btnInsertar.addMouseListener(this);
@@ -129,6 +126,8 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
             Float kmalta = Float.valueOf(vistaVehicle.txt_KmAlta.getText());
             String dataalta = vistaVehicle.txtDataAlta.getText();
             String databaixa = vistaVehicle.txtDataBaixa.getText();
+            int idconductor = Integer.parseInt(vistaVehicle.txtIdConductor.getText());
+            System.out.println("conductor = "+idconductor);
             
 
             vehicle.setMatricula(matricula);
@@ -138,12 +137,11 @@ public class ctrlVehiculos implements ActionListener, MouseListener {
             vehicle.setKilometros_alta(kmalta);
             vehicle.setFecha_alta(dataalta);
             vehicle.setFecha_baja(databaixa);
-            vehicle.setConductorid(1);
+            vehicle.setConductorid(idconductor);
             vehicle.setEmpresaid(1);
 
             try {
                 Boolean resposta = consulta.insertarVehicle(vehicle, token);
-                System.out.println("");
                 if (resposta) {
                     JOptionPane.showMessageDialog(null, "Afegit correctament");
                     consulta.carregaTaula(vistaVehicle, token);

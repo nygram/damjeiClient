@@ -40,6 +40,7 @@ public class DemanaDades {
     int idconductor;
     int empleadoid;
     String nomEmpleat;
+    
 
     int mantenimientoid;
     String nomManteniment;
@@ -233,6 +234,7 @@ public class DemanaDades {
 
         this.vehiculoid = vehiculoid;
         String nomModel = null;
+        
 
         Socket socket = conexioSSL.connect(ip, port);
         comDades com = new comDades();
@@ -310,6 +312,49 @@ public class DemanaDades {
 
     }
     
+    public int tornaIdConductor (int idEmpleat, String token) throws KeyStoreException, IOException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException{
+        
+        this.empleadoid = idEmpleat;
+        Conductor conductor = new Conductor();
+        int idconductor = 0;
+        int idempleado = 0;
+        
+        Socket socket = conexioSSL.connect(ip, port);
+        comDades com = new comDades();
+        
+        Gson gson = new Gson();
+        
+        JsonObject obtConductor = new JsonObject();
+        obtConductor.add("conductor", gson.toJsonTree(conductor));
+        obtConductor.addProperty("accio", LLISTAR);
+        obtConductor.addProperty("token", token);
+        obtConductor.addProperty("clase", "Conductor.class");
+        
+        com.enviaDades(obtConductor, socket);
+        
+        JsonArray conduc = com.repDades4(socket);
+        System.out.println("rep dades");
+        
+        for (JsonElement conducs : conduc) {
+
+            JsonObject conductors = conducs.getAsJsonObject();
+            
+            int idemp = conductors.get("empleadoid").getAsInt();
+            if (idemp == empleadoid ){
+                idconductor = conductors.get("idconductor").getAsInt();
+            }
+            
+        }
+        return idconductor;
+
+        /**
+         * Rebem les dades com a JsonArray. Fent recorregut per l'array,
+         * recollim les dades i les afegim als textBox de la vista
+         */
+        
+        
+    }
     
+   
 
 }

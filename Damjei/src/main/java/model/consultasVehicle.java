@@ -189,6 +189,7 @@ public class consultasVehicle {
             Float kilometros_actu = veh2.getKilometros_actuales();
             String fecha_alta = veh2.getFecha_alta();
             String fecha_baja = veh2.getFecha_baja();
+            
 
             vista.txtMatricula.setText(matricula);
             vista.txtMarca.setText(marca);
@@ -197,6 +198,7 @@ public class consultasVehicle {
             vista.txtKmActu.setText((kilometros_actu).toString());
             vista.txtDataAlta.setText(fecha_alta);
             vista.txtDataBaixa.setText(fecha_baja);
+            
 
         }
 
@@ -232,7 +234,6 @@ public class consultasVehicle {
          */
         com.enviaDades(obtVehicle, socket);
         Boolean resposta = com.repDades3(socket);
-        System.out.println("La resposta es " + resposta);
         return resposta;
 
     }
@@ -342,10 +343,8 @@ public class consultasVehicle {
             empe.setIdempleado(0);
             vectorEmpleats.add(empe);
             empe.setNombre("Seleccioni un vehicle");
-            System.out.println("mes vector");
 
             empleat = empleatCombo(token);
-            System.out.println("segueix vector");
 
             for (JsonElement empleats : empleat) {
                 JsonObject em = empleats.getAsJsonObject();
@@ -353,11 +352,11 @@ public class consultasVehicle {
                 empe = new Empleats();
                 empe.setIdempleado(em.get("idempleado").getAsInt());
                 empe.setNombre(em.get("nombre").getAsString());
+                empe.setApellidos(em.get("apellidos").getAsString());
                 empe.setCategoria(em.get("categoria").getAsString());
                 empe.setDni(em.get("dni").getAsString());
                 
-                System.out.println("dni es "+empe.getDni());
-                System.out.println("categoria "+empe.getCategoria());
+                
 
                 if (empe.getCategoria().equals("conductor")) {
                     vectorEmpleats.add(empe);

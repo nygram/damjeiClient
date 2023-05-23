@@ -57,7 +57,9 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="456" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="315" max="-2" attributes="0"/>
+                                  <Component id="txtIdConductor" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                   <Component id="txtId" min="-2" pref="54" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                   <Component id="txtToken" min="-2" max="-2" attributes="0"/>
@@ -90,6 +92,7 @@
                       <Component id="txtId" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtToken" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIdConductor" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -153,7 +156,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" alignment="0" pref="943" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" alignment="0" pref="952" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -250,7 +253,7 @@
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace pref="506" max="32767" attributes="0"/>
+                                  <EmptySpace pref="515" max="32767" attributes="0"/>
                                   <Component id="btnInsertar" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
@@ -280,14 +283,16 @@
                                       <Component id="txt_KmAlta" min="-2" max="-2" attributes="0"/>
                                       <Component id="txtKmActu" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="322" max="32767" attributes="0"/>
+                                  <EmptySpace pref="331" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="cmbConductor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="397" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="lblConductor" min="-2" pref="89" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="296" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -319,7 +324,10 @@
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="cmbConductor" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblConductor" max="32767" attributes="0"/>
+                              <Component id="cmbConductor" max="32767" attributes="0"/>
+                          </Group>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnModificar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -445,8 +453,16 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="cmbConductorItemStateChanged"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                    <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblConductor">
+                  <AuxValues>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                   </AuxValues>
                 </Component>
@@ -474,6 +490,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Gesti&#xf3; Vehicles"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtIdConductor">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="idconductor"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
