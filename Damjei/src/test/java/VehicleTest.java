@@ -66,7 +66,7 @@ public class VehicleTest {
     @Order(1)
     public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
 
-        vehicle.setMatricula("5443FFF");
+        vehicle.setMatricula("5555AAA");
             vehicle.setMarca("Nissan");
             vehicle.setModelo("Micar");
             vehicle.setKilometros_actuales(10000f);
@@ -86,7 +86,7 @@ public class VehicleTest {
     public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         
         Thread.sleep(1000);
-        vehicle.setMatricula("5655CCC");
+        vehicle.setMatricula("5444FFF");
         vehicle.setKilometros_actuales(12000f);
 
         correcte = consulta.modificarVehicle(vehicle, token);
@@ -99,7 +99,7 @@ public class VehicleTest {
     public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(2000);
 
-        vehicle.setMatricula("5655CCC");
+        vehicle.setMatricula("7777BGT");
         correcte = consulta.eliminarVehicle(vehicle, token);
         assertTrue(correcte);
 

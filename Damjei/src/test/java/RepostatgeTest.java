@@ -72,7 +72,7 @@ public class RepostatgeTest {
         repostar.setImporte_repostar(50f);
         repostar.setKilometros_repostar(23f);
         repostar.setLitros(24f);
-        repostar.setVehiculoid(14);
+        repostar.setVehiculoid(16);
         
         correcte = consulta.insertarRepostatge(repostar, token);
         assertTrue(correcte);
@@ -97,7 +97,7 @@ public class RepostatgeTest {
     public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(2000);
 
-        repostar.setIdrepostar(91);
+        repostar.setIdrepostar(11);
 
         correcte = consulta.eliminarRepostatge(repostar, token);
         assertTrue(correcte);

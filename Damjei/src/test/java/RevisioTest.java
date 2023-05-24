@@ -64,42 +64,27 @@ public class RevisioTest {
     
     @Test
     @Order(1)
-    public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
-
-        
-        
-        manteniment.setIdmantenimiento(1234);
-        manteniment.setNombre("escapaments");
-        manteniment.setKilometros_mantenimiento(45.5f);
-        manteniment.setFecha_mantenimiento("2001-03-03");
-
-        correcte = consulta.insertarManteniment(manteniment, token);
-        assertTrue(correcte);
-
-    }
-
-    @Test
-    @Order(2)
     public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(1000);
-        manteniment.setNombre("escapaments");
-        manteniment.setKilometros_mantenimiento(45.5f);
-        manteniment.setFecha_mantenimiento("2001-03-03");
+        
+        revisio.setIdrevision(13);
+        revisio.setEstado_revision(false);
+       
 
-        correcte = consulta.modificarManteniment(manteniment, token);
+        correcte = consulta.modificarRevisio(revisio, token);
         System.out.println("Correcte de modificar " + correcte);
         assertTrue(correcte);
 
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException, InterruptedException {
         Thread.sleep(2000);
 
-        manteniment.setNombre("escapaments");
+        revisio.setIdrevision(13);
 
-        correcte = consulta.eliminarManteniment(manteniment, token);
+        correcte = consulta.eliminarRevisio(revisio, token);
         assertTrue(correcte);
 
     }

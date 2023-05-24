@@ -86,7 +86,6 @@ public class MantenimentTest {
         manteniment.setFecha_mantenimiento("2001-03-03");
 
         correcte = consulta.modificarManteniment(manteniment, token);
-        System.out.println("Correcte de modificar " + correcte);
         assertTrue(correcte);
 
     }
