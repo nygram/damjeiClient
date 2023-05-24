@@ -135,6 +135,7 @@ public class consultasRevisiones {
         comDades com = new comDades();
         Revisiones rev = new Revisiones();
         rev.setIdrevision(codigo);
+        
 
         Gson gson = new Gson();
         
@@ -165,6 +166,9 @@ public class consultasRevisiones {
             int idmantenimiento = revi.get("mantenimientoid").getAsInt();
             String mantenimiento = dades.nomManteniment(idmantenimiento, token);
             String fecha = revi.get("fecha_revision").getAsString();
+            if (fecha == null){
+                fecha = " ";
+            }
             Float km = revi.get("kilometros_revision").getAsFloat();
             Boolean estado = revi.get("estado_revision").getAsBoolean();
 
@@ -179,7 +183,8 @@ public class consultasRevisiones {
             vista.txtManteniment.setText(String.valueOf(mantenimiento));
             vista.txtData.setText(fecha);
             vista.txtKm.setText(String.valueOf(km));
-            vista.txtEstat.setText(String.valueOf(estado));
+            vista.rbtEstat.setSelected(estado);
+            //vista.txtEstat.setText(String.valueOf(estado));
             vista.txtKmActuals.setText(dades.kmActuals(idvehiculo, token).toString());
         }
 
@@ -212,4 +217,30 @@ public class consultasRevisiones {
              
 
         } 
+    
+    public boolean modificarRevisio(Revisiones revisio, String token) throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
+
+        Gson gson = new Gson();
+        SocketSSL_Conexio conexioSSL = new SocketSSL_Conexio();
+        Socket socket = conexioSSL.connect(ip, port);
+        frmRevisions vista = new frmRevisions();
+
+        /**
+         * Generem objecte Json amb l'objecte modificar i les propietats que hi
+         * volem afegir (accio, token i classe).
+         */
+        JsonObject obtRevisio = new JsonObject();
+        obtRevisio.add("revision", gson.toJsonTree(revisio));
+        obtRevisio.addProperty("accio", MODIFICAR);
+        obtRevisio.addProperty("token", token);
+        obtRevisio.addProperty("clase", "Revisiones.class");
+
+        /**
+         * Rebem un booleà que ens indica si s'ha fet correctament.
+         */
+        com.enviaDades(obtRevisio, socket);
+        Boolean resposta = com.repDades3(socket);
+        return resposta;
+
+    }
 }

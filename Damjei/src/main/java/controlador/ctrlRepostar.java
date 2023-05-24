@@ -62,6 +62,7 @@ public class ctrlRepostar implements MouseListener, ActionListener {
         vista.btnRegistrar.addActionListener(this);
         vista.btnSalir.addActionListener(this);
         vista.btnBorrar.addActionListener(this);
+        vista.btnNuevo.addActionListener(this);
     }
 
     @Override
@@ -94,6 +95,13 @@ public class ctrlRepostar implements MouseListener, ActionListener {
 
         if (e.getSource() == vistaRepostatge.cmbVehicles) {
             String matricula = (String) vistaRepostatge.cmbVehicles.getSelectedItem();
+        }
+        
+        if (e.getSource() == vistaRepostatge.btnNuevo) {
+            vistaRepostatge.jTabbedPane1.setSelectedIndex(0);
+            Camps.netejaCamps(vistaRepostatge.jPanel1);
+            vistaRepostatge.btnRegistrar.setVisible(true);
+
         }
 
         if (e.getSource() == vistaRepostatge.btnRegistrar) {

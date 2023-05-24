@@ -70,7 +70,7 @@ public class CombustibleTest {
     @Test
     @Order(1)
     public void testInsertar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
-        combustible.setNombre("GLP++++");
+        combustible.setNombre("GLPverd");
         combustible.setPrecio(23.9f);
         
         correcte = consulta.insertarCombustible(combustible, token);
@@ -81,7 +81,7 @@ public class CombustibleTest {
     @Test
     @Order(2)
     public void testModificar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
-        combustible.setNombre("GLP++++");
+        combustible.setNombre("GLPverd");
         combustible.setPrecio(45.5f);
         correcte = consulta.modificarCombustible(combustible, token);
         System.out.println("Correcte de modificar " + correcte);
@@ -92,7 +92,7 @@ public class CombustibleTest {
     @Test
     @Order(3)
     public void testEliminar() throws IOException, KeyStoreException, FileNotFoundException, CertificateException, UnrecoverableKeyException, KeyManagementException, NoSuchAlgorithmException {
-        combustible.setNombre("GLP++++");
+        combustible.setNombre("GLPverd");
 
         correcte = consulta.eliminarCombustible(combustible, token);
         assertTrue(correcte);

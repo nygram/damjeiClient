@@ -6,6 +6,8 @@ public class frmRevisions extends javax.swing.JFrame {
     public frmRevisions() {
         initComponents();
         this.setLocationRelativeTo(null);
+        jLabel5.setVisible(false);
+        txtData.setVisible(false);
     }
     
     
@@ -40,9 +42,9 @@ public class frmRevisions extends javax.swing.JFrame {
         txtManteniment = new javax.swing.JTextField();
         txtKm = new javax.swing.JTextField();
         txtData = new javax.swing.JTextField();
-        txtEstat = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         txtKmActuals = new javax.swing.JTextField();
+        rbtEstat = new javax.swing.JRadioButton();
         btnSalir = new javax.swing.JButton();
         txtToken = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -165,9 +167,9 @@ public class frmRevisions extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addGap(38, 38, 38)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                            .addComponent(txtEstat)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rbtEstat)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -182,7 +184,7 @@ public class frmRevisions extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jLabel6)
                     .addComponent(txtVehicle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEstat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(rbtEstat))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -298,9 +300,9 @@ public class frmRevisions extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTabbedPane jTabbedPane1;
+    public javax.swing.JRadioButton rbtEstat;
     public javax.swing.JTable taulaRevisions;
     public javax.swing.JTextField txtData;
-    public javax.swing.JTextField txtEstat;
     public javax.swing.JTextField txtId;
     public javax.swing.JTextField txtKm;
     public javax.swing.JTextField txtKmActuals;

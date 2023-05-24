@@ -47,7 +47,7 @@ public class ctrlRevisions implements ActionListener, MouseListener {
         vista.btnBorrar.addActionListener(this);
         vista.btnNuevo.addMouseListener(this);
         vista.btnSalir.addMouseListener(this);
-        vista.btnModificar.addMouseListener(this);
+        vista.btnModificar.addActionListener(this);
         vista.btnSalir.addActionListener(this);
 
     }
@@ -63,7 +63,6 @@ public class ctrlRevisions implements ActionListener, MouseListener {
             int id = Integer.parseInt(vistaRevisions.txtId.getText());
 
             revisions.setIdrevision(id);
-            
 
             try {
                 if (consulta.eliminarRevisio(revisions, token)) {
@@ -78,7 +77,7 @@ public class ctrlRevisions implements ActionListener, MouseListener {
                 Logger.getLogger(ctrlEmpleats.class.getName()).log(Level.SEVERE, null, ex);
             } catch (KeyStoreException ex) {
                 Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
-            }  catch (CertificateException ex) {
+            } catch (CertificateException ex) {
                 Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
             } catch (UnrecoverableKeyException ex) {
                 Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
@@ -87,6 +86,46 @@ public class ctrlRevisions implements ActionListener, MouseListener {
             } catch (NoSuchAlgorithmException ex) {
                 Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+
+        if (e.getSource() == vistaRevisions.btnModificar) {
+            System.out.println("revisions");
+
+            Boolean estat = vistaRevisions.rbtEstat.isSelected();
+
+            int id = Integer.parseInt(vistaRevisions.txtId.getText());
+            revisions.setIdrevision(id);
+            revisions.setEstado_revision(estat);
+            
+                
+            
+
+            try {
+                Boolean resposta = consulta.modificarRevisio(revisions, token);
+
+                if (resposta) {
+                    JOptionPane.showMessageDialog(null, "Modificat correctament");
+                    consulta.carregaTaula(vistaRevisions, token);
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "No modificat");
+
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyStoreException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CertificateException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (UnrecoverableKeyException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (KeyManagementException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(ctrlRevisions.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }
 
